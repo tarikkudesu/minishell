@@ -4,7 +4,7 @@ GREEN		=	'\033[32m'
 NONE		=	'\033[0m'
 CC			=	cc
 NAME		=	minishell
-HEADER		=	minishell.h
+HEADERS		=	minishell.h macros.h struct.h
 OBJ			=	$(SRC:.c=.o)
 CFLAGS		=	-Wall -Wextra -Werror -g
 
