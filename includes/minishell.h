@@ -6,12 +6,16 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/01 19:27:37 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/02 13:14:24 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include "struct.h"
+# include "macros.h"
+# include "../libft/libft.h"
 
 #include <fcntl.h>             //open
 #include <stdio.h>             //printf, perror
@@ -25,5 +29,11 @@
 #include <dirent.h>            //opendir, closedir
 #include <string.h>            //strerror
 #include <errno.h>             //errno
+
+char	**shell_split(char *line);
+
+
+/* FUNCTIONS */
+char	*ft_strpop(char *str);
 
 #endif

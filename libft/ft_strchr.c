@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tamehri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/02 10:39:02 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/31 13:58:28 by tamehri           #+#    #+#             */
+/*   Updated: 2023/10/31 14:07:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-typedef struct	s_shell t_shell;
-typedef	struct	s_cmds	t_cmds;
-
-struct	s_cmds
+char	*ft_strchr(const char *s, int c)
 {
-	int	hi;
-};
+	int	i;
 
-struct	s_shell
-{
-	char	*line;
-	// t_list	*token;
-	// t_cmds	**cmds;
-	// char	**env;
-};
-
-#endif
+	i = 0;
+	while (*(s + i))
+	{
+		if (*(s + i) == (char)c)
+			return ((char *)(s + i));
+		i++;
+	}
+	if (*(s + i) == (char)c)
+		return ((char *)(s + i));
+	return (NULL);
+}

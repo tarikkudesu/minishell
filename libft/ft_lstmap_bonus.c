@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/02 10:39:02 by tamehri          ###   ########.fr       */
+/*   Created: 2023/11/04 20:25:11 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/04 20:25:15 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-typedef struct	s_shell t_shell;
-typedef	struct	s_cmds	t_cmds;
-
-struct	s_cmds
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int	hi;
-};
+	t_list	*newlst;
+	t_list	*node;
 
-struct	s_shell
-{
-	char	*line;
-	// t_list	*token;
-	// t_cmds	**cmds;
-	// char	**env;
-};
-
-#endif
+	newlst = NULL;
+	while (lst && f)
+	{
+		node = ft_lstnew(f(lst->content));
+		if (!node)
+		{
+			ft_lstclear(&newlst, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&newlst, node);
+		lst = lst->next;
+	}
+	return (newlst);
+}

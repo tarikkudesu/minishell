@@ -3,10 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:31:52 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/01 20:31:52 by ooulcaid         ###   ########.fr       */
+/*   Created: 2024/03/02 10:17:12 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/02 10:18:28 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MACROS_H
+# define MACROS_H
+
+
+
+#endif

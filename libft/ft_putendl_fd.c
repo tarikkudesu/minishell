@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/02 10:39:02 by tamehri          ###   ########.fr       */
+/*   Created: 2023/11/03 22:25:53 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/06 14:11:06 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-typedef struct	s_shell t_shell;
-typedef	struct	s_cmds	t_cmds;
-
-struct	s_cmds
+void	ft_putendl_fd(char *s, int fd)
 {
-	int	hi;
-};
-
-struct	s_shell
-{
-	char	*line;
-	// t_list	*token;
-	// t_cmds	**cmds;
-	// char	**env;
-};
-
-#endif
+	if (!s || fd < 0)
+		return ;
+	while (*s)
+		write(fd, s++, 1);
+	write(fd, "\n", 1);
+}

@@ -1,17 +1,11 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "includes/minishell.h"
 
-int main() {
-    char *line;
-    while (1) {
-        line = readline("prompt >> ");
-        printf("%s\n", line);
-    }
+void f() {system("leaks a.out");}
+
+int main()
+{
+	atexit(f);
+	char *str = getenv("PATH");
+	printf("%s\n", str);
+	free(str);
 }
-
-
-
-

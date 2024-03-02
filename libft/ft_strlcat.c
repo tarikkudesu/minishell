@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/02 10:39:02 by tamehri          ###   ########.fr       */
+/*   Created: 2023/11/02 18:53:07 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/02 09:57:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-typedef struct	s_shell t_shell;
-typedef	struct	s_cmds	t_cmds;
-
-struct	s_cmds
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	int	hi;
-};
+	size_t	i;
+	size_t	ds;
 
-struct	s_shell
-{
-	char	*line;
-	// t_list	*token;
-	// t_cmds	**cmds;
-	// char	**env;
-};
-
-#endif
+	if (!dst && dstsize == 0)
+		return (ft_strlen(src));
+	ds = ft_strlen(dst);
+	if (dstsize <= ds)
+		return (dstsize + ft_strlen(src));
+	i = 0;
+	while (i + ds + 1 < dstsize && *(src + i))
+	{
+		*(dst + ds + i) = *(src + i);
+		i++;
+	}
+	*(dst + ds + i) = '\0';
+	return (ds + ft_strlen(src));
+}
