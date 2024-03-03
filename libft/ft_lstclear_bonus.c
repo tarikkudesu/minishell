@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/02 10:39:02 by tamehri          ###   ########.fr       */
+/*   Created: 2023/11/04 16:27:29 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/06 14:37:22 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-typedef struct	s_shell t_shell;
-typedef	struct	s_cmds	t_cmds;
-
-struct	s_cmds
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int	hi;
-};
+	t_list	*temp;
 
-struct	s_shell
-{
-	char	*line;
-	// t_list	*token;
-	// t_cmds	**cmds;
-	// char	**env;
-};
-
-#endif
+	if (!*lst || !del)
+		return ;
+	temp = *lst;
+	while (lst && *lst)
+	{
+		temp = temp->next;
+		ft_lstdelone(*lst, del);
+		*lst = temp;
+	}
+}

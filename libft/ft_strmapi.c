@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/02 10:39:02 by tamehri          ###   ########.fr       */
+/*   Created: 2023/11/03 18:08:42 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/03 23:10:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-typedef struct	s_shell t_shell;
-typedef	struct	s_cmds	t_cmds;
-
-struct	s_cmds
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	hi;
-};
+	size_t	sl;
+	char	*res;
 
-struct	s_shell
-{
-	char	*line;
-	// t_list	*token;
-	// t_cmds	**cmds;
-	// char	**env;
-};
-
-#endif
+	if (!s)
+		return (NULL);
+	sl = ft_strlen(s);
+	res = (char *)malloc(sizeof(char) * (sl + 1));
+	if (!res)
+		return (NULL);
+	*(res + sl) = '\0';
+	while (sl--)
+		*(res + sl) = f((unsigned int)sl, *(s + sl));
+	return (res);
+}

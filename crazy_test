@@ -1,5 +1,0 @@
-< Makefile cat | > a grep M > c | cat > out
-< Makefile cat | > a >> k > c | cat > out 
-< Makefile cat | < c > a | cat > out
-< Makefile cat | << c > a | cat > out
- < Makefile cat | >> k << c > a << h | cat > out
