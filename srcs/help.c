@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:53:20 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/02 20:43:13 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/03 14:16:08 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	evaluate_len(char *str, int *i)
 	return (free(var), ft_strlen(val));
 }
 
-static void	evaluate(char **pop, char *str, int *i, int *j)
+static int	eval(char **pop, char *str, int *i, int *j)
 {
 	int		x;
 	int		len;
@@ -45,16 +45,17 @@ static void	evaluate(char **pop, char *str, int *i, int *j)
 	(*i) += len + 1;
 	var = ft_substr(str, 0, len);
 	if (!var)
-		return ;
+		return (0);
 	val = getenv(var);
 	if (!val)
-		return ;
+		return (0);
 	while (*(val + x))
 	{
 		*(*pop + *j) = *(val + x);
 		(*j)++;
 		x++;
 	}
+	return (1);
 }
 
 static int	find_len(char *str)
@@ -68,64 +69,59 @@ static int	find_len(char *str)
 	while (*(str + i))
 	{
 		c = 0;
-		while (*(str + i) && *(str + i) != '\"' && *(str + i) != '\'')
-		{
-			if (*(str + i) == '$')
-				len += evaluate_len(str + i + 1, &i);
-			else
-			{
-				len++;
-				i++;
-			}
-		}
-		if (*(str + i))
+		(*(str + i) == '$' && (len += evaluate_len(str + i + 1, &i)));
+		(*(str + i) != '$' && (++len) && (++i));
+		if (*(str + i) && (*(str + i) == '\'' || *(str + i) == '\"'))
 			c = *(str + i++);
 		while (c && *(str + i) && *(str + i) != c)
 		{
-			if (c == '\"' && *(str + i) == '$')
-				len += evaluate_len(str + i + 1, &i);
-			else
-			{
-				len++;
-				i++;
-			}
+			(c == '\"' && *(str + i) == '$'
+				&& (len += evaluate_len(str + i + 1, &i)));
+			((c != '\"' || *(str + i) != '$') && (++len) && (++i));
 		}
+		if (*(str + i) && (*(str + i) == '\'' || *(str + i) == '\"'))
+			i++;
 	}
 	return (len);
 }
 
-char	*ft_strpop(char *str)
+static int	is_operator(int c)
+{
+	return (c == '>' || c == '<' || c == '|');
+}
+
+char	*ft_strpop(char *s)
 {
 	int		i;
 	int		j;
 	char	c;
 	char	*pop;
 
-	pop = malloc(sizeof(char) * (find_len(str) + 1));
+	pop = malloc(sizeof(char) * (find_len(s) + 1));
 	if (!pop)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (*(str + i))
+	while (*(s + i))
 	{
 		c = 0;
-		while (*(str + i) && *(str + i) != '\"' && *(str + i) != '\'')
+		while (*(s + i) && !is_operator(*(s + i)) && *(s + i) != '\"' && *(s + i) != '\'')
+			((*(s + i) == '$' && eval(&pop, s + i + 1, &i, &j)),
+				(*(s + i) != '$' && (*(pop + j++) = *(s + i++))));
+		if (*(s + i))
 		{
-			if (*(str + i) == '$')
-				evaluate(&pop, str + i + 1, &i, &j);
-			else
-				*(pop + j++) = *(str + i++);
+			while (*(s + i) && is_operator(*(s + i)))
+					*(pop + j++) = *(s + i++);
+			if (*(s + i) == '\"' || *(s + i) == '\'')
+				c = *(s + i++);
 		}
-		if (*(str + i))
-			c = *(str + i++);
-		while (c && *(str + i) && *(str + i) != c)
+		while (c && *(s + i) && *(s + i) != c)
 		{
-			if (c == '\"' && *(str + i) == '$')
-				evaluate(&pop, str + i + 1, &i, &j);
-			else
-				*(pop + j++) = *(str + i++);
+			(c == '\"' && *(s + i) == '$' && eval(&pop, s + i + 1, &i, &j));
+			((c == '\"' && *(s + i) != '$' && *(s + i) != '\"')
+				&& (*(pop + j++) = *(s + i++)));
 		}
 	}
 	*(pop + j) = '\0';
-	return (free(str), str = NULL, pop);
+	return (free(s), s = NULL, pop);
 }

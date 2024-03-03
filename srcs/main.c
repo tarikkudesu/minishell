@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/02 19:07:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/03 14:20:01 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 void	minishell(t_shell *data)
 {
 	char	**tab;
-	
+
 	tab = shell_split(data->line);
-	for (int i = 0; *(tab + i); i++) {
+	for (int i = 0; *(tab + i); i++)
 		printf("tab %d == %s\n", i, *(tab + i));
-	}
 }
 
 void	read_line(t_shell *data)
 {
 	char	*line;
 
-	while (1)
-	{
+	// while (1)
+	// {
 		line = readline("minishell >> ");
 		if (!line || !ft_strncmp(line, "exit", ft_strlen(line)))
 			return ;
@@ -36,7 +35,7 @@ void	read_line(t_shell *data)
 		free(line);
 		data->line = NULL;
 		line = NULL;
-	}
+	// }
 }
 
 int main(int ac, char **av, char **env)
@@ -45,7 +44,8 @@ int main(int ac, char **av, char **env)
 
 	if (ac != 1)
 	{
-		av++, env++;
+		av++;
+		env++;
 		ft_putendl_fd("Error", 2);
 		return (1);
 	}
