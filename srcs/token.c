@@ -6,42 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:56:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 14:16:52 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/04 13:53:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static int	is_sep(int c)
-{
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (1);
-	else if (c == '\r' || c == '\v' || c == '\f')
-		return (1);
-	return (0);
-}
-
-static char	**ft_error(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (*(tab + i))
-		free(*(tab + i++));
-	free(tab);
-	return (NULL);
-}
-
-static void	bunny_ears(char **s, char c)
-{
-	(*s)++;
-	while (**s && **s != c)
-		(*s)++;
-}
-static int	is_operator(int c)
-{
-	return (c == '>' || c == '<' || c == '|');
-}
 
 static int	clen(char *line)
 {
@@ -52,22 +21,20 @@ static int	clen(char *line)
 	{
 		while (*line && is_sep(*line))
 			line++;
-		if (*line)
+		if (*line && !is_operator(*line))
 		{
-			i++;
 			while (*line && !is_sep(*line) && !is_operator(*line))
 			{
-				if (*line == '\"' || *line == '\'')
-					bunny_ears(&line, *line);
+				((*line == '\"' || *line == '\'') && bunny_ears(&line, *line));
 				line++;
 			}
-			if (*line && is_operator(*line))
-			{
-				((*line == '<' && *(line + 1) && *(line + 1) == '<' && line++),
-				(*line == '>' && *(line + 1) && *(line + 1) == '>' && line++));
-				i++;
+			i++;
+		}
+		if (*line && is_operator(*line))
+		{
+			while (*line && is_operator(*line))
 				line++;
-			}
+			i++;
 		}
 	}
 	return (i);
@@ -112,7 +79,7 @@ int	tablen(char const *s, int *index)
 	return (i - *index);
 }
 
-char	*ft_itab(char const *s, int *index, int wlen)
+char	*init_token(char const *s, int *index, int wlen)
 {
 	int		i;
 	char	*word;
@@ -127,29 +94,26 @@ char	*ft_itab(char const *s, int *index, int wlen)
 	return (word);
 }
 
-char	**shell_split(char *line)
+void	shell_split(t_shell *data)
 {
-	int		flen;
-	int		i;
-	int		index;
-	char	**tab;
+	int			i;
+	char		*str;
+	int			flen;
+	int			index;
+	t_tokens	*token;
 
-	if (!line)
-		return (NULL);
 	i = -1;
 	index = 0;
-	flen = clen(line);
-	tab = malloc(sizeof(char *) * (flen + 1));
-	if (!tab)
-		return (NULL);
+	flen = clen(data->line);
 	while (++i < flen)
 	{
-		*(tab + i) = ft_itab(line, &index, tablen(line, &index));
-		if (!*(tab + i))
-			return (ft_error(tab));
-		*(tab + i) = ft_strpop(*(tab + i));
+		str = init_token(data->line, &index, tablen(data->line, &index));
+		if (!str)
+			return ;
+		token = tokennew(str);
+		if (!token)
+			return ;
+		tokenadd_back(&data->token, token);
+		process_token(token);
 	}
-	*(tab + i) = 0;
-	return (NULL);
-	return (tab);
 }

@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   minifun.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 14:18:58 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 15:33:30 by tamehri          ###   ########.fr       */
+/*   Created: 2024/03/03 18:57:51 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/03 19:11:01 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	is_operator(int c)
 {
-	size_t	i;
+	return (c == '>' || c == '<' || c == '|');
+}
 
-	i = 0;
-	if (!n)
-		return (0);
-	while (*(s1 + i) == *(s2 + i) && *(s1 + i) && *(s2 + i) && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)*(s1 + i) - (unsigned char)*(s2 + i));
+int	is_sep(int c)
+{
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (1);
+	else if (c == '\r' || c == '\v' || c == '\f')
+		return (1);
+	return (0);
+}
+
+int	bunny_ears(char **s, char c)
+{
+	(*s)++;
+	while (**s && **s != c)
+		(*s)++;
+	return (1);
 }

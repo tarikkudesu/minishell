@@ -1,4 +1,8 @@
-SRC				=	srcs/main.c srcs/token.c srcs/help.c
+SRC				=	srcs/main.c \
+					srcs/token.c \
+					srcs/help.c \
+					srcs/lists.c \
+					srcs/minifun.c
 
 GREEN			=	'\033[32m'
 NONE			=	'\033[0m'

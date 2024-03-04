@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/03 11:12:00 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/03 14:51:36 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ enum	e_class
 	APPEND,
 	TRUNC,
 	INFILE,
+	PIPE,
 };
 
 struct	s_tokens
 {
-	char	*token;
-	t_class	class;
+	char		*token;
+	t_class		class;
+	t_tokens	*next;
 };
 
 // struct	s_cmds
@@ -42,8 +44,8 @@ struct	s_tokens
 
 struct	s_shell
 {
-	char	*line;
-	// t_list	*token;
+	char		*line;
+	t_tokens	*token;
 	// t_cmds	**cmds;
 	// char	**env;
 };

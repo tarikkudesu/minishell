@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 10:22:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/03 18:59:06 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@
 
 
 /* FUNCTIONS */
-char	**shell_split(char *line);
-char	*ft_strpop(char *str);
+void	process_token(t_tokens *token);
+int			bunny_ears(char **s, char c);
+int			is_sep(int c);
+int			is_operator(int c);
+void		tokenclear(t_tokens **lst);
+void		tokenadd_back(t_tokens **lst, t_tokens *new);
+t_tokens	*tokennew(char *content);
+void		shell_split(t_shell *data);
+char		*ft_strpop(char *str);
 
 #endif

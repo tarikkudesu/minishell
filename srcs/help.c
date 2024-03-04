@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 14:53:20 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 14:16:08 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/04 13:54:37 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	evaluate_len(char *str, int *i)
 	return (free(var), ft_strlen(val));
 }
 
-static int	eval(char **pop, char *str, int *i, int *j)
+static int	eval(char **pop, char *str, int *j)
 {
 	int		x;
 	int		len;
@@ -42,7 +42,6 @@ static int	eval(char **pop, char *str, int *i, int *j)
 	len = 0;
 	while (*(str + len) && ft_isalnum(*(str + len)))
 		len++;
-	(*i) += len + 1;
 	var = ft_substr(str, 0, len);
 	if (!var)
 		return (0);
@@ -85,43 +84,120 @@ static int	find_len(char *str)
 	return (len);
 }
 
-static int	is_operator(int c)
-{
-	return (c == '>' || c == '<' || c == '|');
+// char	*ft_strpop(char *s)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	c;
+// 	char	*pop;
+
+// 	pop = malloc(sizeof(char) * (find_len(s) + 1));
+// 	if (!pop)
+// 		return (NULL);
+// 	i = 0;
+// 	j = 0;
+// 	while (*(s + i))
+// 	{
+// 		c = 0;
+// 		while (*(s + i) && !is_operator(*(s + i)) && *(s + i) != '\"' && *(s + i) != '\'')
+// 			((*(s + i) == '$' && eval(&pop, s + i + 1, &i, &j)),
+// 				(*(s + i) != '$' && (*(pop + j++) = *(s + i++))));
+// 		if (*(s + i))
+// 		{
+// 			while (*(s + i) && is_operator(*(s + i)))
+// 					*(pop + j++) = *(s + i++);
+// 			if (*(s + i) == '\"' || *(s + i) == '\'')
+// 				c = *(s + i++);
+// 		}
+// 		while (c && *(s + i) && *(s + i) != c)
+// 		{
+// 			(c == '\"' && *(s + i) == '$' && eval(&pop, s + i + 1, &i, &j));
+// 			((c == '\"' && *(s + i) != '$' && *(s + i) != '\"')
+// 				&& (*(pop + j++) = *(s + i++)));
+// 			((c == '\'' && *(s + i) != '\'')
+// 				&& (*(pop + j++) = *(s + i++)));
+// 		}
+// 	}
+// 	return (free(s), s = NULL, *(pop + j) = '\0', pop);
+// }
+
+void	simple_word(char **s, char **tmp, int *j)
+{	
+	while (**tmp && !is_operator(**tmp) && **tmp != '\"' && **tmp != '\'')
+	{
+		if (**tmp == '$')
+			eval(s, *tmp + 1, j);
+		else
+		{
+			*(*s + *j) = **tmp;
+			(*j)++;
+		}
+		(*tmp)++;
+	}
 }
 
-char	*ft_strpop(char *s)
+void	operat_word(char **s, char **tmp, int *j, char *c)
 {
-	int		i;
-	int		j;
-	char	c;
-	char	*pop;
-
-	pop = malloc(sizeof(char) * (find_len(s) + 1));
-	if (!pop)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (*(s + i))
+	if (**tmp)
 	{
-		c = 0;
-		while (*(s + i) && !is_operator(*(s + i)) && *(s + i) != '\"' && *(s + i) != '\'')
-			((*(s + i) == '$' && eval(&pop, s + i + 1, &i, &j)),
-				(*(s + i) != '$' && (*(pop + j++) = *(s + i++))));
-		if (*(s + i))
+		while (**tmp && is_operator(**tmp))
 		{
-			while (*(s + i) && is_operator(*(s + i)))
-					*(pop + j++) = *(s + i++);
-			if (*(s + i) == '\"' || *(s + i) == '\'')
-				c = *(s + i++);
+			*(*s + *j) = **tmp;
+			(*tmp)++;
+			(*j)++;
 		}
-		while (c && *(s + i) && *(s + i) != c)
+		if (**tmp == '\"' || **tmp == '\'')
 		{
-			(c == '\"' && *(s + i) == '$' && eval(&pop, s + i + 1, &i, &j));
-			((c == '\"' && *(s + i) != '$' && *(s + i) != '\"')
-				&& (*(pop + j++) = *(s + i++)));
+			*c = **tmp;
+			(*tmp)++;
 		}
 	}
-	*(pop + j) = '\0';
-	return (free(s), s = NULL, pop);
+	
+}
+
+void	quoted_word(char **s, char **tmp, int *j, char *c)
+{	
+	while (*c && **tmp && **tmp != *c)
+	{
+		if (*c == '\"')
+		{
+			if (**tmp == '$')
+				eval(s, *tmp + 1, j);
+			else if (**tmp != '$' && **tmp != '\"')
+			{
+				*(*s + *j) = **tmp;
+				(*tmp)++;
+				(*j)++;
+			}
+		}
+		else if (*c == '\'' && **tmp != '\'')
+		{
+				*(*s + *j) = **tmp;
+				(*tmp)++;
+				(*j)++;
+		}
+	}
+}
+
+void	process_token(t_tokens *token)
+{
+	char	*tmp;
+	char	*s;
+	int		j;
+	char	q;
+	
+	j = 0;
+	s = malloc(sizeof(char) * (find_len(token->token) + 1));
+	if (!s)
+		return ;
+	tmp = token->token;
+	while (*tmp)
+	{
+		q = 0;
+		simple_word(&s, &tmp, &j);
+		operat_word(&s, &tmp, &j, &q);
+		quoted_word(&s, &tmp, &j, &q);
+	}
+	free(token->token);
+	token->token = s;
 }

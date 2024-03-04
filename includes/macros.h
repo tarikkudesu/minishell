@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:17:12 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 09:51:31 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:55:04 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
 # define MACROS_H
 
-
+# define ERR_MAL	"Error : malloc"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 14:20:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/03 20:39:22 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,35 @@
 
 void	minishell(t_shell *data)
 {
-	char	**tab;
+	t_tokens *tmp;
 
-	tab = shell_split(data->line);
-	for (int i = 0; *(tab + i); i++)
-		printf("tab %d == %s\n", i, *(tab + i));
+	shell_split(data);
+	tmp = data->token;
+	while (tmp)
+	{
+		printf("class : %d, token : |\033[1;32m%s\033[0m|\n", tmp->class, tmp->token);
+		tmp = tmp->next;
+	}
+	tokenclear(&data->token);
 }
 
 void	read_line(t_shell *data)
 {
 	char	*line;
 
-	// while (1)
-	// {
-		line = readline("minishell >> ");
-		if (!line || !ft_strncmp(line, "exit", ft_strlen(line)))
+	while (1)
+	{
+		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
+		if (!line)
+			return ;
+		if (!ft_strncmp(line, "exit", ft_strlen(line)) && ft_strlen(line))
 			return ;
 		data->line = line;
 		minishell(data);
 		free(line);
 		data->line = NULL;
 		line = NULL;
-	// }
+	}
 }
 
 int main(int ac, char **av, char **env)
