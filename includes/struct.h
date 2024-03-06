@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/03 14:51:36 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/05 20:25:57 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@ typedef	enum	e_class		t_class;
 
 enum	e_class
 {
-	WORD = 1,
-	HERDOC,
+	ERROR,
+	WORD,
+	OUTPUT_RED,
+	INPUT_RED,
+	HEREDOC,
 	APPEND,
-	TRUNC,
-	INFILE,
 	PIPE,
 };
 
 struct	s_tokens
 {
-	char		*token;
+	char		*string;
+	int			index;
 	t_class		class;
 	t_tokens	*next;
 };
@@ -46,6 +48,8 @@ struct	s_shell
 {
 	char		*line;
 	t_tokens	*token;
+	int			number_of_tokens;
+	int			number_of_commands;
 	// t_cmds	**cmds;
 	// char	**env;
 };

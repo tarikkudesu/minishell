@@ -6,18 +6,28 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:57:51 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 19:11:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/04 16:51:26 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int ft_strcmp(char *s1, char *s2)
+{
+  int i;
+
+  i = 0;
+  while (*(s1 + i) && *(s1 + i) && *(s1 + i) == *(s2 + i))
+    i++;
+  return (*(s1 + i) - *(s2 + i));
+}
 
 int	is_operator(int c)
 {
 	return (c == '>' || c == '<' || c == '|');
 }
 
-int	is_sep(int c)
+int	is_space(int c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);

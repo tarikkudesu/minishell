@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 18:59:06 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/06 10:53:37 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,24 @@
 # include <string.h>            //strerror
 # include <errno.h>             //errno
 
-
 /* FUNCTIONS */
-void	process_token(t_tokens *token);
-int			bunny_ears(char **s, char c);
-int			is_sep(int c);
+int			throw_error(char *str);
+void		check_syntax(t_shell *data);
+void		token_class(t_tokens *token);
+int			ft_strcmp(char *s1, char *s2);
+void		token_class(t_tokens *token);
+int			expansion_value(char *str, int *i);
+void		expand(char **s, char *tmp, int i[3]);
 int			is_operator(int c);
+int			is_space(int c);
+int			bunny_ears(char **s, char c);
+int			process_token(t_shell *data, t_tokens *token);
+int			tokensize(t_tokens *lst);
 void		tokenclear(t_tokens **lst);
 void		tokenadd_back(t_tokens **lst, t_tokens *new);
 t_tokens	*tokennew(char *content);
-void		shell_split(t_shell *data);
-char		*ft_strpop(char *str);
+char		*init_token(char const *s, int *index, int lenght);
+int			get_number_of_tokens(char *line);
+int			lexer(t_shell *data);
 
 #endif

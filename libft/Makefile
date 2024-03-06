@@ -70,7 +70,6 @@ bonus: $(OBJS_B)
 
 %.o: %.c libft.h
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo $(GREEN) "... Compiling\t$<\t[OK]" $(RESET)
 
 clean:
 	@$(RM) $(OBJS) $(OBJS_B)

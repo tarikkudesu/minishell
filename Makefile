@@ -1,10 +1,14 @@
 SRC				=	srcs/main.c \
-					srcs/token.c \
-					srcs/help.c \
-					srcs/lists.c \
-					srcs/minifun.c
+					pars/lexer.c \
+					pars/process_token.c \
+					pars/classify.c \
+					pars/expansion.c \
+					pars/minifun.c \
+					pars/token_lists.c \
+					pars/syntax.c \
+					srcs/error.c
 
-GREEN			=	'\033[32m'
+GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'
 CC				=	cc
 NAME			=	minishell
@@ -18,23 +22,22 @@ all: $(NAME) clean
 $(NAME): $(OBJ)
 	@make -C libft
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a
-	@echo $(GREEN) "\n compilation done" $(NONE)
+	@echo $(GREEN) "compilation done" $(NONE)
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo $(GREEN) "... Compiling\t$<\t[OK]" $(RESET)
 
 clean:
 	@make -C libft clean
 	@rm -f $(OBJ)
-	@echo $(GREEN) "clean done\n" $(NONE)
+	@echo $(GREEN) "clean done" $(NONE)
 
 fclean: clean
 	@make -C libft fclean
 	@rm -f $(NAME)
-	@echo $(GREEN) "fclean done\n" $(NONE)
+	@echo $(GREEN) "fclean done" $(NONE)
 
 re: fclean all
-	@echo $(GREEN) "re done\n" $(NONE)
+	@echo $(GREEN) "re done" $(NONE)
 
 .PHONY: clean
