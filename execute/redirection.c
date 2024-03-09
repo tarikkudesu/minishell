@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 19:19:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:31:51 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static	void	herdoc_red(char *eof, int input)
 
 void	red_process(t_tokens *token, int input, int output, int *nbr)
 {
-	while (token && token->string[0] != '|')
+	while (token && token->class != PIPE)
 	{
 		if (token->class == APPEND)
 			(append_red(token->right->string, output),
