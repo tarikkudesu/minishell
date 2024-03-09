@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:09:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 10:30:27 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/07 00:22:16 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	quoted_word(char **s, char *tmp, int i[3])
 		}
 		if (i[2] == '\'' && *(tmp + i[0]) != '\'')
 		{
-				*(*s + i[1]) = *(tmp + i[0]);
-				i[0] += 1;
-				i[1] += 1;
+			*(*s + i[1]) = *(tmp + i[0]);
+			i[0] += 1;
+			i[1] += 1;
 		}
 	}
 }
@@ -113,11 +113,11 @@ int	process_token(t_shell *data, t_tokens *token)
 	char	*tmp;
 	char	*s;
 	int		i[3];
-	
+
 	i[0] = 0;
 	i[1] = 0;
 	s = malloc(sizeof(char) * (token_len(token->string) + 1));
-	if (s)
+	if (!s)
 		return (throw_error(ERR_MAL));
 	token_class(token);
 	tmp = token->string;
@@ -131,6 +131,6 @@ int	process_token(t_shell *data, t_tokens *token)
 	token->string = s;
 	token_class(token);
 	check_syntax(data);
-	// split_commands(data);
+	// command_tree(data);
 	return (0);
 }

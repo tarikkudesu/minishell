@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   shell_environement.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 14:31:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 15:49:56 by tamehri          ###   ########.fr       */
+/*   Created: 2024/03/06 23:18:12 by ooulcaid          #+#    #+#             */
+/*   Updated: 2024/03/08 13:14:28 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+t_env	*get_env(char **env)
 {
-	t_list	*temp;
+	int		i;
+	t_env	*list;
+	t_env	*node;
+	char	*content;
 
-	if (!*lst)
+	i = 0;
+	list = NULL;
+	while (env[i])
 	{
-		*lst = new;
-		return ;
+		content = ft_strdup(env[i]);
+		if (!content)
+			ft_throw("ERROR_STRDUP_GET_ENV");
+		node = env_new(content);
+		if (!node)
+			ft_throw("ERROR_NEW_NODE_GET_ENV");
+		env_add_back(&list, node);
+		i++;
 	}
-	if (!new)
-		return ;
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
+	return (list);
 }

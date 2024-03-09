@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:49:09 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 10:55:50 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/07 19:27:44 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	lexer(t_shell *data)
 	i = -1;
 	index = 0;
 	data->number_of_tokens = get_number_of_tokens(data->line);
+	data->token = NULL;
 	while (++i < data->number_of_tokens)
 	{
 		str = init_token(data->line, &index, token_len(data->line, &index));

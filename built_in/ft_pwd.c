@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 14:31:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 15:49:56 by tamehri          ###   ########.fr       */
+/*   Created: 2024/03/05 23:17:02 by ooulcaid          #+#    #+#             */
+/*   Updated: 2024/03/07 00:00:11 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_pwd(void)
 {
-	t_list	*temp;
+	char	*position;
 
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	if (!new)
-		return ;
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
+	position = getcwd(NULL, 0);
+	if (!position)
+		ft_throw("ERROR_GETING_WORK_DIRECTORY");
+	ft_putendl_fd(position, 1);
 }
+
+// int	main(void)
+// {
+// 	ft_pwd();
+// }

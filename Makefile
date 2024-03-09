@@ -1,12 +1,25 @@
-SRC				=	srcs/main.c \
-					pars/lexer.c \
-					pars/process_token.c \
+SRC				=	srcs/main.c\
+					pars/lexer.c\
+					srcs/error.c \
+					pars/syntax.c \
+					pars/minifun.c \
 					pars/classify.c \
 					pars/expansion.c \
-					pars/minifun.c \
-					pars/token_lists.c \
-					pars/syntax.c \
-					srcs/error.c
+					built_in/ft_cd.c  \
+					execute/execute.c  \
+					signals/signals.c	\
+					built_in/ft_env.c    \
+					built_in/ft_pwd.c     \
+					pars/token_lists.c 	   \
+					built_in/ft_exit.c	    \
+					built_in/ft_echo.c		 \
+					pars/command_tree.c	   	  \
+					built_in/ft_unset.c	 	   \
+					pars/process_token.c		\
+					built_in/ft_export.c		 \
+					execute/gold_process.c		  \
+					execute/shell_environement.c   \
+					built_in/double_linked_list.c   \
 
 GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'
@@ -17,15 +30,15 @@ OBJ				=	$(SRC:.c=.o)
 CFLAGS			=	-Wall -Wextra -Werror -g
 READLINE		=	-lreadline
 
-all: $(NAME) clean
+all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADERS)
 	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a  -L /Users/ooulcaid/.brew/opt/readline/lib
 	@echo $(GREEN) "compilation done" $(NONE)
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@  -I /Users/ooulcaid/.brew/opt/readline/include
 
 clean:
 	@make -C libft clean

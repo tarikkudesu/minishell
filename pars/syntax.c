@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/05 20:49:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/06 15:50:24 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ void	check_syntax(t_shell *data)
 	t_tokens	*tmp;
 	t_tokens	*previous;
 
-	tmp = data->token->next;
+	tmp = data->token->right;
 	previous = data->token;
 	while (tmp)
 	{
-		if (is_operatr(tmp) && is_operatr(previous))
+		if (is_operatr(tmp) && is_operatr(previous) && previous->class != PIPE)
 		{
 			printf("parse error near '%s'\n", tmp->string);
 			return ;
 		}
 		previous = tmp;
-		tmp = tmp->next;
+		tmp = tmp->right;
 	}
 }

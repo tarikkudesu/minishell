@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:35:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 10:31:33 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/06 15:50:16 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	token_class(t_tokens *token)
 			tmp->class = HEREDOC;
 		else if (!ft_strcmp(tmp->string, ">>"))
 			tmp->class = APPEND;
-		tmp = tmp->next;
+		tmp = tmp->right;
 	}
 }

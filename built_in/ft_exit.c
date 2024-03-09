@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 14:31:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 15:49:56 by tamehri          ###   ########.fr       */
+/*   Created: 2024/03/06 16:38:30 by ooulcaid          #+#    #+#             */
+/*   Updated: 2024/03/06 23:58:50 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_exit(void)
 {
-	t_list	*temp;
-
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	if (!new)
-		return ;
-	temp = *lst;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
+	exit(EXIT_SUCCESS);
 }
+
+//until what we will do exactly
