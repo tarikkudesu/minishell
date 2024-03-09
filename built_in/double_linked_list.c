@@ -12,17 +12,17 @@
 
 #include "../includes/minishell.h"
 
-// void	print(t_env **env)
-// {
-// 	t_env	*tmp;
+void	print(t_env **env)
+{
+	t_env	*tmp;
 
-// 	tmp = *env;
-// 	while (tmp)
-// 	{
-// 		ft_putendl_fd(tmp->environ, 1);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = *env;
+	while (tmp)
+	{
+		printf("%s = %s\n", tmp->name, tmp->value);
+		tmp = tmp->next;
+	}
+}
 
 // t_env	*env_new(char *name, char *value)
 // {
@@ -73,15 +73,15 @@
 // 	}
 // }
 
-void	env_clear(t_env **env)
-{
-	t_env	*tmp;
+// void	env_clear(t_env **env)
+// {
+// 	t_env	*tmp;
 
-	tmp = (*env);
-	while (tmp)
-	{
-		*env = (*env)->next;
-		(free(tmp->name), free(tmp));
-		tmp = *env;
-	}
-}
+// 	tmp = (*env);
+// 	while (tmp)
+// 	{
+// 		*env = (*env)->next;
+// 		(free(tmp->name), free(tmp));
+// 		tmp = *env;
+// 	}
+// }

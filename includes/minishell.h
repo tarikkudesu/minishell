@@ -34,12 +34,10 @@
 
 void		check_syntax(t_shell *data);
 int			ft_strcmp(char *s1, char *s2);
-int			expansion_value(char *str, int *i);
-void		expand(char **s, char *tmp, int i[3]);
+int	        expansion_value_1(t_shell *data, char *str, int *i);
 int			is_operator(int c);
 int			is_space(int c);
-int			bunny_ears(char **s, char c);
-int			get_number_of_tokens(char *line);
+int			bunny_ears(char **s, char c);\
 int			lexer(t_shell *data);
 void    	command_tree(t_shell *data);
 
@@ -54,7 +52,7 @@ void		ft_throw(char *strerr);
 
 /*----------------environement_operation---------------*/
 
-t_env		*get_env(char **env);
+void        get_env(t_shell *data, char **env);
 t_env	    *env_new(char *name, char *value);
 void		env_add_back(t_env **linked, t_env *node);
 void		print(t_env **env);
@@ -64,6 +62,7 @@ void		env_clear(t_env **env);
 
 /*--------------------token_operation-------------------*/
 
+void        fill_token(t_shell *data, char **s, char *tmp, int i[3]);
 char		*init_token(char const *s, int *index, int lenght);
 int			process_token(t_shell *data, t_tokens *token);
 int			tokensize(t_tokens *lst);

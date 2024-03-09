@@ -59,12 +59,16 @@ char	*init_token(char const *s, int *index, int lenght)
 	int		i;
 	char	*token;
 
+	if (!lenght)
+		return (NULL);
 	token = malloc(sizeof(char) * (lenght + 1));
 	if (!token)
 		return (NULL);
 	i = -1;
 	while (++i < lenght)
 		*(token + i) = *(s + (*index)++);
+	while (*(s + *index) && is_space(*(s + *index)))
+		(*index)++;
 	*(token + i) = '\0';
 	return (token);
 }
@@ -88,7 +92,7 @@ int	lexer(t_shell *data)
 		i++;
 		str = init_token(data->line, &index, token_len(data->line, &index));
 		if (!str)
-			return (throw_error(ERR_MAL));
+			return (0);
 		token = tokennew(str);
 		if (!token)
 			return (free(str), throw_error(ERR_MAL));

@@ -12,95 +12,36 @@
 
 #include "../includes/minishell.h"
 
-// void	quoted_word(char **s, char *tmp, int i[3])
-// {
-// 	while (i[2] && *(tmp + i[0]) && *(tmp + i[0]) != i[2])
-// 	{
-// 		if (i[2] == '\"')
-// 		{
-// 			if (*(tmp + i[0]) == '$')
-// 				expand(s, tmp, i);
-// 			else if (*(tmp + i[0]) != '$' && *(tmp + i[0]) != '\"')
-// 			{
-// 				*(*s + i[1]) = *(tmp + i[0]);
-// 				i[0] += 1;
-// 				i[1] += 1;
-// 			}
-// 		}
-// 		if (i[2] == '\'' && *(tmp + i[0]) != '\'')
-// 		{
-// 			*(*s + i[1]) = *(tmp + i[0]);
-// 			i[0] += 1;
-// 			i[1] += 1;
-// 		}
-// 	}
-// }
-
-// void	operat_word(char **s, char *tmp, int i[3])
-// {
-// 	if (*(tmp + i[0]))
-// 	{
-// 		while (*(tmp + i[0]) && is_operator(*(tmp + i[0])))
-// 		{
-// 			*(*s + i[1]) = *(tmp + i[0]);
-// 			i[0] += 1;
-// 			i[1] += 1;
-// 		}
-// 		if (*(tmp + i[0]) == '\"' || *(tmp + i[0]) == '\'')
-// 		{
-// 			i[2] = *(tmp + i[0]);
-// 			i[0] += 1;
-// 		}
-// 	}
-// 	quoted_word(s, tmp, i);
-// }
-
-// void	simple_word(char **s, char *tmp, int i[3])
-// {
-// 	while (*(tmp + i[0]) && !is_operator(*(tmp + i[0])) 
-// 	&& *(tmp + i[0]) != '\"' && *(tmp + i[0]) != '\'')
-// 	{
-// 		if (*(tmp + i[0]) == '$')
-// 			expand(s, tmp, i);
-// 		else
-// 		{
-// 			*(*s + i[1]) = *(tmp + i[0]);
-// 			i[0] += 1;
-// 			i[1] += 1;
-// 		}
-// 	}
-// 	operat_word(s, tmp, i);
-// }
-
 /*
 	this function will find the lenght of a token after removing quotes and
 	expanding envirement variables
+	var[0] is for iterating str
 */
-static int	token_len(char *str)
+static int	token_len(t_shell *data, char *str)
 {
-	int		i;
-	char	c;
-	int		len;
+	int	var[3];
 
-	i = 0;
-	len = 0;
-	while (*(str + i))
+	(assign(var, 0), assign(var + 1, 0));
+	while (*(str + var[0]))
 	{
-		c = 0;
-		(*(str + i) == '$' && (len += expansion_value(str + i + 1, &i)));
-		(*(str + i) != '$' && (++len) && (++i));
-		if (*(str + i) && (*(str + i) == '\'' || *(str + i) == '\"'))
-			c = *(str + i++);
-		while (c && *(str + i) && *(str + i) != c)
+		if (*(str + var[0]) == '\"' || *(str + var[0]) == '\'')
 		{
-			(c == '\"' && *(str + i) == '$'
-				&& (len += expansion_value(str + i + 1, &i)));
-			((c != '\"' || *(str + i) != '$') && (++len) && (++i));
+			(assign(var + 2, *(str + var[0])), assign(var, var[0] + 1));
+			while (*(str + var[0]) && *(str + var[0]) != var[2])
+			{
+				if (*(str + var[0]) == '$')
+					var[1] += expansion_value_1(data, str + var[0], var);
+				else
+					(assign(var, var[0] + 1), assign(var + 1, var[1] + 1));
+			}
+			var[0]++;
 		}
-		if (*(str + i) && (*(str + i) == '\'' || *(str + i) == '\"'))
-			i++;
+		else if (*(str + var[0]) == '$')
+			var[1] += expansion_value_1(data, str + var[0], var);
+		else
+			(assign(var, var[0] + 1), assign(var + 1, var[1] + 1));
 	}
-	return (len);
+	return (var[1]);
 }
 
 /*
@@ -116,7 +57,7 @@ int	process_token(t_shell *data, t_tokens *token)
 
 	i[0] = 0;
 	i[1] = 0;
-	s = malloc(sizeof(char) * (token_len(token->string) + 1));
+	s = malloc(sizeof(char) * (token_len(data, token->string) + 1));
 	if (!s)
 		return (throw_error(ERR_MAL));
 	token_class(token);
@@ -124,12 +65,10 @@ int	process_token(t_shell *data, t_tokens *token)
 	while (*(tmp + i[0]))
 	{
 		i[2] = 0;
-		fill_token(&s, tmp, i);
+		fill_token(data, &s, tmp, i);
 	}
 	*(s + i[1]) = '\0';
 	free(token->string);
 	token->string = s;
-	// check_syntax(data);
-	// command_tree(data);
 	return (0);
 }

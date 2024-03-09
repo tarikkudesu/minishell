@@ -31,7 +31,6 @@ void	tokenadd_back(t_tokens **lst, t_tokens *new)
 {
 	t_tokens	*temp;
 
-	// puts("here");
 	if (!lst)
 		return ;
 	if (!new)

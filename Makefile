@@ -7,6 +7,8 @@ SRC				=	srcs/main.c\
 					pars/expansion.c \
 					built_in/ft_cd.c  \
 					execute/execute.c  \
+					pars/env_lists.c \
+					pars/fill_token.c \
 					signals/signals.c	\
 					built_in/ft_env.c    \
 					built_in/ft_pwd.c     \

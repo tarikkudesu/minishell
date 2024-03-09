@@ -12,25 +12,43 @@
 
 #include "../includes/minishell.h"
 
-void	get_env()
+void	get_env(t_shell *data, char **env)
 {
+	int		i;
+	char	*name;
+	char	*value;
+	char	*start;
+	t_env	*node;
 
+	i = -1;
+	while (env[++i])
+	{
+		start = ft_strchr(env[i], '=');
+		name = ft_substr(env[i], 0, (start - env[i]));
+		if (!name)
+			ft_throw("ERROR_SUBSTR_GET_ENV");
+		value = ft_strdup(start + 1);
+		if (!value)
+			ft_throw("ERROR_STRDUP_GET_ENV");
+		node = env_new(name, value);
+		if (!node)
+			ft_throw("ERROR_ENV_NEW_GET_ENV");
+		env_add_back(&data->env_list, node);
+	}
 }
 
 void	minishell(t_shell *data)
 {
-	t_tokens	*token;
 
 	if (lexer(data))
         return ;
-	token = data->token;
-	while (token) {
-		printf("\t\t[\033[1;32m  %s  \033[0m]\n", token->string);
-		token = token->right;
-	}
-    // check_syntax(data);
-    // command_tree(data);
-	// execute(data);
+	// while (token) {
+	// 	printf("\t\t[\033[1;32m  %s  \033[0m]\n", token->string);
+	// 	token = token->right;
+	// }
+    check_syntax(data);
+    command_tree(data);
+	execute(data);
 }
 
 void	read_line(t_shell *data)
@@ -43,7 +61,7 @@ void	read_line(t_shell *data)
 		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
 		if (!line)
 			return ;
-		if (!ft_strncmp(line, "exit", ft_strlen(line)) && ft_strlen(line))
+		if (!ft_strncmp(line, "exit", ft_strlen(line)) && ft_strlen(line) == 4)
 			return (free(line), ft_exit());
 		data->line = line;
 		minishell(data);
@@ -57,12 +75,13 @@ void	read_line(t_shell *data)
 
 void	init_data(t_shell *data, char **env)
 {
-	// data->env_list = get_env(env);
+	data->env_list = NULL;
+	get_env(data, env);
 	data->pipes = NULL;
 	data->token = NULL;
 	data->line = NULL;
 	data->pids = NULL;
-	data->status = 0;
+	data->status = 1000;
 	data->env = env;
 }
 

@@ -3,9 +3,15 @@
 
 int main()
 {
-    char *str = ft_strdup("\"hhhhhppejkbf wehjfg \"");
-    int l = ft_strchr(str + 1, '\"') - str - 1;
-    printf("%d\n", l);
+	int i = 2;
+	int j = 0;
+	
+	
+	
+	((i != j) || printf("%d", 10));
+//     char *str = ft_strdup("\"hhhhhppejkbf wehjfg \"");
+//     int l = ft_strchr(str + 1, '\"') - str - 1;
+//     printf("%d\n", l);
 }
 
 // static int	token_len(char const *s, int *index)
