@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 10:56:44 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:19:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	input_red(char *file, int input, int output)
+static void	input_red(char *file, int input)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		ft_throw("ERROR_OPEN_REDIRECTION_PROCESS");
-	if (dup2(fd, output) < 0)
+	if (dup2(fd, input) < 0)
 		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS");
 	if (-1 == close(fd))
 		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS");
 }
 
-static void	output_red(char *file, int input, int output)
+static void	output_red(char *file, int output)
 {
 	int	fd;
 
@@ -38,7 +38,7 @@ static void	output_red(char *file, int input, int output)
 		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS");
 }
 
-static void	append_red(char *file, int input, int output)
+static void	append_red(char *file, int output)
 {
 	int	fd;
 
@@ -51,40 +51,40 @@ static void	append_red(char *file, int input, int output)
 		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS");
 }
 
-static	void	herdoc_red(char *eof, int input, int output)
+static	void	herdoc_red(char *eof, int input)
 {
 	int	fd;
 
-	fd = hedoc();
+	fd = heredoc(eof);
 	if (fd < 0)
 		ft_throw("ERROR_HERDOC_REDIRECTION_PROCESS");
-	if (dup2(fd, output) < 0)
+	if (dup2(fd, input) < 0)
 		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS");
 	if (-1 == close(fd))
 		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS");
 }
 
-void	*red_process(t_tokens *token, int input, int output, int *nbr)
+void	red_process(t_tokens *token, int input, int output, int *nbr)
 {
 	while (token && token->string[0] != '|')
 	{
 		if (token->class == APPEND)
-			(append_red(token->right->string, input, output),
+			(append_red(token->right->string, output),
 				token = token->right);
 		else if (token->class == OUTPUT_RED)
 		{
 			token = token->right;
-			output_red(token->string, input, output);
+			output_red(token->string, output);
 		}
 		else if (token->class == INPUT_RED)
 		{
 			token = token->right;
-			input_red(token->string, input, output);
+			input_red(token->string, input);
 		}
 		else if (token->class == HEREDOC)
 		{
 			token = token->right;
-			herdoc_red(token->string, input, output);
+			herdoc_red(token->string, input);
 		}
 		else if (token->class == WORD)
 			(*nbr)++;

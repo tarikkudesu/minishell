@@ -17,15 +17,15 @@ SRC				=	srcs/main.c  \
 					built_in/ft_echo.c		     \
 					built_in/ft_unset.c	 	      \
 					built_in/ft_export.c		   \
-					built_in/double_linked_list.c   \
 					execute/builtin.c         	     \
 					execute/execute.c                 \
 					execute/heredoc.c 				   \
 					execute/redirection.c               \
 					execute/gold_process.c		         \
 					execute/path_processing.c             \
-					execute/shell_environement.c           \
-					signals/signals.c
+					signals/signals.c \
+					get_next_line/get_next_line.c \
+					get_next_line/get_next_line_utils.c
 
 GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'

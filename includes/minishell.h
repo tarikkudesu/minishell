@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 18:47:32 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:19:37 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,19 @@ t_tokens	*tokennew(char *content);
 void		process(t_shell *data, t_tokens *token, int input, int output);
 void		execute(t_shell *data);
 void		signals(void);
-void		*red_process(t_tokens *token, int input, int output, int *nbr);
+void		red_process(t_tokens *token, int input, int output, int *nbr);
 char		*absolute_path(char	*cmd, char **env);
 void		process(t_shell *data, t_tokens *token, int input, int output);
-void		herdoc_red(char *eof, int input, int output);
+int			heredoc(char *del);
 void		execute(t_shell *data);
-int			is_builtin(t_tokens *token);
-void		exec_builtin(t_shell *data, char **cmd_arg, int input, int output);
+int			is_builtin(char *string);
+void		exec_builtin(t_shell *data, char **cmd_argd);
 
 /*-----------------end_execute_operations---------------*/
 
 /*--------------------built_in_command------------------*/
 
-void		unset(t_env **env, char **vars);
+void		ft_unset(t_env **env, char **vars);
 void		ft_pwd(void);
 void		ft_export(t_env **env, char **to_add, int add);
 void		ft_exit(void);
@@ -98,5 +98,13 @@ void		ft_echo(char **argument);
 void		ft_cd(char *path);
 
 /*------------------end_built_in_command----------------*/
+
+
+/* FUNCTIONS */
+char	*get_next_line(int fd);
+size_t	gn_strlen(const char *s);
+char	*gn_strchr(const char *s);
+char	*gn_strjoin(char *s1, char *s2);
+void	print(t_env *env);
 
 #endif

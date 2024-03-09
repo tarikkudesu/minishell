@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 10:37:55 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:28:10 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 void	first_process(t_shell *data, t_tokens *token)
 {
+	puts("hna");
 	if (data->number_of_commands > 1)
 	{
 		data->pipes[0] = malloc(sizeof(int) * 2);
@@ -97,14 +98,14 @@ void	execute(t_shell *data)
 	int			status;
 	int			i;
 
+	data->pids = malloc(sizeof(int) * data->number_of_commands);
+	if (!data->pids)
+		ft_throw("ERROR_MALLOC_PIDS_EXECUTE");
 	if (data->number_of_commands == 1)
 		return (first_process(data, data->token));
 	data->pipes = malloc(sizeof(int *) * (data->number_of_commands - 1));
 	if (!data->pipes)
 		ft_throw("ERROR_MALLOC_PIPES_EXECUTE");
-	data->pids = malloc(sizeof(int) * data->number_of_commands);
-	if (!data->pids)
-		ft_throw("ERROR_MALLOC_PIDS_EXECUTE");
 	first_process(data, data->token);
 	middle_process(data, data->token->left);
 	i = -1;

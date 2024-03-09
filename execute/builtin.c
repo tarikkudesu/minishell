@@ -3,36 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:36:29 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/08 23:31:12 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:59:04 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_builtin(t_tokens *token)
+int	is_builtin(char *string)
 {
-	while (token && token->string != '|')
-	{
-		if (!ft_strcmp(token->string, "echo")
-			|| !ft_strcmp(token->string, "cd")
-			|| !ft_strcmp(token->string, "exit")
-			|| !ft_strcmp(token->string, "export")
-			|| !ft_strcmp(token->string, "unset")
-			|| !ft_strcmp(token->string, "pwd")
-			|| !ft_strcmp(token->string, "env"))
-			return (1);
-		if (token->class == WORD)
-			return (0);
-		if (token->right && token->right->string[0] != '|')
-			token = token->right->right;
-	}
-	return (0);
+	if (!ft_strcmp(string, "echo")
+		|| !ft_strcmp(string, "cd")
+		|| !ft_strcmp(string, "exit")
+		|| !ft_strcmp(string, "export")
+		|| !ft_strcmp(string, "unset")
+		|| !ft_strcmp(string, "pwd")
+		|| !ft_strcmp(string, "env"))
+		return (1);
+	return (0);	
 }
 
-void	exec_builtin(t_shell *data, char **cmd_arg, int input, int output)
+void	exec_builtin(t_shell *data, char **cmd_arg)
 {
 	if (!ft_strcmp(cmd_arg[0], "echo"))
 		ft_echo(cmd_arg + 1);

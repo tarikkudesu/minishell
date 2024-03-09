@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   env_lists.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:05:56 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 15:06:08 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/09 18:50:29 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	print(t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		printf("%s=%s\n", tmp->name, tmp->value);
+		tmp = tmp->next;
+	}
+}
 
 t_env	*env_new(char *name, char *value)
 {

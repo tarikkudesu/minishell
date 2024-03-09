@@ -6,14 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:22:07 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 18:45:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/09 18:58:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "../includes/minishell.h"
 
-void	unset(t_env **env, char **vars)
+void	ft_unset(t_env **env, char **vars)
 {
 	t_env	*node;
 	t_env	*to_rm;
