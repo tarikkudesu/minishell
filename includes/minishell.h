@@ -29,7 +29,7 @@
 # include <dirent.h>            //opendir, closedir
 # include <string.h>            //strerror
 # include <errno.h>             //errno
-# include <libc.h>
+
 /*-----------------------parse-------------------------*/
 
 void		check_syntax(t_shell *data);
@@ -55,7 +55,7 @@ void		ft_throw(char *strerr);
 /*----------------environement_operation---------------*/
 
 t_env		*get_env(char **env);
-t_env		*env_new(char *environ);
+t_env	    *env_new(char *name, char *value);
 void		env_add_back(t_env **linked, t_env *node);
 void		print(t_env **env);
 void		env_clear(t_env **env);
@@ -93,5 +93,9 @@ void		ft_pwd(void);
 void		unset(t_env **env, char *variable);
 
 /*------------------end_built_in_command----------------*/
+
+
+/* FUNCTIONS */
+void	assign(int *nbr, int add);
 
 #endif

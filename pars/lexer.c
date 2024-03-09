@@ -10,42 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../includes/minishell.h"
 
 // This function will return the lenght of a token if it is an operator
-static int	token_len2(char const *s, int *index)
+static int	token_len2(char const *s)
 {
 	int		len;
 
-	len = *index;
-	while (*(s + len) && is_operator(*(s + len)))
-		len++;
-	return (len - *index);
+	len = 0;
+	if (*s == '<' && *(s + 1) == '<')
+		len = 2;
+	else if (*s == '>' && *(s + 1) == '>')
+		len = 2;
+	else if (*s == '|' || *s == '>' || *s == '<')
+		len = 1;
+	return (len);
 }
 
 // this function will caculate the lenght of each token
 static int	token_len(char const *s, int *index)
 {
 	int		len;
+	int		c;
 
 	len = 0;
 	while (*(s + (*index)) && is_space(*(s + (*index))))
 		(*index)++;
-	if (is_operator(*(s + (*index))))
-		return (token_len2(s, index));
+	if (is_operator(*(s + *index)))
+		return (token_len2(s + *index));
 	len = *index;
 	while (*(s + len) && !is_space(*(s + len)) && !is_operator(*(s + len)))
 	{
-		if (*(s + len) == '\"')
+		if (*(s + len) == '\"' || *(s + len) == '\'')
 		{
-			len++;
-			while (*(s + len) && *(s + len) != '\"')
-				len++;
-		}
-		else if (*(s + len) == '\'')
-		{
-			len++;
-			while (*(s + len) && *(s + len) != '\'')
+			assign(&c, *(s + len)), assign(&len, len + 1);
+			while (*(s + len) && *(s + len) != c)
 				len++;
 		}
 		len++;
@@ -57,46 +57,16 @@ static int	token_len(char const *s, int *index)
 char	*init_token(char const *s, int *index, int lenght)
 {
 	int		i;
-	char	*word;
+	char	*token;
 
-	word = malloc(sizeof(char) * (lenght + 1));
-	if (!word)
+	token = malloc(sizeof(char) * (lenght + 1));
+	if (!token)
 		return (NULL);
 	i = -1;
 	while (++i < lenght)
-		*(word + i) = *(s + (*index)++);
-	*(word + i) = '\0';
-	return (word);
-}
-
-// this function will iterate over the line and find the number of tokens in it
-int	get_number_of_tokens(char *line)
-{
-	int	number_of_tokens;
-
-	number_of_tokens = 0;
-	while (*line)
-	{
-		while (*line && is_space(*line))
-			line++;
-		if (*line && !is_operator(*line))
-		{
-			while (*line && !is_space(*line) && !is_operator(*line))
-			{
-				((*line == '\"' || *line == '\'') \
-				&& bunny_ears(&line, *line));
-				line++;
-			}
-			number_of_tokens++;
-		}
-		if (*line && is_operator(*line))
-		{
-			while (*line && is_operator(*line))
-				line++;
-			number_of_tokens++;
-		}
-	}
-	return (number_of_tokens);
+		*(token + i) = *(s + (*index)++);
+	*(token + i) = '\0';
+	return (token);
 }
 
 /*
@@ -111,12 +81,11 @@ int	lexer(t_shell *data)
 	int			index;
 	t_tokens	*token;
 
-	i = -1;
+	i = 0;
 	index = 0;
-	data->number_of_tokens = get_number_of_tokens(data->line);
-	data->token = NULL;
-	while (++i < data->number_of_tokens)
+	while (data->line[index])
 	{
+		i++;
 		str = init_token(data->line, &index, token_len(data->line, &index));
 		if (!str)
 			return (throw_error(ERR_MAL));

@@ -12,17 +12,17 @@
 
 #include "../includes/minishell.h"
 
-void	print(t_env **env)
-{
-	t_env	*tmp;
+// void	print(t_env **env)
+// {
+// 	t_env	*tmp;
 
-	tmp = *env;
-	while (tmp)
-	{
-		ft_putendl_fd(tmp->environ, 1);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = *env;
+// 	while (tmp)
+// 	{
+// 		ft_putendl_fd(tmp->environ, 1);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -54,4 +54,8 @@ int	bunny_ears(char **s, char c)
 	while (**s && **s != c)
 		(*s)++;
 	return (1);
+}
+void	assign(int *nbr, int add)
+{
+	(*nbr) = add;
 }

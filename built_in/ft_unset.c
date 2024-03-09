@@ -13,28 +13,28 @@
 #include "../libft/libft.h"
 #include "../includes/minishell.h"
 
-void	unset(t_env **env, char *variable) //t_tokens *token instead of char *to_add
-{											// to handle unset multiple varriable
-	t_env	*node;
-	t_env	*to_rm;
+// void	unset(t_env **env, char *variable) //t_tokens *token instead of char *to_add
+// {											// to handle unset multiple varriable
+// 	t_env	*node;
+// 	t_env	*to_rm;
 
-	node = *env;
-	while (node)
-	{
-		if (!ft_strcmp(node->environ, variable))
-		{
-			to_rm = node;
-			if (node->prev)
-				node->prev->next = node->next;
-			else
-				(*env) = (*env)->next;
-			free(to_rm);
-			to_rm = NULL;
-			break ;
-		}
-		node = node->next;
-	}
-}
+// 	node = *env;
+// 	while (node)
+// 	{
+// 		if (!ft_strcmp(node->environ, variable))
+// 		{
+// 			to_rm = node;
+// 			if (node->prev)
+// 				node->prev->next = node->next;
+// 			else
+// 				(*env) = (*env)->next;
+// 			free(to_rm);
+// 			to_rm = NULL;
+// 			break ;
+// 		}
+// 		node = node->next;
+// 	}
+// }
 
 // int	main()
 // {

@@ -30,12 +30,11 @@ OBJ				=	$(SRC:.c=.o)
 CFLAGS			=	-Wall -Wextra -Werror -g
 READLINE		=	-lreadline
 
-all: $(NAME)
+all: $(NAME) clean
 
 $(NAME): $(OBJ) $(HEADERS)
 	@make -C libft
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a  -L /Users/ooulcaid/.brew/opt/readline/lib
-	@echo $(GREEN) "compilation done" $(NONE)
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(CFLAGS) -c $< -o $@  -I /Users/ooulcaid/.brew/opt/readline/include
@@ -43,14 +42,11 @@ $(NAME): $(OBJ) $(HEADERS)
 clean:
 	@make -C libft clean
 	@rm -f $(OBJ)
-	@echo $(GREEN) "clean done" $(NONE)
 
 fclean: clean
 	@make -C libft fclean
 	@rm -f $(NAME)
-	@echo $(GREEN) "fclean done" $(NONE)
 
 re: fclean all
-	@echo $(GREEN) "re done" $(NONE)
 
 .PHONY: clean

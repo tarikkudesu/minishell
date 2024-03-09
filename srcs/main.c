@@ -12,13 +12,25 @@
 
 #include "../includes/minishell.h"
 
+void	get_env()
+{
+
+}
+
 void	minishell(t_shell *data)
 {
+	t_tokens	*token;
+
 	if (lexer(data))
         return ;
-    check_syntax(data);
-    command_tree(data);
-	execute(data);
+	token = data->token;
+	while (token) {
+		printf("\t\t[\033[1;32m  %s  \033[0m]\n", token->string);
+		token = token->right;
+	}
+    // check_syntax(data);
+    // command_tree(data);
+	// execute(data);
 }
 
 void	read_line(t_shell *data)
@@ -39,24 +51,29 @@ void	read_line(t_shell *data)
 		line = NULL;
 		data->line = NULL;
 		tokenclear(&data->token);
-		env_clear(&data->env);
+		// env_clear(&data->env);
 	}
 }
 
-void	f(void)
+void	init_data(t_shell *data, char **env)
 {
-	system("lsof -c minishell");
+	// data->env_list = get_env(env);
+	data->pipes = NULL;
+	data->token = NULL;
+	data->line = NULL;
+	data->pids = NULL;
+	data->status = 0;
+	data->env = env;
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_shell	data;
 
-	// atexit(f);
-	signals();
-	((void)ac, (void)av);
+	(void)av;
 	if (ac != 1)
-		return (throw_error("Error "));
-	data.env = get_env(env);
+		ft_throw("minishell accepts no arguments");
+	init_data(&data, env);
+	// signals();
 	read_line(&data);
 }

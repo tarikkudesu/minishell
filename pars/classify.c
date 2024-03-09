@@ -23,15 +23,15 @@ void	token_class(t_tokens *token)
 	tmp = token;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->string, "|"))
+		if (!ft_strcmp(tmp->string, "|") && ft_strlen(tmp->string) == 1)
 			tmp->class = PIPE;
-		else if (!ft_strcmp(tmp->string, "<"))
+		else if (!ft_strcmp(tmp->string, "<") && ft_strlen(tmp->string) == 1)
 			tmp->class = INPUT_RED;
-		else if (!ft_strcmp(tmp->string, ">"))
+		else if (!ft_strcmp(tmp->string, ">") && ft_strlen(tmp->string) == 1)
 			tmp->class = OUTPUT_RED;
-		else if (!ft_strcmp(tmp->string, "<<"))
+		else if (!ft_strcmp(tmp->string, "<<") && ft_strlen(tmp->string) == 2)
 			tmp->class = HEREDOC;
-		else if (!ft_strcmp(tmp->string, ">>"))
+		else if (!ft_strcmp(tmp->string, ">>") && ft_strlen(tmp->string) == 2)
 			tmp->class = APPEND;
 		tmp = tmp->right;
 	}

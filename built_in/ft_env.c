@@ -12,14 +12,14 @@
 
 #include "../includes/minishell.h"
 
-void	ft_env(t_env	*env)
-{
-	t_env	*tmp;
+// void	ft_env(t_env	*env)
+// {
+// 	t_env	*tmp;
 
-	tmp = env;
-	while (tmp)
-	{
-		ft_putendl_fd(tmp->environ, 1);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = env;
+// 	while (tmp)
+// 	{
+// 		ft_putendl_fd(tmp->environ, 1);
+// 		tmp = tmp->next;
+// 	}
+// }

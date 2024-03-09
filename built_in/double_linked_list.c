@@ -24,42 +24,37 @@
 // 	}
 // }
 
-void	ft_throw(char *strerr)
-{
-	printf("%s\n", strerr);
-	exit(EXIT_FAILURE);
-}
+// t_env	*env_new(char *name, char *value)
+// {
+// 	t_env	*env;
 
-t_env	*env_new(char *environ)
-{
-	t_env	*env;
+// 	env = (t_env *)malloc(sizeof(t_env));
+// 	if (!env)
+// 		return (NULL);
+// 	env->value = value;
+// 	env->name = name;
+// 	env->next = NULL;
+// 	env->prev = NULL;
+// 	return (env);
+// }
 
-	env = (t_env *)malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
-	env->environ = environ;
-	env->next = NULL;
-	env->prev = NULL;
-	return (env);
-}
+// void	env_add_back(t_env **linked, t_env *node)
+// {
+// 	t_env	*tmp;
 
-void	env_add_back(t_env **linked, t_env *node)
-{
-	t_env	*tmp;
-
-	if (!linked || !node)
-		return ;
-	if (!*linked)
-		*linked = node;
-	else
-	{
-		tmp = *linked;
-		while (tmp->next)
-			tmp = tmp->next;
-		node->prev = tmp;
-		tmp->next = node;
-	}
-}
+// 	if (!linked || !node)
+// 		return ;
+// 	if (!*linked)
+// 		*linked = node;
+// 	else
+// 	{
+// 		tmp = *linked;
+// 		while (tmp->next)
+// 			tmp = tmp->next;
+// 		node->prev = tmp;
+// 		tmp->next = node;
+// 	}
+// }
 
 // void	env_add_front(t_env **linked, t_env *node)
 // {
@@ -86,7 +81,7 @@ void	env_clear(t_env **env)
 	while (tmp)
 	{
 		*env = (*env)->next;
-		(free(tmp->environ), free(tmp));
+		(free(tmp->name), free(tmp));
 		tmp = *env;
 	}
 }

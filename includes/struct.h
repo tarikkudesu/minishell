@@ -30,7 +30,8 @@ enum	e_class
 
 struct s_env
 {
-	char			*environ;
+	char			*value;
+	char			*name;
 	struct s_env	*next;
 	struct s_env	*prev;
 };
@@ -46,7 +47,8 @@ struct	s_tokens
 
 struct	s_shell
 {
-	t_env		*env;
+	char		**env;
+	t_env		*env_list;
 	char		*line;
 	t_tokens	*token;
 	int			**pipes;

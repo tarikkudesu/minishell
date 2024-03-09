@@ -12,15 +12,15 @@
 
 #include "../includes/minishell.h"
 
-void	ft_pwd(void)
-{
-	char	*position;
+// void	ft_pwd(void)
+// {
+// 	char	*position;
 
-	position = getcwd(NULL, 0);
-	if (!position)
-		ft_throw("ERROR_GETING_WORK_DIRECTORY");
-	ft_putendl_fd(position, 1);
-}
+// 	position = getcwd(NULL, 0);
+// 	if (!position)
+// 		ft_throw("ERROR_GETING_WORK_DIRECTORY");
+// 	ft_putendl_fd(position, 1);
+// }
 
 // int	main(void)
 // {
