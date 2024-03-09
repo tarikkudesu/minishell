@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/07 19:26:39 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:47:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int			ft_strcmp(char *s1, char *s2);
 int	        expansion_value_1(t_shell *data, char *str, int *i);
 int			is_operator(int c);
 int			is_space(int c);
+void		assign(int *nbr, int add);
 int			bunny_ears(char **s, char c);\
 int			lexer(t_shell *data);
 void    	command_tree(t_shell *data);
@@ -55,7 +56,6 @@ void		ft_throw(char *strerr);
 void        get_env(t_shell *data, char **env);
 t_env	    *env_new(char *name, char *value);
 void		env_add_back(t_env **linked, t_env *node);
-void		print(t_env **env);
 void		env_clear(t_env **env);
 
 /*--------------end_environement_operation--------------*/
@@ -77,24 +77,26 @@ t_tokens	*tokennew(char *content);
 void		process(t_shell *data, t_tokens *token, int input, int output);
 void		execute(t_shell *data);
 void		signals(void);
+void		*red_process(t_tokens *token, int input, int output, int *nbr);
+char		*absolute_path(char	*cmd, char **env);
+void		process(t_shell *data, t_tokens *token, int input, int output);
+void		herdoc_red(char *eof, int input, int output);
+void		execute(t_shell *data);
+int			is_builtin(t_tokens *token);
+void		exec_builtin(t_shell *data, char **cmd_arg, int input, int output);
 
 /*-----------------end_execute_operations---------------*/
 
 /*--------------------built_in_command------------------*/
 
-void		ft_exit(void);
-void		ft_cd(char *path, int ac);
-void		ft_echo(t_tokens	*echo, char **av);
-void		ft_env(t_env	*env);
-void		ft_exit(void);
-void		ft_export(t_env **env, char *to_add, int add);
+void		unset(t_env **env, char **vars);
 void		ft_pwd(void);
-void		unset(t_env **env, char *variable);
+void		ft_export(t_env **env, char **to_add, int add);
+void		ft_exit(void);
+void		ft_env(t_env *env);
+void		ft_echo(char **argument);
+void		ft_cd(char *path);
 
 /*------------------end_built_in_command----------------*/
-
-
-/* FUNCTIONS */
-void	assign(int *nbr, int add);
 
 #endif

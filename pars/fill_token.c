@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:05:21 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 15:05:37 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/09 18:36:50 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,74 +108,3 @@ void    fill_token(t_shell *data, char **s, char *tmp, int i[3])
 		(assign(i, i[0] + 1), assign(i + 1, i[1] + 1));
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-// void	quoted_word(char **s, char *tmp, int i[3])
-// {
-// 	while (i[2] && *(tmp + i[0]) && *(tmp + i[0]) != i[2])
-// 	{
-// 		if (i[2] == '\"')
-// 		{
-// 			if (*(tmp + i[0]) == '$')
-// 				expand(s, tmp, i);
-// 			else if (*(tmp + i[0]) != '$' && *(tmp + i[0]) != '\"')
-// 			{
-// 				*(*s + i[1]) = *(tmp + i[0]);
-// 				i[0] += 1;
-// 				i[1] += 1;
-// 			}
-// 		}
-// 		if (i[2] == '\'' && *(tmp + i[0]) != '\'')
-// 		{
-// 			*(*s + i[1]) = *(tmp + i[0]);
-// 			i[0] += 1;
-// 			i[1] += 1;
-// 		}
-// 	}
-// }
-
-// void	operat_word(char **s, char *tmp, int i[3])
-// {
-// 	if (*(tmp + i[0]))
-// 	{
-// 		while (*(tmp + i[0]) && is_operator(*(tmp + i[0])))
-// 		{
-// 			*(*s + i[1]) = *(tmp + i[0]);
-// 			i[0] += 1;
-// 			i[1] += 1;
-// 		}
-// 		if (*(tmp + i[0]) == '\"' || *(tmp + i[0]) == '\'')
-// 		{
-// 			i[2] = *(tmp + i[0]);
-// 			i[0] += 1;
-// 		}
-// 	}
-// 	quoted_word(s, tmp, i);
-// }
-
-// void	simple_word(char **s, char *tmp, int i[3])
-// {
-// 	while (*(tmp + i[0]) && !is_operator(*(tmp + i[0])) 
-// 	&& *(tmp + i[0]) != '\"' && *(tmp + i[0]) != '\'')
-// 	{
-// 		if (*(tmp + i[0]) == '$')
-// 			expand(s, tmp, i);
-// 		else
-// 		{
-// 			*(*s + i[1]) = *(tmp + i[0]);
-// 			i[0] += 1;
-// 			i[1] += 1;
-// 		}
-// 	}
-// 	operat_word(s, tmp, i);
-// }
-

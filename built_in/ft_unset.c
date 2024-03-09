@@ -3,38 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:22:07 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/06 23:54:22 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:45:19 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/minishell.h"
 
-// void	unset(t_env **env, char *variable) //t_tokens *token instead of char *to_add
-// {											// to handle unset multiple varriable
-// 	t_env	*node;
-// 	t_env	*to_rm;
+void	unset(t_env **env, char **vars)
+{
+	t_env	*node;
+	t_env	*to_rm;
+	int		i;
 
-// 	node = *env;
-// 	while (node)
-// 	{
-// 		if (!ft_strcmp(node->environ, variable))
-// 		{
-// 			to_rm = node;
-// 			if (node->prev)
-// 				node->prev->next = node->next;
-// 			else
-// 				(*env) = (*env)->next;
-// 			free(to_rm);
-// 			to_rm = NULL;
-// 			break ;
-// 		}
-// 		node = node->next;
-// 	}
-// }
+	node = *env;
+	i = -1;
+	while (vars[++i])
+	{
+		while (node)
+		{
+			if (!ft_strcmp(node->name, vars[i]))
+			{
+				to_rm = node;
+				if (node->prev)
+					node->prev->next = node->next;
+				else
+					(*env) = (*env)->next;
+				(free(to_rm->value), free(to_rm->name), free(to_rm));
+				break ;
+			}
+			node = node->next;
+		}
+		node = *env;
+	}
+}
 
 // int	main()
 // {
