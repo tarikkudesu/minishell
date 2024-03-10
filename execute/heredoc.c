@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 19:18:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:17:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	heredoc(char *del)
 	if (fd < 0)
 		ft_throw("ERROR_OPEN_HERDOC");
 	fd2 = open(".tmp", O_WRONLY | O_CREAT, 0644);
-	if (fd2 < 0) 
+	if (fd2 < 0)
 		ft_throw("ERROR_OPEN_HERDOC");
 	if (unlink(".tmp") < 0)
 		ft_throw("ERRON_UNLINK_HERDOC");
@@ -35,5 +35,5 @@ int	heredoc(char *del)
 		(free(line), line = NULL);
 	}
 	close(fd);
-	return(fd2);
+	return (fd2);
 }

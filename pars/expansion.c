@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:48:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 18:37:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:08:30 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	expansion_value_2(t_shell *data, char *str, int *i)
 	return (expansion_value_3(data->env_list, name));
 }
 
-int	expansion_value_1(t_shell *data, char *str, int *i) //changed
+int	expansion_value_1(t_shell *data, char *str, int *i)
 {
 	int		len;
 	char	*nbr;

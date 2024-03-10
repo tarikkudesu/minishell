@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 19:24:59 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:13:59 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ void	get_env(t_shell *data, char **env)
 
 void	minishell(t_shell *data)
 {
+	t_tokens	*token;
 
 	if (lexer(data))
-        return ;
-	// while (token) {
-	// 	printf("\t\t[\033[1;32m  %s  \033[0m]\n", token->string);
-	// 	token = token->right;
-	// }
-    check_syntax(data);
-    command_tree(data);
+		return ;
+	token = data->token;
+	while (token)
+	{
+		printf("\t\t[\033[1;32m %s \033[0m]\n", token->string);
+		token = token->right;
+	}
+	check_syntax(data);
+	command_tree(data);
 	execute(data);
 }
 
@@ -92,6 +95,6 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		ft_throw("minishell accepts no arguments");
 	init_data(&data, env);
-	// signals();
+	signals();
 	read_line(&data);
 }

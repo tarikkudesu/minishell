@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 19:19:37 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:15:55 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,30 @@
 # include "macros.h"
 # include "../libft/libft.h"
 
-# include <fcntl.h>             //open
-# include <stdio.h>             //printf, perror
-# include <stdlib.h>            //malloc, free, exit, getenv
-# include <unistd.h>            //write, read, access, close, fork, unlink, execve, dup, dup2, pipe, chdir, getcwd, isatty, ttyname, ttyslot
-# include <readline/readline.h> // readline, rl_clear_history, rl_on_new_line, rl_replace_line. rl_redisplay, add_history
-# include <readline/history.h>  // readline, rl_clear_history, rl_on_new_line, rl_replace_line. rl_redisplay, add_history
-# include <signal.h>            //signal, sigaction, sigemptyset, sigaddset, kill
-# include <sys/wait.h>          //wait, waitpid, wait3, wait4
-# include <sys/stat.h>          //stat, lstat, fstat
-# include <dirent.h>            //opendir, closedir
-# include <string.h>            //strerror
-# include <errno.h>             //errno
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <dirent.h>
+# include <string.h>
+# include <errno.h>
 
 /*-----------------------parse-------------------------*/
 
 void		check_syntax(t_shell *data);
 int			ft_strcmp(char *s1, char *s2);
-int	        expansion_value_1(t_shell *data, char *str, int *i);
+int			expansion_value_1(t_shell *data, char *str, int *i);
 int			is_operator(int c);
 int			is_space(int c);
 void		assign(int *nbr, int add);
-int			bunny_ears(char **s, char c);\
+int			bunny_ears(char **s, char c);
 int			lexer(t_shell *data);
-void    	command_tree(t_shell *data);
+void		command_tree(t_shell *data);
 
 /*---------------------end_parse-----------------------*/
 
@@ -53,8 +53,8 @@ void		ft_throw(char *strerr);
 
 /*----------------environement_operation---------------*/
 
-void        get_env(t_shell *data, char **env);
-t_env	    *env_new(char *name, char *value);
+void		get_env(t_shell *data, char **env);
+t_env		*env_new(char *name, char *value);
 void		env_add_back(t_env **linked, t_env *node);
 void		env_clear(t_env **env);
 
@@ -62,7 +62,7 @@ void		env_clear(t_env **env);
 
 /*--------------------token_operation-------------------*/
 
-void        fill_token(t_shell *data, char **s, char *tmp, int i[3]);
+void		fill_token(t_shell *data, char **s, char *tmp, int i[3]);
 char		*init_token(char const *s, int *index, int lenght);
 int			process_token(t_shell *data, t_tokens *token);
 int			tokensize(t_tokens *lst);
@@ -99,12 +99,14 @@ void		ft_cd(char *path);
 
 /*------------------end_built_in_command----------------*/
 
+/*---------------------get_next_line-------------------*/
 
-/* FUNCTIONS */
-char	*get_next_line(int fd);
-size_t	gn_strlen(const char *s);
-char	*gn_strchr(const char *s);
-char	*gn_strjoin(char *s1, char *s2);
-void	print(t_env *env);
+char		*get_next_line(int fd);
+size_t		gn_strlen(const char *s);
+char		*gn_strchr(const char *s);
+char		*gn_strjoin(char *s1, char *s2);
+void		print(t_env *env);
+
+/*--------------------end_get_next_line-----------------*/
 
 #endif

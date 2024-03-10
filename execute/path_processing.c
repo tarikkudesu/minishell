@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:24:04 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 19:33:46 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:17:00 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*absolute_path(char	*cmd, char **env)
 			(ft_throw("ERROR_JOIN_CMD_ABSOLUTE"));
 		if (!access(try, F_OK) && !access(try, X_OK))
 			return (try);
-	 	(free(try), try = NULL);
+		(free(try), try = NULL);
 	}
 	return (ft_throw("ERROR_GET_ABSPATH"), NULL);
 }

@@ -6,17 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 20:49:44 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:17:58 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// 		if (fcntl(i, F_GETFD) != -1) {
-// 			dprintf(2, "%d, %d is open\n", getpid(), i);
-// 		}
-
-// void	c() {system("lsof -c minishell");}
 
 void	first_process(t_shell *data, t_tokens *token)
 {

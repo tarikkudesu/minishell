@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minifun.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 18:57:51 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/07 00:21:39 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/10 10:10:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// void	print(t_env **env)
-// {
-// 	t_env	*tmp;
-
-// 	tmp = *env;
-// 	while (tmp)
-// 	{
-// 		ft_putendl_fd(tmp->environ, 1);
-// 		tmp = tmp->next;
-// 	}
-// }
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -55,6 +43,7 @@ int	bunny_ears(char **s, char c)
 		(*s)++;
 	return (1);
 }
+
 void	assign(int *nbr, int add)
 {
 	(*nbr) = add;

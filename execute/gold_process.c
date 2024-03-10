@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 20:42:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:17:39 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static	void	ft_execve(t_shell *data, char **cmd_arg, int input, int output)
 	char	*abs_path;
 
 	abs_path = absolute_path(cmd_arg[0], data->env);
-	if (input != STDIN_FILENO && dup2(input, STDIN_FILENO) < 0 )
+	if (input != STDIN_FILENO && dup2(input, STDIN_FILENO) < 0)
 		ft_throw("ERR_DUP2_EXECVE");
-	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0 )
+	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0)
 		ft_throw("ERR_DUP2_EXECVE");
 	// if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
 	// 	ft_throw("DUP2_CHILD_ERROR");

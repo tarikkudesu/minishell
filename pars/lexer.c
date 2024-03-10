@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:49:09 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/07 19:27:44 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/10 10:10:28 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -44,7 +43,7 @@ static int	token_len(char const *s, int *index)
 	{
 		if (*(s + len) == '\"' || *(s + len) == '\'')
 		{
-			assign(&c, *(s + len)), assign(&len, len + 1);
+			(assign(&c, *(s + len)), assign(&len, len + 1));
 			while (*(s + len) && *(s + len) != c)
 				len++;
 		}

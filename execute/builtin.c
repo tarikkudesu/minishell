@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:36:29 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 18:59:04 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:16:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_builtin(char *string)
 		|| !ft_strcmp(string, "pwd")
 		|| !ft_strcmp(string, "env"))
 		return (1);
-	return (0);	
+	return (0);
 }
 
 void	exec_builtin(t_shell *data, char **cmd_arg)
