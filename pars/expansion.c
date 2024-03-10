@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:48:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 10:08:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 11:07:02 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	expansion_value_3(t_env *env, char *name)
 			return (free(name), ft_strlen(env->value));
 		env = env->next;
 	}
-	return (0);
+	return (free(name), 0);
 }
 
 int	expansion_value_2(t_shell *data, char *str, int *i)
@@ -36,7 +36,7 @@ int	expansion_value_2(t_shell *data, char *str, int *i)
 		return (1);
 	name = ft_substr(str + 1, 0, len);
 	if (!name)
-		return (0);
+		return (ft_putendl_fd(ERR_MAL, 2), 0);
 	return (expansion_value_3(data->env_list, name));
 }
 

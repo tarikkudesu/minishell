@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:49:09 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 10:10:28 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 11:22:12 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	lexer(t_shell *data)
 		if (!str)
 			return (0);
 		token = tokennew(str);
-		if (!token)
+		if (token && i == 3)
 			return (free(str), throw_error(ERR_MAL));
 		token->index = i;
 		tokenadd_back(&data->token, token);

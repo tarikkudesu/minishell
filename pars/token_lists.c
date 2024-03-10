@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lists.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/07 19:30:54 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/10 11:16:16 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ void	tokenadd_back(t_tokens **lst, t_tokens *new)
 	temp->right = new;
 }
 
-void	tokenclear(t_tokens **lst)
-{
-	t_tokens	*temp;
-
-	if (!*lst)
-		return ;
-	temp = *lst;
-	while (lst && *lst)
-	{
-		free(temp->string);
-		temp = temp->right;
-		free(*lst);
-		*lst = temp;
-	}
-}
-
 int	tokensize(t_tokens *lst)
 {
 	int	i;
@@ -75,4 +59,36 @@ int	tokensize(t_tokens *lst)
 		lst = lst->right;
 	}
 	return (i);
+}
+
+void	tokenclear(t_tokens **branch)
+{
+	t_tokens	*tmp;
+
+	if (!branch || !*branch)
+		return ;
+	tmp = *branch;
+	while (branch && *branch)
+	{
+		free(tmp->string);
+		tmp->string = NULL;
+		tmp = tmp->right;
+		free(*branch);
+		*branch = tmp;
+	}
+}
+
+void	clear_command_tree(t_tokens **tree)
+{
+	t_tokens	*tmp;
+
+	if (!tree || !*tree)
+		return ;
+	tmp = *tree;
+	while (tree && *tree)
+	{
+		tmp = tmp->left;
+		tokenclear(tree);
+		*tree = tmp;
+	}
 }
