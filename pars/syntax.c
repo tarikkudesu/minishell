@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/06 15:50:24 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 13:32:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_operatr(t_tokens *token)
+static int	class_operator(t_tokens *token)
 {
 	if (token->class == INPUT_RED || token->class == OUTPUT_RED)
 		return (1);
@@ -32,7 +32,7 @@ void	check_syntax(t_shell *data)
 	previous = data->token;
 	while (tmp)
 	{
-		if (is_operatr(tmp) && is_operatr(previous) && previous->class != PIPE)
+		if (class_operator(tmp) && class_operator(previous) && previous->class != PIPE)
 		{
 			printf("parse error near '%s'\n", tmp->string);
 			return ;

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:49:09 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 11:22:12 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 13:29:12 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ char	*init_token(char const *s, int *index, int lenght)
 
 /*
 	this function will proccess the given line and split into tokens while 
-	removing single quotes quotes and single quotes and expand envirement 
-	variables
+	removing single quotes and double quotes and expand envirement variables
 */
 int	lexer(t_shell *data)
 {
@@ -93,7 +92,7 @@ int	lexer(t_shell *data)
 		if (!str)
 			return (0);
 		token = tokennew(str);
-		if (token && i == 3)
+		if (!token)
 			return (free(str), throw_error(ERR_MAL));
 		token->index = i;
 		tokenadd_back(&data->token, token);

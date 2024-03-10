@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 10:17:23 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 13:48:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ int	heredoc(char *del)
 	while (1)
 	{
 		line = get_next_line(1);
-		if (!line || !ft_strcmp(line, del))
+		printf("line : %s %zu\n", line, strlen(line));
+		printf("delimiter : %s %zu\n", del, strlen(del));
+		if (!line)
+			break ;
+		printf("<<%d>> %zu %zu\n", ft_strncmp(line, del, ft_strlen(line) - 1), ft_strlen(del), ft_strlen(line) - 1);
+	if (!ft_strncmp(line, del, ft_strlen(line) - 1) && ((ft_strlen(line) - 1) == ft_strlen(del)))
 			break ;
 		write(fd, line, ft_strlen(line));
 		(free(line), line = NULL);

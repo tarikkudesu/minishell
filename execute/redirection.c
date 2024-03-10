@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 20:31:51 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 13:37:15 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static	void	herdoc_red(char *eof, int input)
 	fd = heredoc(eof);
 	if (fd < 0)
 		ft_throw("ERROR_HERDOC_REDIRECTION_PROCESS");
-	if (dup2(fd, input) < 0)
+	if (input != STDIN_FILENO && dup2(fd, input) < 0)
 		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS");
 	if (-1 == close(fd))
 		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS");

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 11:10:15 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 13:42:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	minishell(t_shell *data)
 		printf("\t\t[\033[1;32m %s \033[0m]\n", token->string);
 		token = token->right;
 	}
-	// check_syntax(data);
+	check_syntax(data);
 	command_tree(data);
-	// execute(data);
+	execute(data);
 }
 
 void	read_line(t_shell *data)
@@ -72,7 +72,7 @@ void	read_line(t_shell *data)
 		line = NULL;
 		data->line = NULL;
 		clear_command_tree(&data->token);
-		system("echo '\033[1;33m'; leaks minishell; echo '\033[0m'");
+		// system("echo '\033[1;33m'; leaks minishell; echo '\033[0m'");
 	}
 }
 
