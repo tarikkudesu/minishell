@@ -23,7 +23,7 @@ static int	class_operator(t_tokens *token)
 	return (0);
 }
 
-void	check_syntax(t_shell *data)
+int	check_syntax(t_shell *data) // this doesn't work my friend
 {
 	t_tokens	*tmp;
 	t_tokens	*previous;
@@ -32,12 +32,14 @@ void	check_syntax(t_shell *data)
 	previous = data->token;
 	while (tmp)
 	{
-		if (class_operator(tmp) && class_operator(previous) && previous->class != PIPE)
+		if (class_operator(tmp) && class_operator(previous))
 		{
 			printf("parse error near '%s'\n", tmp->string);
-			return ;
+			data->status = 258;
+			return (1);
 		}
 		previous = tmp;
 		tmp = tmp->right;
 	}
+	return (0);
 }

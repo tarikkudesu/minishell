@@ -27,5 +27,4 @@ void	ft_cd(char *path)
 		(printf("minishell: cd: %s: Not a directory\n", path), exit(1));
 	else if (chdir(path) < 0)
 		ft_throw(strerror(errno), 1);
-	exit(0);
 }

@@ -12,6 +12,16 @@
 
 #include "../includes/minishell.h"
 
+void	free_2d(char **free2d)
+{
+	int	i;
+
+	i = -1;
+	while (free2d[++i])
+		free(free2d[i]);
+	free(free2d);
+}
+
 int	throw_error(char *str)
 {
 	ft_putendl_fd(str, 2);

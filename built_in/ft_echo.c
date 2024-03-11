@@ -41,7 +41,6 @@ void	ft_echo(char **argument)
 		(ft_putstr_fd(argument[i], 1), ft_putstr_fd(" ", 1), i++);
 	if (!b)
 		write(1, "\n", 1);
-	exit(0);
 }
 
 // int	main(int ac, char **av) // to delete it

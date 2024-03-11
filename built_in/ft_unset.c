@@ -38,7 +38,6 @@ void	ft_unset(t_env **env, char **vars)
 		}
 		node = *env;
 	}
-	exit(0);
 }
 
 // int	main()

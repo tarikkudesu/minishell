@@ -23,9 +23,7 @@ SRC				=	srcs/main.c  \
 					execute/redirection.c               \
 					execute/gold_process.c		         \
 					execute/path_processing.c             \
-					signals/signals.c \
-					get_next_line/get_next_line.c \
-					get_next_line/get_next_line_utils.c
+					signals/signals.c
 
 GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'

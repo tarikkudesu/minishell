@@ -48,5 +48,5 @@ char	*absolute_path(char	*cmd, char **env)
 			return (try);
 		(free(try), try = NULL);
 	}
-	return (ft_throw("minishell: command not found", 1), NULL);
+	return (ft_throw("minishell: command not found", 127), NULL);
 }

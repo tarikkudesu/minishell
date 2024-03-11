@@ -35,7 +35,7 @@
 int			expansion_value_1(t_shell *data, char *str, int *i);
 int			ft_strcmp(char *s1, char *s2);
 int			bunny_ears(char **s, char c);
-void		check_syntax(t_shell *data);
+int 		check_syntax(t_shell *data);
 void		command_tree(t_shell *data);
 void		assign(int *nbr, int add);
 int			lexer(t_shell *data);
@@ -88,28 +88,18 @@ void		signals(void);
 
 /*--------------------built_in_command------------------*/
 
-void		ft_cd(char *path);
+void	    ft_export(t_env **env, char **to_add, int add);
+void	    ft_unset(t_env **env, char **vars);
+void	    ft_echo(char **argument);
+void	    ft_env(t_env *env);
 void		ft_exit(char **args);
+void	    ft_cd(char *path);
+void	    ft_pwd(void);
 
 /*------------------end_built_in_command----------------*/
 
-/*---------------------get_next_line-------------------*/
-
-char		*gn_strjoin(char *s1, char *s2);
-char		*gn_strchr(const char *s);
-size_t		gn_strlen(const char *s);
-char		*get_next_line(int fd);
-void		print(t_env *env);
-
-/*--------------------end_get_next_line-----------------*/
-
-
 /* FUNCTIONS */
-void	ft_unset(t_env **env, char **vars);
-void	ft_pwd(void);
-void	ft_export(t_env **env, char **to_add, int add);
-void	ft_env(t_env *env);
-void	ft_echo(char **argument);
-void	ft_cd(char *path);
+void	    print(t_env *env);
+void	    free_2d(char **free2d);
 
 #endif

@@ -28,10 +28,8 @@ void	first_process(t_shell *data, t_tokens *token)
 	if (!data->pids[0])
 	{
 		if (data->number_of_commands > 1)
-		{
-			close(data->pipes[0][0]);
-			process(data, token, STDIN_FILENO, data->pipes[0][1]);
-		}
+			(close(data->pipes[0][0]),
+				process(data, token, STDIN_FILENO, data->pipes[0][1]));
 		else
 			process(data, token, STDIN_FILENO, STDOUT_FILENO);
 	}
@@ -88,21 +86,26 @@ void	execute(t_shell *data)
 	int			status;
 	int			i;
 
-	data->pids = malloc(sizeof(int) * data->number_of_commands);
-	if (!data->pids)
-		ft_throw("ERROR_MALLOC_PIDS_EXECUTE", 1);
-	if (data->number_of_commands == 1)
-		return (first_process(data, data->token));
-	data->pipes = malloc(sizeof(int *) * (data->number_of_commands - 1));
-	if (!data->pipes)
-		ft_throw("ERROR_MALLOC_PIPES_EXECUTE", 1);
-	first_process(data, data->token);
-	middle_process(data, data->token->left);
-	i = -1;
-	while (++i < data->number_of_commands)
+	if (data->number_of_commands == 1 && is_builtin(data->token->string))
+		process(data, data->token, STDIN_FILENO, STDOUT_FILENO);
+	else 
 	{
-		waitpid(data->pids[i], &status, 0);
-		if (WIFEXITED(status))
-			data->status = WEXITSTATUS(status);
+		data->pids = malloc(sizeof(int) * data->number_of_commands);
+		if (!data->pids)
+			ft_throw("ERROR_MALLOC_PIDS_EXECUTE", 1);
+		if (data->number_of_commands == 1)
+			return (first_process(data, data->token));
+		data->pipes = malloc(sizeof(int *) * (data->number_of_commands - 1));
+		if (!data->pipes)
+			ft_throw("ERROR_MALLOC_PIPES_EXECUTE", 1);
+		first_process(data, data->token);
+		middle_process(data, data->token->left);
+		i = -1;
+		while (++i < data->number_of_commands)
+		{
+			waitpid(data->pids[i], &status, 0);
+			if (WIFEXITED(status))
+				data->status = WEXITSTATUS(status);
+		}
 	}
 }

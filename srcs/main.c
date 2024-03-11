@@ -49,7 +49,8 @@ void	minishell(t_shell *data)
 		printf("\t\t[\033[1;32m %s \033[0m]\n", token->string);
 		token = token->right;
 	}
-	check_syntax(data);
+	if (check_syntax(data))
+		return ;
 	command_tree(data);
 	execute(data);
 }
@@ -64,12 +65,16 @@ void	read_line(t_shell *data)
 		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
 		if (!line)
 			return ;
-		data->line = line;
-		minishell(data);
+		if (*line)
+		{
+			add_history(line);
+			data->line = line;
+			minishell(data);
+			clear_command_tree(&data->token);
+		}
 		free(line);
 		line = NULL;
 		data->line = NULL;
-		clear_command_tree(&data->token);
 		// system("echo '\033[1;33m'; leaks minishell; echo '\033[0m'");
 	}
 }
@@ -82,7 +87,7 @@ void	init_data(t_shell *data, char **env)
 	data->token = NULL;
 	data->line = NULL;
 	data->pids = NULL;
-	data->status = 1000;
+	data->status = 0;
 	data->env = env;
 }
 

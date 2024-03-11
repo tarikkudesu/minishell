@@ -24,5 +24,4 @@ void	ft_env(t_env *env)
 		ft_putendl_fd(tmp->value, 1);
 		tmp = tmp->next;
 	}
-	exit(0);
 }

@@ -20,7 +20,6 @@ void	ft_pwd(void)
 	if (!position)
 		ft_throw(strerror(errno), 1);
 	ft_putendl_fd(position, 1);
-	exit(0);
 }
 
 // int	main(void)

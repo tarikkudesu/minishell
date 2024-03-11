@@ -3,7 +3,7 @@ minishell
 a.out
 *.vscode
 *.DS_Store
-
+README.md
 # Prerequisites
 *.d
 

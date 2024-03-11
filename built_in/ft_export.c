@@ -64,7 +64,6 @@ void	ft_export(t_env **env, char **to_add, int add)
 	}
 	tmp = *env;
 	print(sort_list(tmp));
-	exit(0);
 }
 
 // int	main(int ac, char **av, char **env)
