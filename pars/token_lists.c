@@ -21,6 +21,8 @@ t_tokens	*tokennew(char *content)
 		return (NULL);
 	head->string = content;
 	head->index = 1;
+	head->type = DEFAULT; // added
+	head->stat = GENERAL; // added
 	head->class = WORD;
 	head->right = NULL;
 	head->left = NULL;

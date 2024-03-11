@@ -41,18 +41,27 @@ void	minishell(t_shell *data)
 {
 	t_tokens	*token;
 
-	if (lexer(data))
-		return ;
+	// if (lexer(data))
+	// 	return ;
+	lexer_redone(data);
+	token = data->cherry;
+	while (token)
+	{
+		printf("\t\t[\033[1;32m\t%s\t\033[0m]\ttype : \t|\033[1;33m%c\033[0m|\t stat : |\033[1;34m%c\033[0m|\n", token->string, token->type, token->stat);
+		token = token->right;
+	}
+	printf("-------------------------------------------------------------------\n");
+	pars_redone(data);
 	token = data->token;
 	while (token)
 	{
-		printf("\t\t[\033[1;32m %s \033[0m]\n", token->string);
+		printf("\t\t[\033[1;32m%s\033[0m]\n", token->string);
 		token = token->right;
 	}
-	if (check_syntax(data))
-		return ;
-	command_tree(data);
-	execute(data);
+	// if (check_syntax(data))
+	// 	return ;
+	// command_tree(data);
+	// execute(data);
 }
 
 void	read_line(t_shell *data)
@@ -70,6 +79,7 @@ void	read_line(t_shell *data)
 			add_history(line);
 			data->line = line;
 			minishell(data);
+			clear_command_tree(&data->cherry);
 			clear_command_tree(&data->token);
 		}
 		free(line);
@@ -83,6 +93,8 @@ void	init_data(t_shell *data, char **env)
 {
 	data->env_list = NULL;
 	get_env(data, env);
+	data->stat = GENERAL;
+	data->cherry = NULL;
 	data->pipes = NULL;
 	data->token = NULL;
 	data->line = NULL;

@@ -99,6 +99,8 @@ void	    ft_pwd(void);
 /*------------------end_built_in_command----------------*/
 
 /* FUNCTIONS */
+int pars_redone(t_shell *data);
+int	        lexer_redone(t_shell *data);
 void	    print(t_env *env);
 void	    free_2d(char **free2d);
 

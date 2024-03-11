@@ -23,7 +23,9 @@ SRC				=	srcs/main.c  \
 					execute/redirection.c               \
 					execute/gold_process.c		         \
 					execute/path_processing.c             \
-					signals/signals.c
+					signals/signals.c \
+					lexer_redone.c \
+					pars_redone.c
 
 GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'
