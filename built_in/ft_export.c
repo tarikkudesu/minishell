@@ -6,7 +6,7 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:39:06 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 11:19:35 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/10 23:46:07 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ void	ft_export(t_env **env, char **to_add, int add)
 		{
 			node = env_new(to_add[i], NULL);
 			if (!node)
-				ft_throw("ERROR_LSTNEW_EXPORT");
+				ft_throw("ERROR_LSTNEW_EXPORT", 1);
 			env_add_back(env, node);
 		}
 		return ;
 	}
 	tmp = *env;
 	print(sort_list(tmp));
+	exit(0);
 }
 
 // int	main(int ac, char **av, char **env)

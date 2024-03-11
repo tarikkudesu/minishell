@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 13:48:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 23:03:25 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,24 @@ int	heredoc(char *del)
 	int		fd2;
 	char	*line;
 
-	fd = open(".tmp", O_WRONLY | O_CREAT, 0644);
-	if (fd < 0)
-		ft_throw("ERROR_OPEN_HERDOC");
 	fd2 = open(".tmp", O_WRONLY | O_CREAT, 0644);
 	if (fd2 < 0)
-		ft_throw("ERROR_OPEN_HERDOC");
+		ft_throw("ERROR_OPEN_HERDOC", 1);
+	fd = open(".tmp", O_RDONLY);
+	if (fd < 0)
+		ft_throw("ERROR_OPEN_HERDOC", 1);
 	if (unlink(".tmp") < 0)
-		ft_throw("ERRON_UNLINK_HERDOC");
+		ft_throw("ERRON_UNLINK_HERDOC", 1);
 	while (1)
 	{
-		line = get_next_line(1);
-		printf("line : %s %zu\n", line, strlen(line));
-		printf("delimiter : %s %zu\n", del, strlen(del));
-		if (!line)
+		ft_putstr_fd("here_doc > ", 1);
+		line = readline("");
+		if (!line || (!ft_strcmp(line, del)))
 			break ;
-		printf("<<%d>> %zu %zu\n", ft_strncmp(line, del, ft_strlen(line) - 1), ft_strlen(del), ft_strlen(line) - 1);
-	if (!ft_strncmp(line, del, ft_strlen(line) - 1) && ((ft_strlen(line) - 1) == ft_strlen(del)))
-			break ;
-		write(fd, line, ft_strlen(line));
+		write(fd2, line, ft_strlen(line));
+		write(fd2, "\n", 1);
 		(free(line), line = NULL);
 	}
-	close(fd);
-	return (fd2);
+	close(fd2);
+	return (fd);
 }

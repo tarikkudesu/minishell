@@ -6,7 +6,7 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:13:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/08 21:17:18 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/10 23:45:33 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_echo(char **argument)
 		(ft_putstr_fd(argument[i], 1), ft_putstr_fd(" ", 1), i++);
 	if (!b)
 		write(1, "\n", 1);
+	exit(0);
 }
 
 // int	main(int ac, char **av) // to delete it

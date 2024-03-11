@@ -6,7 +6,7 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:17:02 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/07 00:00:11 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/11 00:24:02 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	ft_pwd(void)
 
 	position = getcwd(NULL, 0);
 	if (!position)
-		ft_throw("ERROR_GETING_WORK_DIRECTORY");
+		ft_throw(strerror(errno), 1);
 	ft_putendl_fd(position, 1);
+	exit(0);
 }
 
 // int	main(void)

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:09:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 12:08:58 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/11 09:49:52 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	token_len(t_shell *data, char *str)
 				else
 					(assign(var, var[0] + 1), assign(var + 1, var[1] + 1));
 			}
+			if (!*(str + var[0]))
+				printf("Error : unclosed quotes\n");
 			var[0]++;
 		}
 		else if (*(str + var[0]) == '$')

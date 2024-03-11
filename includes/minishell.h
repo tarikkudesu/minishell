@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 11:20:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:26:43 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			is_space(int c);
 /*-------------------error_handling--------------------*/
 
 int			throw_error(char *str);
-void		ft_throw(char *strerr);
+void		ft_throw(char *strerr, int status);
 
 /*-------------------error_handling--------------------*/
 
@@ -88,13 +88,8 @@ void		signals(void);
 
 /*--------------------built_in_command------------------*/
 
-void		ft_export(t_env **env, char **to_add, int add);
-void		ft_unset(t_env **env, char **vars);
-void		ft_echo(char **argument);
-void		ft_env(t_env *env);
 void		ft_cd(char *path);
-void		ft_exit(void);
-void		ft_pwd(void);
+void		ft_exit(char **args);
 
 /*------------------end_built_in_command----------------*/
 
@@ -107,5 +102,14 @@ char		*get_next_line(int fd);
 void		print(t_env *env);
 
 /*--------------------end_get_next_line-----------------*/
+
+
+/* FUNCTIONS */
+void	ft_unset(t_env **env, char **vars);
+void	ft_pwd(void);
+void	ft_export(t_env **env, char **to_add, int add);
+void	ft_env(t_env *env);
+void	ft_echo(char **argument);
+void	ft_cd(char *path);
 
 #endif

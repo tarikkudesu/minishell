@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gold_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 10:17:39 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/11 00:29:21 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static	char	**get_args(t_tokens *token, int nbr_arg)
 	i = 0;
 	args = malloc(sizeof(char *) * (nbr_arg + 1));
 	if (!args)
-		ft_throw("ERROR_MALLOC_GET_ARGS");
+		ft_throw("ERROR_MALLOC_GET_ARGS", 1);
 	while (token && token->string[0] != '|')
 	{
 		if (token->class == WORD)
 		{
 			args[i] = ft_strdup(token->string);
 			if (!args[i++])
-				ft_throw("ERROR_STRDUP_GET_ARGS");
+				ft_throw("ERROR_STRDUP_GET_ARGS", 1);
 		}
 		else if (token->class != PIPE && token->right->string[0] != '|')
 			token = token->right;
@@ -42,16 +42,12 @@ static	void	ft_execve(t_shell *data, char **cmd_arg, int input, int output)
 	char	*abs_path;
 
 	abs_path = absolute_path(cmd_arg[0], data->env);
-	if (input != STDIN_FILENO && dup2(input, STDIN_FILENO) < 0)
-		ft_throw("ERR_DUP2_EXECVE");
+	if (input != STDIN_FILENO && dup2(input, STDIN_FILENO))
+		ft_throw(strerror(errno), 1);
 	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0)
-		ft_throw("ERR_DUP2_EXECVE");
-	// if (dup2(input, STDIN_FILENO) < 0 || dup2(output, STDOUT_FILENO) < 0)
-	// 	ft_throw("DUP2_CHILD_ERROR");
-	// if (close(input) < 0 || close(output) < 0)
-	// 	ft_throw("CLOSE_CHILD_ERROR");
+		ft_throw(strerror(errno), 1);
 	execve(abs_path, cmd_arg, data->env);
-	ft_throw("BAD_ADDRESS");
+	ft_throw(strerror(errno), 128);
 }
 
 void	process(t_shell *data, t_tokens *token, int input, int output)

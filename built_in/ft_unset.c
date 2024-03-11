@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:22:07 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/09 18:58:41 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 23:46:24 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_unset(t_env **env, char **vars)
 		}
 		node = *env;
 	}
+	exit(0);
 }
 
 // int	main()

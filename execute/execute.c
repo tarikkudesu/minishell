@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 10:17:58 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/10 23:01:45 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,26 @@ void	first_process(t_shell *data, t_tokens *token)
 	{
 		data->pipes[0] = malloc(sizeof(int) * 2);
 		if (!data->pipes[0])
-			ft_throw("ERROR_MALLOC_PIPE_EXECUTE");
+			ft_throw("ERROR_MALLOC_PIPE_EXECUTE", 1);
 		if (pipe(data->pipes[0]) < 0)
-			ft_throw("ERROR_CREAT_PIPE_EXECUTE");
+			ft_throw("ERROR_CREAT_PIPE_EXECUTE", 1);
 	}
 	data->pids[0] = fork();
 	if (data->pids[0] < 0)
-		ft_throw("ERROR_FORK_MIDDLE_COMMAND");
+		ft_throw("ERROR_FORK_MIDDLE_COMMAND", 1);
 	if (!data->pids[0])
 	{
 		if (data->number_of_commands > 1)
 		{
-			if (close(data->pipes[0][0]) < 0)
-				ft_throw("ERROR_CLOSE_CHILD_FIRST");
+			close(data->pipes[0][0]);
 			process(data, token, STDIN_FILENO, data->pipes[0][1]);
 		}
 		else
 			process(data, token, STDIN_FILENO, STDOUT_FILENO);
 	}
 	else if (data->pids[0] && data->number_of_commands > 1)
-		if (close(data->pipes[0][1]) < 0)
-			ft_throw("ERROR_CLOSE_PARENT_FIRST");
-	waitpid(data->pids[0], &(data->status), 0);
+		close(data->pipes[0][1]);
+	waitpid(data->pids[0], &(data->status), 0),
 	data->status = WEXITSTATUS(data->status);
 }
 
@@ -50,13 +48,12 @@ void	last_process(t_shell *data, t_tokens *token)
 	i = data->number_of_commands;
 	data->pids[i - 1] = fork();
 	if (data->pids[i - 1] < 0)
-		ft_throw("ERROR_FORK_LAST_COMMAND");
+		ft_throw("ERROR_FORK_LAST_COMMAND", 1);
 	if (!data->pids[i - 1])
 		(process(data, token,
 				data->pipes[i - 2][0], STDOUT_FILENO));
 	else
-		if (close(data->pipes[i - 2][0]) < 0)
-			ft_throw("ERROR_CLOSE_PARENT_LAST");
+		close(data->pipes[i - 2][0]);
 }
 
 void	middle_process(t_shell *data, t_tokens *token)
@@ -68,22 +65,20 @@ void	middle_process(t_shell *data, t_tokens *token)
 	{
 		data->pipes[i] = malloc(sizeof(int) * 2);
 		if (!data->pipes[i])
-			ft_throw("ERROR_MALLOC_PIPE_EXECUTE");
+			ft_throw("ERROR_MALLOC_PIPE_EXECUTE", 1);
 		if (pipe(data->pipes[i]) < 0)
-			ft_throw("ERROR_CREAT_PIPE_EXECUTE");
+			ft_throw("ERROR_CREAT_PIPE_EXECUTE", 1);
 		data->pids[i] = fork();
 		if (data->pids[i] < 0)
-			ft_throw("ERROR_FORK_MIDDLE_COMMAND");
+			ft_throw("ERROR_FORK_MIDDLE_COMMAND", 1);
 		if (!data->pids[i])
 		{
-			if (close(data->pipes[i][0]) < 0)
-				ft_throw("ERROR_CLOSE_MIDDLE_CHILD");
+			close(data->pipes[i][0]);
 			process(data, token, data->pipes[i - 1][0], data->pipes[i][1]);
 		}
-		else if (close(data->pipes[i][1]) < 0
-			|| close(data->pipes[i - 1][0]) < 0)
-			ft_throw("ERROR_CLOSE_MIDDLE_PARENT");
-		token = token->left;
+		else
+			(close(data->pipes[i][1]), close(data->pipes[i - 1][0]),
+				token = token->left);
 	}
 	last_process(data, token);
 }
@@ -95,19 +90,17 @@ void	execute(t_shell *data)
 
 	data->pids = malloc(sizeof(int) * data->number_of_commands);
 	if (!data->pids)
-		ft_throw("ERROR_MALLOC_PIDS_EXECUTE");
+		ft_throw("ERROR_MALLOC_PIDS_EXECUTE", 1);
 	if (data->number_of_commands == 1)
 		return (first_process(data, data->token));
 	data->pipes = malloc(sizeof(int *) * (data->number_of_commands - 1));
 	if (!data->pipes)
-		ft_throw("ERROR_MALLOC_PIPES_EXECUTE");
+		ft_throw("ERROR_MALLOC_PIPES_EXECUTE", 1);
 	first_process(data, data->token);
 	middle_process(data, data->token->left);
 	i = -1;
-	printf("%d\n", data->number_of_commands);
 	while (++i < data->number_of_commands)
 	{
-		puts("hnaaaaa");
 		waitpid(data->pids[i], &status, 0);
 		if (WIFEXITED(status))
 			data->status = WEXITSTATUS(status);

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 13:42:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:27:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	get_env(t_shell *data, char **env)
 		start = ft_strchr(env[i], '=');
 		name = ft_substr(env[i], 0, (start - env[i]));
 		if (!name)
-			ft_throw("ERROR_SUBSTR_GET_ENV");
+			throw_error("ERROR_SUBSTR_GET_ENV");
 		value = ft_strdup(start + 1);
 		if (!value)
-			ft_throw("ERROR_STRDUP_GET_ENV");
+			throw_error("ERROR_STRDUP_GET_ENV");
 		node = env_new(name, value);
 		if (!node)
-			ft_throw("ERROR_ENV_NEW_GET_ENV");
+			throw_error("ERROR_ENV_NEW_GET_ENV");
 		env_add_back(&data->env_list, node);
 	}
 }
@@ -64,8 +64,6 @@ void	read_line(t_shell *data)
 		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
 		if (!line)
 			return ;
-		if (!ft_strncmp(line, "exit", ft_strlen(line)) && ft_strlen(line) == 4)
-			return (free(line), ft_exit());
 		data->line = line;
 		minishell(data);
 		free(line);
@@ -94,7 +92,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	if (ac != 1)
-		ft_throw("minishell accepts no arguments");
+		throw_error("minishell accepts no arguments");
 	init_data(&data, env);
 	signals();
 	read_line(&data);
