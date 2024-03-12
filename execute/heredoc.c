@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 23:03:25 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:55:29 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ int	heredoc(char *del)
 		line = readline("");
 		if (!line || (!ft_strcmp(line, del)))
 			break ;
-		write(fd2, line, ft_strlen(line));
-		write(fd2, "\n", 1);
+		(write(fd2, line, ft_strlen(line)), write(fd2, "\n", 1));
 		(free(line), line = NULL);
 	}
+	if (line)
+		free(line);
 	close(fd2);
 	return (fd);
 }

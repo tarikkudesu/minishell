@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 16:55:44 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:48:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ int	check_syntax(t_shell *data)
 		if (class_operator(tmp) && class_operator(previous))
 			if (previous->class != PIPE)
 				return (pars_error(data));
+		if (previous->class == IN_RED || previous->class == OUT_RED \
+			|| previous->class == HEREDOC || previous->class == APPEND)
+			tmp->class = FILE_NAME;
 		previous = tmp;
 		tmp = tmp->right;
 	}

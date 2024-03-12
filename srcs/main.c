@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 17:02:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 19:34:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,28 @@ void fonction_mli7a(t_shell *data)
 		printf("\t\t[\033[1;32m%s\033[0m]class : \t|\033[1;33m%c\033[0m|\n", token->string, token->class);
 		token = token->right;
 	}
-	printf("%d\n", data->number_of_commands);
+}
+char	**get_args(t_tokens *branch)
+{
+	char	*arg;
+	char	*to_free;
+
+	to_free = NULL;
+	arg = NULL;
+	while (branch)
+	{
+		if (branch->class == WORD)
+		{
+			to_free = arg;
+			arg = ft_strjoin(branch->string, " ");
+			if (!arg)
+				return (NULL);
+			if (to_free)
+				free(to_free);
+		}
+		branch = branch->right;
+	}
+	return (ft_split(arg, ' '));
 }
 
 void	minishell(t_shell *data)
@@ -66,6 +87,12 @@ void	minishell(t_shell *data)
 	if (check_syntax(data))
 		return ;
 	command_tree(data);
+	// fonction_mli7a(data);
+	char **arg = get_args(data->tree);
+	for (int i = 0; arg[i]; i++) {
+		printf("%s\n", arg[i]);
+	}
+	printf("%d\n", data->number_of_commands);
 	// execute(data);
 }
 
@@ -97,7 +124,6 @@ void	read_line(t_shell *data)
 void	init_data(t_shell *data, char **env)
 {
 	data->number_of_commands = 0;
-	data->number_of_tokens = 0;
 	data->stat = GENERAL;
 	data->env_list = NULL;
 	get_env(data, env);

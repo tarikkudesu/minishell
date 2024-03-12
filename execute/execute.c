@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 23:01:45 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:12:47 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,20 @@ void	execute(t_shell *data)
 	int			status;
 	int			i;
 
-	if (data->number_of_commands == 1 && is_builtin(data->token->string))
-		process(data, data->token, STDIN_FILENO, STDOUT_FILENO);
+	if (data->number_of_commands == 1 && is_builtin(data->tree->string))
+		process(data, data->tree, STDIN_FILENO, STDOUT_FILENO);
 	else 
 	{
 		data->pids = malloc(sizeof(int) * data->number_of_commands);
 		if (!data->pids)
 			ft_throw("ERROR_MALLOC_PIDS_EXECUTE", 1);
 		if (data->number_of_commands == 1)
-			return (first_process(data, data->token));
+			return (first_process(data, data->tree));
 		data->pipes = malloc(sizeof(int *) * (data->number_of_commands - 1));
 		if (!data->pipes)
 			ft_throw("ERROR_MALLOC_PIPES_EXECUTE", 1);
-		first_process(data, data->token);
-		middle_process(data, data->token->left);
+		first_process(data, data->tree);
+		middle_process(data, data->tree->left);
 		i = -1;
 		while (++i < data->number_of_commands)
 		{

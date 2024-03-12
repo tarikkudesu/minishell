@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 23:10:21 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:13:07 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void	red_process(t_tokens *token, int input, int output, int *nbr)
 		if (token->class == APPEND)
 			(append_red(token->right->string, output),
 				token = token->right);
-		else if (token->class == OUTPUT_RED)
+		else if (token->class == OUT_RED)
 		{
 			token = token->right;
 			output_red(token->string, output);
 		}
-		else if (token->class == INPUT_RED)
+		else if (token->class == IN_RED)
 		{
 			token = token->right;
 			input_red(token->string, input);
