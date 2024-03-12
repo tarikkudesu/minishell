@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 16:57:45 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:02:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	minishell(t_shell *data)
 		return ;
 	if (check_syntax(data))
 		return ;
-	fonction_mli7a(data);
-	// command_tree(data);
+	command_tree(data);
 	// execute(data);
 }
 

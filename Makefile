@@ -7,6 +7,7 @@ SRC				=	srcs/main.c  \
 					parse/syntax.c \
 					parse/env_lists.c \
 					parse/token_lists.c \
+					parse/command_tree.c \
 					signals/signals.c
 
 GREEN			=	'\033[1;32m'

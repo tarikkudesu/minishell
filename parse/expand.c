@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:28:01 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 15:37:22 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:04:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	expand_variable(t_shell *data, t_tokens *token)
 	t_env	*env;
 
 	env = data->env_list;
-	puts(token->string);
-	puts(env->name);
 	while (env)
 	{
 		if (!ft_strcmp(token->string + 1, env->name))
