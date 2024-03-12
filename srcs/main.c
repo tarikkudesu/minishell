@@ -37,29 +37,33 @@ void	get_env(t_shell *data, char **env)
 	}
 }
 
-void	minishell(t_shell *data)
+void fonction_mli7a(t_shell *data)
 {
 	t_tokens	*token;
+	token = data->tokens;
 
-	// if (lexer(data))
-	// 	return ;
-	lexer_redone(data);
-	token = data->cherry;
 	while (token)
 	{
-		printf("\t\t[\033[1;32m\t%s\t\033[0m]\ttype : \t|\033[1;33m%c\033[0m|\t stat : |\033[1;34m%c\033[0m|\n", token->string, token->type, token->stat);
+		printf("\t\t[\033[1;32m\t%s\t\033[0m]\ttype : \t|\033[1;33m%c\033[0m|\t stat : |\033[1;34m%c\033[0m|\n", token->string, token->class, token->stat);
 		token = token->right;
 	}
 	printf("-------------------------------------------------------------------\n");
-	pars_redone(data);
-	token = data->token;
-	while (token)
-	{
-		printf("\t\t[\033[1;32m%s\033[0m]\n", token->string);
-		token = token->right;
-	}
-	// if (check_syntax(data))
+	// token = data->tree;
+	// while (token)
+	// {
+	// 	printf("\t\t[\033[1;32m%s\033[0m]class : \t|\033[1;33m%c\033[0m|\n", token->string, token->class);
+	// 	token = token->right;
+	// }
+}
+
+void	minishell(t_shell *data)
+{
+	// if (lexer(data) || pars(data) || check_syntax(data))
 	// 	return ;
+	printf("%d\n", lexer(data));
+	// printf("%d\n", pars(data));
+	// check_syntax(data);
+	fonction_mli7a(data);
 	// command_tree(data);
 	// execute(data);
 }
@@ -79,8 +83,8 @@ void	read_line(t_shell *data)
 			add_history(line);
 			data->line = line;
 			minishell(data);
-			clear_command_tree(&data->cherry);
-			clear_command_tree(&data->token);
+			clear_command_tree(&data->tokens);
+			clear_command_tree(&data->tree);
 		}
 		free(line);
 		line = NULL;
@@ -94,9 +98,9 @@ void	init_data(t_shell *data, char **env)
 	data->env_list = NULL;
 	get_env(data, env);
 	data->stat = GENERAL;
-	data->cherry = NULL;
+	data->tokens = NULL;
 	data->pipes = NULL;
-	data->token = NULL;
+	data->tree = NULL;
 	data->line = NULL;
 	data->pids = NULL;
 	data->status = 0;

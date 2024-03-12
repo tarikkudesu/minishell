@@ -32,15 +32,15 @@
 
 /*-----------------------parse-------------------------*/
 
-int			expansion_value_1(t_shell *data, char *str, int *i);
-int			ft_strcmp(char *s1, char *s2);
-int			bunny_ears(char **s, char c);
-int 		check_syntax(t_shell *data);
-void		command_tree(t_shell *data);
-void		assign(int *nbr, int add);
-int			lexer(t_shell *data);
-int			is_operator(int c);
-int			is_space(int c);
+// int			expansion_value_1(t_shell *data, char *str, int *i);
+// int			ft_strcmp(char *s1, char *s2);
+// int			bunny_ears(char **s, char c);
+// int 		check_syntax(t_shell *data);
+// void		command_tree(t_shell *data);
+// void		assign(int *nbr, int add);
+// int			lexer(t_shell *data);
+// int			is_operator(int c);
+// int			is_space(int c);
 
 /*---------------------end_parse-----------------------*/
 
@@ -62,12 +62,12 @@ void		env_clear(t_env **env);
 
 /*--------------------token_operation-------------------*/
 
-void		fill_token(t_shell *data, char **s, char *tmp, int i[3]);
-char		*init_token(char const *s, int *index, int lenght);
-int			process_token(t_shell *data, t_tokens *token);
+// void		fill_token(t_shell *data, char **s, char *tmp, int i[3]);
+// char		*init_token(char const *s, int *index, int lenght);
+// int			process_token(t_shell *data, t_tokens *token);
 void		tokenadd_back(t_tokens **lst, t_tokens *new);
 void		clear_command_tree(t_tokens **tree);
-void		token_class(t_tokens *token);
+// void		token_class(t_tokens *token);
 void		tokenclear(t_tokens **lst);
 int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
@@ -99,8 +99,15 @@ void	    ft_pwd(void);
 /*------------------end_built_in_command----------------*/
 
 /* FUNCTIONS */
-int pars_redone(t_shell *data);
-int	        lexer_redone(t_shell *data);
+void        token_class(t_tokens *token);
+int	        check_syntax(t_shell *data);
+int	        ft_strcmp(char *s1, char *s2);
+int         meta_char(char c);
+int	        add(t_tokens *token);
+int	        skip(t_tokens *token);
+int	        keep(t_tokens *token);
+int         pars(t_shell *data);
+int	        lexer(t_shell *data);
 void	    print(t_env *env);
 void	    free_2d(char **free2d);
 

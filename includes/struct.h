@@ -15,7 +15,6 @@
 
 typedef struct s_shell		t_shell;
 typedef struct s_tokens		t_tokens;
-typedef enum e_type			t_type;
 typedef enum e_class		t_class;
 typedef enum e_stat			t_stat;
 typedef struct s_env		t_env;
@@ -27,29 +26,19 @@ enum	e_stat
 	INDQUOTE = 'D',
 };
 
-enum	e_type
+enum	e_class
 {
 	DEFAULT = 'D',
-	RE_WORD = 'W',
+	WORD = 'W',
 	WHITESPACE = 'S',
 	DQUOTE = '"',
 	QUOTE = '\'',
-	RE_PIPE = '|',
+	PIPE = '|',
 	IN_RED = '<',
 	OUT_RED = '>',
-	RE_HEREDOC = 'H',
-	RE_APPEND = 'A',
+	HEREDOC = 'H',
+	APPEND = 'A',
 	ENV = '$',
-};
-
-enum	e_class
-{
-	WORD = 1,
-	OUTPUT_RED,
-	INPUT_RED,
-	HEREDOC,
-	APPEND,
-	PIPE,
 };
 
 struct s_env
@@ -66,7 +55,7 @@ struct	s_tokens
 	int			index;
 	t_class		class;
 	t_stat		stat;
-	t_type		type;
+	// t_type		type;
 	t_tokens	*left;
 	t_tokens	*right;
 };
@@ -76,8 +65,8 @@ struct	s_shell
 	char		**env;
 	t_env		*env_list;
 	char		*line;
-	t_tokens	*cherry;
-	t_tokens	*token;
+	t_tokens	*tokens;
+	t_tokens	*tree;
 	int			**pipes;
 	int			*pids;
 	int			number_of_tokens;
