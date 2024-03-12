@@ -111,6 +111,6 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		throw_error("minishell accepts no arguments");
 	init_data(&data, env);
-	signals();
+	// signals();
 	read_line(&data);
 }

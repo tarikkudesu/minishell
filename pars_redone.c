@@ -8,7 +8,7 @@ void	expand(t_shell *data, t_tokens *token)
 	env = data->env_list;
 	while (env)
 	{
-		if (!ft_strcmp(token->string, env->name))
+		if (!ft_strcmp(token->string + 1, env->name))
 			break ;
 		env = env->next;
 	}
@@ -25,69 +25,75 @@ void	expand(t_shell *data, t_tokens *token)
 	token->string = ft_strdup("");
 }
 
-int	xclass(t_type type)
-{
-	if (type == RE_PIPE || type == IN_RED || type == OUT_RED \
-		|| type == RE_HEREDOC || type == RE_APPEND)
-		return (1);
-	return (0);
-}
-
-int	stop(t_tokens *token)
-{
-	if (!token)
-		return (1);
-	if (token->stat == GENERAL && token->type != RE_WORD)
-		return (1);
-	return (0);
-}
-
-int	add2(t_tokens *token)
-{
-	if (token->stat == GENERAL && token->type != WHITESPACE && token->type != DQUOTE && token->type != QUOTE)
-		return (1);
-	return (0);
-}
-
 int	add(t_tokens *token)
 {
-	if (token->stat == GENERAL && token->type == RE_WORD)
+	if (token->type == RE_WORD)
 		return (1);
-	else if (token->stat != GENERAL && token->type != DQUOTE && token->type != QUOTE)
+	else if (token->stat == GENERAL)
+	{
+		if (token->type != WHITESPACE && token->type != QUOTE && token->type != DQUOTE)
+			return (1);
+	}
+	else if (token->stat != GENERAL)
+	{
+		if (token->type != QUOTE && token->type != DQUOTE)
+			return (1);
+	}
+	return (0);
+}
+
+int	skip(t_tokens *token)
+{
+	if (token->type == QUOTE || token->type == DQUOTE)
+		return (1);
+	return (0);
+}
+
+int	keep(t_tokens *token)
+{
+	if (token->type == RE_WORD || token->type == ENV)
+		return (1);
+	else if (token->stat != GENERAL)
 		return (1);
 	return (0);
 }
 
 void	inquote(t_shell *data, t_tokens **tmp)
 {
-	char		*string;
 	char		*to_free;
+	char		*string;
 	t_tokens	*token;
 
+	if ((*tmp)->type == ENV && (*tmp)->stat != INQUOTE)
+		expand(data, *tmp);
 	string = ft_strdup((*tmp)->string);
 	if (!string)
 		return ;
-	printf("|%s|\n", string);
 	*tmp = (*tmp)->right;
-	while (!stop(*tmp))
+	if (*tmp)
 	{
-		puts("----");
-		if ((*tmp)->type == ENV && (*tmp)->stat != INQUOTE)
-			expand(data, (*tmp));
-		if (add(*tmp))
+		while (*tmp)
 		{
-			to_free = string;
-			string = ft_strjoin(string, (*tmp)->string);
-			free(to_free);
+			puts((*tmp)->string);
+			if (skip(*tmp))
+				*tmp = (*tmp)->right;
+			else if (keep(*tmp))
+			{
+				if ((*tmp)->type == ENV && (*tmp)->stat != INQUOTE)
+					expand(data, *tmp);
+				to_free = string;
+				string = ft_strjoin(string, (*tmp)->string);
+				free(to_free);
+				*tmp = (*tmp)->right;
+			}
+			else
+				break ;
+			usleep(50000);
 		}
-		*tmp = (*tmp)->right;
 	}
 	token = tokennew(string);
 	if (!token)
-	{
-		free(string);
 		return ;
-	}
 	tokenadd_back(&data->token, token);
 }
 
@@ -98,7 +104,7 @@ int pars_redone(t_shell *data)
 	tmp = data->cherry;
 	while (tmp)
 	{
-		if (add2(tmp))
+		if (add(tmp))
 			inquote(data, &tmp);
 		else
 			tmp = tmp->right;
