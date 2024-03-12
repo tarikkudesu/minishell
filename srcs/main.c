@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/11 10:27:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:03:39 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ void fonction_mli7a(t_shell *data)
 
 void	minishell(t_shell *data)
 {
-	// if (lexer(data) || pars(data) || check_syntax(data))
-	// 	return ;
-	printf("%d\n", lexer(data));
-	printf("%d\n", pars(data));
-	// check_syntax(data);
+	if (lexer(data))
+		return ;
+	if (pars(data))
+		return ;
+	if (check_syntax(data))
+		return ;
 	fonction_mli7a(data);
 	// command_tree(data);
 	// execute(data);
@@ -90,7 +91,7 @@ void	read_line(t_shell *data)
 		free(line);
 		line = NULL;
 		data->line = NULL;
-		// system("echo '\033[1;33m'; leaks minishell; echo '\033[0m'");
+		system("echo '\033[1;33m'; leaks minishell; echo '\033[0m'");
 	}
 }
 
@@ -99,8 +100,8 @@ void	init_data(t_shell *data, char **env)
 	data->number_of_commands = 0;
 	data->number_of_tokens = 0;
 	data->stat = GENERAL;
-	get_env(data, env);
 	data->env_list = NULL;
+	get_env(data, env);
 	data->tokens = NULL;
 	data->pipes = NULL;
 	data->tree = NULL;

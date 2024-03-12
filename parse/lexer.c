@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 10:30:07 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 15:44:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ t_tokens    *init_token(t_shell *data, char *line, int *index)
 
 	string = token_string(line + *index, index);
 	if (!string)
-		return (NULL);
+		return (ft_putendl_fd(ERR_MAL, 2), NULL);
 	token = tokennew(string);
 	if (!token)
-		return (NULL);
+		return (ft_putendl_fd(ERR_MAL, 2), NULL);
 	token_class(token);
     if (token->class == QUOTE || token->class == DQUOTE)
     {
@@ -120,7 +120,7 @@ int	lexer(t_shell *data)
 	{
 		token = init_token(data, data->line, &index);
 		if (!token)
-			return 1;
+			return (1);
 		tokenadd_back(&data->tokens, token);
 	}
 	return (0);

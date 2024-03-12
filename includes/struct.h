@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/08 15:06:13 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:55:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ struct s_env
 struct	s_tokens
 {
 	char		*string;
-	int			index;
 	t_class		class;
 	t_stat		stat;
-	// t_type		type;
 	t_tokens	*left;
 	t_tokens	*right;
 };

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 13:32:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:55:44 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,31 @@ static int	class_operator(t_tokens *token)
 	return (0);
 }
 
-int	check_syntax(t_shell *data) // this doesn't work my friend
+int	pars_error(t_shell *data)
+{
+	printf("pars error\n");
+	data->status = 258;
+	return (1);
+}
+
+int	check_syntax(t_shell *data)
 {
 	t_tokens	*tmp;
 	t_tokens	*previous;
 
 	tmp = data->tree->right;
 	previous = data->tree;
+	if (previous->class == PIPE)
+		return (pars_error(data));
 	while (tmp)
 	{
 		if (class_operator(tmp) && class_operator(previous))
-		{
 			if (previous->class != PIPE)
-			{
-				printf("parse error\n");
-				data->status = 258;
-				return (1);
-			}
-		}
+				return (pars_error(data));
 		previous = tmp;
 		tmp = tmp->right;
 	}
 	if (class_operator(previous))
-	{
-		printf("parse error\n");
-		data->status = 258;
-		return (1);
-	}
+		return (pars_error(data));
 	return (0);
 }

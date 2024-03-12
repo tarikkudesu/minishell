@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 10:32:46 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:46:38 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@ char    *leaf(t_shell *data, t_tokens **tmp, char *string)
 	to_free = string;
 	string = ft_strjoin(string, (*tmp)->string);
 	if (!string)
-		return (NULL);
+		return (free(to_free), ft_putendl_fd(ERR_MAL, 2), NULL);
 	free(to_free);
 	return (string);
 }
 
 int init_leaf(t_shell *data, char *string, t_tokens *class)
 {
-	static int	i; // if there is no use of this variable remove it, ask otman
 	t_tokens    *token;
 
 	token = tokennew(string);
 	if (!token)
-		return (1);
-	token->index = ++i;
+		return (ft_putendl_fd(ERR_MAL, 2), 1);
 	if (class->stat == GENERAL)
 		token->class = class->class;
 	else
@@ -43,17 +41,11 @@ int init_leaf(t_shell *data, char *string, t_tokens *class)
 	return (0);
 }
 
-void	inquote(t_shell *data, t_tokens **tmp)
+int	inquote(t_shell *data, t_tokens **tmp, char **string)
 {
-	char		*string;
 	t_tokens	*class;
 
-	if ((*tmp)->class == ENV && (*tmp)->stat != INQUOTE)
-		expand(data, *tmp);
 	class = *tmp;
-	string = ft_strdup((*tmp)->string);
-	if (!string)
-		return ;
 	*tmp = (*tmp)->right;
 	while (*tmp)
 	{
@@ -61,32 +53,37 @@ void	inquote(t_shell *data, t_tokens **tmp)
 			*tmp = (*tmp)->right;
 		else if (keep(*tmp))
 		{
-			string = leaf(data, tmp, string);
+			*string = leaf(data, tmp, *string);
+			if (!*string)
+				return (1);
 			*tmp = (*tmp)->right;
 		}
 		else
 			break ;
 	}
-	init_leaf(data, string, class);
+	return (init_leaf(data, *string, class));
 }
 
 int pars(t_shell *data)
 {
-	int			i;
 	t_tokens    *tmp;
+	char		*string;
 
-	i = 0;
 	tmp = data->tokens;
 	while (tmp)
 	{
 		if (add(tmp))
 		{
-			inquote(data, &tmp);
-			i++;
+			if (tmp->class == ENV && tmp->stat != INQUOTE)
+				expand(data, tmp);
+			string = ft_strdup(tmp->string);
+			if (!string)
+				return (ft_putendl_fd(ERR_MAL, 2), 1);
+			if (inquote(data, &tmp, &string))
+				return (1);
 		}
 		else
 			tmp = tmp->right;
 	}
-	data->number_of_commands = i;
 	return (0);
 }
