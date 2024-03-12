@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:45:41 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 17:01:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:07:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
+/*
 void d(int i) {
     while (i-- >= 0)
         printf("\t");
@@ -36,7 +36,7 @@ void    print_tree(t_tokens *tree)
 		i++;
 	}
 }
-
+*/
 void	command_tree(t_shell *data)
 {
 	int			i;

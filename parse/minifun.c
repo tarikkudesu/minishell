@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:43 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 10:30:44 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:09:19 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (*(s1 + i) - *(s2 + i));
 }
 
-int meta_char(char c)
+int	meta_char(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' \
 		|| c == '\r' || c == '\v' || c == '\f' \
@@ -38,7 +38,8 @@ int	add(t_tokens *token)
 		return (1);
 	else if (token->stat == GENERAL)
 	{
-		if (token->class != WHITESPACE && token->class != QUOTE && token->class != DQUOTE)
+		if (token->class != WHITESPACE && \
+			token->class != QUOTE && token->class != DQUOTE)
 			return (1);
 	}
 	else if (token->stat != GENERAL)

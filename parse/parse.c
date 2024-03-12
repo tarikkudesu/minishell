@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 16:46:38 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:09:48 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char    *leaf(t_shell *data, t_tokens **tmp, char *string)
+char	*leaf(t_shell *data, t_tokens **tmp, char *string)
 {
 	char		*to_free;
 
@@ -26,9 +26,9 @@ char    *leaf(t_shell *data, t_tokens **tmp, char *string)
 	return (string);
 }
 
-int init_leaf(t_shell *data, char *string, t_tokens *class)
+int	init_leaf(t_shell *data, char *string, t_tokens *class)
 {
-	t_tokens    *token;
+	t_tokens	*token;
 
 	token = tokennew(string);
 	if (!token)
@@ -64,9 +64,9 @@ int	inquote(t_shell *data, t_tokens **tmp, char **string)
 	return (init_leaf(data, *string, class));
 }
 
-int pars(t_shell *data)
+int	pars(t_shell *data)
 {
-	t_tokens    *tmp;
+	t_tokens	*tmp;
 	char		*string;
 
 	tmp = data->tokens;

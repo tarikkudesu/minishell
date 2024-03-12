@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 15:44:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:08:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char    *meta_char_string(char *string, int *index)
+char	*meta_char_string(char *string, int *index)
 {
 	int	len;
 
@@ -38,7 +38,7 @@ char    *meta_char_string(char *string, int *index)
 	return (NULL);
 }
 
-void    token_class(t_tokens *token)
+void	token_class(t_tokens *token)
 {
 	if (!ft_strcmp(token->string, "|"))
 		token->class = PIPE;
@@ -62,10 +62,10 @@ void    token_class(t_tokens *token)
 		token->class = WORD;
 }
 
-char    *token_string(char *string, int *index)
+char	*token_string(char *string, int *index)
 {
-	int     i;
-	char    *word;
+	int		i;
+	char	*word;
 
 	i = 0;
 	if (!meta_char(*string))
@@ -81,10 +81,10 @@ char    *token_string(char *string, int *index)
 	return (meta_char_string(string, index));
 }
 
-t_tokens    *init_token(t_shell *data, char *line, int *index)
+t_tokens	*init_token(t_shell *data, char *line, int *index)
 {
-	char        *string;
-	t_tokens    *token;
+	char		*string;
+	t_tokens	*token;
 
 	string = token_string(line + *index, index);
 	if (!string)
@@ -93,27 +93,28 @@ t_tokens    *init_token(t_shell *data, char *line, int *index)
 	if (!token)
 		return (ft_putendl_fd(ERR_MAL, 2), NULL);
 	token_class(token);
-    if (token->class == QUOTE || token->class == DQUOTE)
-    {
+	if (token->class == QUOTE || token->class == DQUOTE)
+	{
 		if (data->stat == INDQUOTE || data->stat == INQUOTE)
 			data->stat = GENERAL;
 		else if (token->class == DQUOTE)
-			data->stat = INDQUOTE; 
+			data->stat = INDQUOTE;
 		else if (token->class == QUOTE)
 			data->stat = INQUOTE;
-    }
+	}
 	token->stat = data->stat;
 	return (token);
 }
 
 /*
-    The Lexer : this function will retrieve the next token and add it to a linked list,
-    a token can be a word, an operator (<, >, <<, >>, |), an env ($VAR) or a quote (", ')
+	The Lexer : this function will retrieve the next token and add it
+	to a linked list, a token can be a word, an operator (<, >, <<, >>, |),
+	an env ($VAR) or a quote (", ')
 */
 int	lexer(t_shell *data)
 {
 	int			index;
-	t_tokens    *token;
+	t_tokens	*token;
 
 	index = 0;
 	while (data->line[index])
