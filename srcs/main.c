@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 16:03:39 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:57:45 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void fonction_mli7a(t_shell *data)
 	token = data->tree;
 	while (token)
 	{
-		printf("%d\t\t[\033[1;32m%s\033[0m]class : \t|\033[1;33m%c\033[0m|\n", token->index, token->string, token->class);
+		printf("\t\t[\033[1;32m%s\033[0m]class : \t|\033[1;33m%c\033[0m|\n", token->string, token->class);
 		token = token->right;
 	}
 	printf("%d\n", data->number_of_commands);

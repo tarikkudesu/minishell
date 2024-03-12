@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/12 16:55:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:57:24 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ struct	s_shell
 	int			number_of_tokens;
 	int			number_of_commands;
 	int			status;
-	t_stat		stat; // temp variables
+	t_stat		stat;
 };
 
 #endif

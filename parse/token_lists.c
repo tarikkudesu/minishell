@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/10 11:16:16 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:58:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ t_tokens	*tokennew(char *content)
 	if (!head)
 		return (NULL);
 	head->string = content;
-	head->index = 1;
-	head->class = DEFAULT; // added
-	head->stat = GENERAL; // added
+	head->class = DEFAULT;
+	head->stat = GENERAL;
 	head->right = NULL;
 	head->left = NULL;
 	return (head);
