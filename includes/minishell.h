@@ -35,9 +35,9 @@
 // int			expansion_value_1(t_shell *data, char *str, int *i);
 // int			ft_strcmp(char *s1, char *s2);
 // int			bunny_ears(char **s, char c);
-// int 		check_syntax(t_shell *data);
-// void		command_tree(t_shell *data);
-// void		assign(int *nbr, int add);
+// int 		    check_syntax(t_shell *data);
+// void		    command_tree(t_shell *data);
+// void		    assign(int *nbr, int add);
 // int			lexer(t_shell *data);
 // int			is_operator(int c);
 // int			is_space(int c);
@@ -99,6 +99,7 @@ void	    ft_pwd(void);
 /*------------------end_built_in_command----------------*/
 
 /* FUNCTIONS */
+void	    expand(t_shell *data, t_tokens *token);
 void        token_class(t_tokens *token);
 int	        check_syntax(t_shell *data);
 int	        ft_strcmp(char *s1, char *s2);

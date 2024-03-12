@@ -3,6 +3,7 @@ SRC				=	srcs/main.c  \
 					parse/lexer.c \
 					parse/parse.c \
 					parse/minifun.c \
+					parse/expand.c \
 					parse/syntax.c \
 					parse/env_lists.c \
 					parse/token_lists.c \

@@ -48,12 +48,13 @@ void fonction_mli7a(t_shell *data)
 		token = token->right;
 	}
 	printf("-------------------------------------------------------------------\n");
-	// token = data->tree;
-	// while (token)
-	// {
-	// 	printf("\t\t[\033[1;32m%s\033[0m]class : \t|\033[1;33m%c\033[0m|\n", token->string, token->class);
-	// 	token = token->right;
-	// }
+	token = data->tree;
+	while (token)
+	{
+		printf("%d\t\t[\033[1;32m%s\033[0m]class : \t|\033[1;33m%c\033[0m|\n", token->index, token->string, token->class);
+		token = token->right;
+	}
+	printf("%d\n", data->number_of_commands);
 }
 
 void	minishell(t_shell *data)
@@ -61,7 +62,7 @@ void	minishell(t_shell *data)
 	// if (lexer(data) || pars(data) || check_syntax(data))
 	// 	return ;
 	printf("%d\n", lexer(data));
-	// printf("%d\n", pars(data));
+	printf("%d\n", pars(data));
 	// check_syntax(data);
 	fonction_mli7a(data);
 	// command_tree(data);
@@ -95,9 +96,11 @@ void	read_line(t_shell *data)
 
 void	init_data(t_shell *data, char **env)
 {
-	data->env_list = NULL;
-	get_env(data, env);
+	data->number_of_commands = 0;
+	data->number_of_tokens = 0;
 	data->stat = GENERAL;
+	get_env(data, env);
+	data->env_list = NULL;
 	data->tokens = NULL;
 	data->pipes = NULL;
 	data->tree = NULL;
