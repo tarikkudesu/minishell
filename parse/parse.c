@@ -53,6 +53,8 @@ int	inquote(t_shell *data, t_tokens **tmp, char **string)
 			*tmp = (*tmp)->right;
 		else if (keep(*tmp))
 		{
+			if ((*tmp)->class == ENV && (*tmp)->stat == GENERAL)
+				data->split == 1;
 			*string = leaf(data, tmp, *string);
 			if (!*string)
 				return (1);

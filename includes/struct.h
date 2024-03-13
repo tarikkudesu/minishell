@@ -71,6 +71,7 @@ struct	s_shell
 	int			number_of_commands;
 	int			status;
 	t_stat		stat;
+	t_stat		split;
 };
 
 #endif

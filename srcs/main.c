@@ -117,7 +117,6 @@ void	read_line(t_shell *data)
 		free(line);
 		line = NULL;
 		data->line = NULL;
-		system("echo '\033[1;33m'; leaks minishell; echo '\033[0m'");
 	}
 }
 
@@ -133,6 +132,7 @@ void	init_data(t_shell *data, char **env)
 	data->line = NULL;
 	data->pids = NULL;
 	data->status = 0;
+	data->split = 0;
 	data->env = env;
 }
 
