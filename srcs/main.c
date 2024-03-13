@@ -88,12 +88,8 @@ void	minishell(t_shell *data)
 		return ;
 	command_tree(data);
 	// fonction_mli7a(data);
-	char **arg = get_args(data->tree);
-	for (int i = 0; arg[i]; i++) {
-		printf("%s\n", arg[i]);
-	}
 	printf("%d\n", data->number_of_commands);
-	// execute(data);
+	execute(data);
 }
 
 void	read_line(t_shell *data)

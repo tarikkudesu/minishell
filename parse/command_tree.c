@@ -20,7 +20,7 @@ void d(int i) {
 void    print_branch(t_tokens *cmd, int i) {
     while (cmd) {
         d(i);
-        printf("%s\n", cmd->string);
+        printf("%s [%c] [%c]\n", cmd->string, cmd->class, cmd->stat);
         cmd = cmd->right;
     }
 }
