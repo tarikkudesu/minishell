@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char	*leaf(t_shell *data, t_tokens **tmp, char *string)
+char	*join_tokens(t_shell *data, t_tokens **tmp, char *string)
 {
 	char		*to_free;
 
@@ -41,7 +41,7 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class)
 	return (0);
 }
 
-int	inquote(t_shell *data, t_tokens **tmp, char **string)
+int	leaf(t_shell *data, t_tokens **tmp, char **string)
 {
 	t_tokens	*class;
 
@@ -53,7 +53,7 @@ int	inquote(t_shell *data, t_tokens **tmp, char **string)
 			*tmp = (*tmp)->right;
 		else if (keep(*tmp))
 		{
-			*string = leaf(data, tmp, *string);
+			*string = join_tokens(data, tmp, *string);
 			if (!*string)
 				return (1);
 			*tmp = (*tmp)->right;
@@ -79,7 +79,7 @@ int	pars(t_shell *data)
 			string = ft_strdup(tmp->string);
 			if (!string)
 				return (ft_putendl_fd(ERR_MAL, 2), 1);
-			if (inquote(data, &tmp, &string))
+			if (leaf(data, &tmp, &string))
 				return (1);
 		}
 		else
