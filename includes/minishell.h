@@ -99,7 +99,6 @@ void	    ft_pwd(void);
 /*------------------end_built_in_command----------------*/
 
 /* FUNCTIONS */
-int	       init_leaf(t_shell *data, char *string, t_tokens *class, int split);
 void	    command_tree(t_shell *data);
 void	    expand(t_shell *data, t_tokens *token);
 void        token_class(t_tokens *token);

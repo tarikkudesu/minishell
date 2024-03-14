@@ -26,31 +26,10 @@ char	*leaf(t_shell *data, t_tokens **tmp, char *string)
 	return (string);
 }
 
-int	sub_leafs(t_shell *data, char *string, char **arr, t_tokens *class)
-{
-	int	i;
-
-	i = 0;
-	puts("hi there");
-	if (!arr)
-		return (free(string), ft_putendl_fd(ERR_MAL, 2), 1);
-	while (*(arr + i))
-	{
-		if (init_leaf(data, *(arr + i), class, 0))
-			return (free_2d(arr), ft_putendl_fd(ERR_MAL, 2), 1);
-		i++;
-	}
-	free(arr);
-	free(string);
-	return (0);
-}
-
-int	init_leaf(t_shell *data, char *string, t_tokens *class, int split)
+int	init_leaf(t_shell *data, char *string, t_tokens *class)
 {
 	t_tokens	*token;
 
-	if (split)
-		return (sub_leafs(data, string, ft_split(string, ' '), class));
 	token = tokennew(string);
 	if (!token)
 		return (ft_putendl_fd(ERR_MAL, 2), 1);
@@ -62,7 +41,7 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class, int split)
 	return (0);
 }
 
-int	inquote(t_shell *data, t_tokens **tmp, char **string, int split)
+int	inquote(t_shell *data, t_tokens **tmp, char **string)
 {
 	t_tokens	*class;
 
@@ -74,8 +53,6 @@ int	inquote(t_shell *data, t_tokens **tmp, char **string, int split)
 			*tmp = (*tmp)->right;
 		else if (keep(*tmp))
 		{
-			if ((*tmp)->class == ENV && (*tmp)->stat == GENERAL)
-				split = 1;
 			*string = leaf(data, tmp, *string);
 			if (!*string)
 				return (1);
@@ -84,32 +61,25 @@ int	inquote(t_shell *data, t_tokens **tmp, char **string, int split)
 		else
 			break ;
 	}
-	return (init_leaf(data, *string, class, split));
+	return (init_leaf(data, *string, class));
 }
 
 int	pars(t_shell *data)
 {
 	t_tokens	*tmp;
-	int			split;
 	char		*string;
 
-	split = 0;
 	tmp = data->tokens;
 	while (tmp)
 	{
 		if (add(tmp))
 		{
 			if (tmp->class == ENV && tmp->stat != INQUOTE)
-			{
 				expand(data, tmp);
-				if (tmp->stat == GENERAL)
-					split = 1;
-				orttmp->class = WORD;
-			}
 			string = ft_strdup(tmp->string);
 			if (!string)
 				return (ft_putendl_fd(ERR_MAL, 2), 1);
-			if (inquote(data, &tmp, &string, split))
+			if (inquote(data, &tmp, &string))
 				return (1);
 		}
 		else

@@ -62,6 +62,20 @@ void	token_class(t_tokens *token)
 		token->class = WORD;
 }
 
+void	token_stat(t_shell *data, t_tokens *token)
+{
+	if (token->class == QUOTE || token->class == DQUOTE)
+	{
+		if (data->stat == INDQUOTE || data->stat == INQUOTE)
+			data->stat = GENERAL;
+		else if (token->class == DQUOTE)
+			data->stat = INDQUOTE;
+		else if (token->class == QUOTE)
+			data->stat = INQUOTE;
+	}
+	token->stat = data->stat;
+}
+
 char	*token_string(char *string, int *index)
 {
 	int		i;
@@ -81,7 +95,7 @@ char	*token_string(char *string, int *index)
 	return (meta_char_string(string, index));
 }
 
-t_tokens	*init_token(t_shell *data, char *line, int *index)
+t_tokens	*init_token(t_shell *data, char *line, int *index, int t)
 {
 	char		*string;
 	t_tokens	*token;
@@ -92,18 +106,36 @@ t_tokens	*init_token(t_shell *data, char *line, int *index)
 	token = tokennew(string);
 	if (!token)
 		return (ft_putendl_fd(ERR_MAL, 2), NULL);
-	token_class(token);
-	if (token->class == QUOTE || token->class == DQUOTE)
+	if (!t)
 	{
-		if (data->stat == INDQUOTE || data->stat == INQUOTE)
-			data->stat = GENERAL;
-		else if (token->class == DQUOTE)
-			data->stat = INDQUOTE;
-		else if (token->class == QUOTE)
-			data->stat = INQUOTE;
+		token_class(token);
+		token_stat(data, token);
 	}
-	token->stat = data->stat;
+	else
+	{
+		if (!ft_strcmp(token->string, " "))
+			token->class = WHITESPACE;
+		else
+			token->class = WORD;
+		token->stat = GENERAL;
+	}
 	return (token);
+}
+
+int	env_lexer(t_shell *data, char *line)
+{
+	int			index;
+	t_tokens	*token;
+
+	index = 0;
+	while (line[index])
+	{
+		token = init_token(data, line, &index, 1);
+		if (!token)
+			return (1);
+		tokenadd_back(&data->tokens, token);
+	}
+	return (0);
 }
 
 /*
@@ -119,10 +151,17 @@ int	lexer(t_shell *data)
 	index = 0;
 	while (data->line[index])
 	{
-		token = init_token(data, data->line, &index);
+		token = init_token(data, data->line, &index, 0);
 		if (!token)
 			return (1);
-		tokenadd_back(&data->tokens, token);
+		if (token->class == ENV && token->stat == GENERAL)
+		{
+			expand(data, token);
+			env_lexer(data, token->string);
+			tokenclear(&token);
+		}
+		else
+			tokenadd_back(&data->tokens, token);
 	}
 	return (0);
 }

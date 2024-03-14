@@ -87,8 +87,6 @@ void	minishell(t_shell *data)
 	if (check_syntax(data))
 		return ;
 	command_tree(data);
-	// fonction_mli7a(data);
-	printf("%d\n", data->number_of_commands);
 	execute(data);
 }
 
