@@ -2,9 +2,10 @@ SRC				=	srcs/main.c  \
 					srcs/error.c  \
 					parse/lexer.c \
 					parse/parse.c \
-					parse/minifun.c \
 					parse/expand.c \
 					parse/syntax.c \
+					parse/minifun.c \
+					parse/classify.c \
 					parse/env_lists.c \
 					parse/token_lists.c \
 					parse/command_tree.c \
@@ -32,7 +33,7 @@ OBJ				=	$(SRC:.c=.o)
 CFLAGS			=	-Wall -Wextra -Werror -g
 READLINE		=	-lreadline
 
-all: $(NAME) clean
+all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADERS)
 	@make -C libft
