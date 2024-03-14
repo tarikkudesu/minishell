@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 19:34:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:03:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,12 @@ void fonction_mli7a(t_shell *data)
 		token = token->right;
 	}
 }
-char	**get_args(t_tokens *branch)
-{
-	char	*arg;
-	char	*to_free;
-
-	to_free = NULL;
-	arg = NULL;
-	while (branch)
-	{
-		if (branch->class == WORD)
-		{
-			to_free = arg;
-			arg = ft_strjoin(branch->string, " ");
-			if (!arg)
-				return (NULL);
-			if (to_free)
-				free(to_free);
-		}
-		branch = branch->right;
-	}
-	return (ft_split(arg, ' '));
-}
 
 void	minishell(t_shell *data)
 {
 	if (lexer(data))
 		return ;
+	fonction_mli7a(data);
 	if (pars(data))
 		return ;
 	if (check_syntax(data))
@@ -105,6 +84,7 @@ void	read_line(t_shell *data)
 			add_history(line);
 			data->line = line;
 			minishell(data);
+			data->stat = GENERAL;
 			clear_command_tree(&data->tokens);
 			clear_command_tree(&data->tree);
 		}
@@ -117,8 +97,8 @@ void	read_line(t_shell *data)
 void	init_data(t_shell *data, char **env)
 {
 	data->number_of_commands = 0;
-	data->stat = GENERAL;
 	data->env_list = NULL;
+	data->stat = GENERAL;
 	get_env(data, env);
 	data->tokens = NULL;
 	data->pipes = NULL;
@@ -126,7 +106,6 @@ void	init_data(t_shell *data, char **env)
 	data->line = NULL;
 	data->pids = NULL;
 	data->status = 0;
-	data->split = 0;
 	data->env = env;
 }
 

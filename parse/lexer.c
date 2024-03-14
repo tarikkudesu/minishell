@@ -6,11 +6,34 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 12:36:34 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:46:03 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	check_quoting(char *str)
+{
+	int	c;
+
+	while (*str)
+	{
+		c = 0;
+		if (*str == '\'' || *str == '"')
+		{
+			c = *str;
+			str++;
+			while (*str && *str != c)
+				str++;
+			if (!*str)
+				return (ft_putendl_fd("Error : unclosed quotes", 2), 1);
+			str++;
+		}
+		else
+			str++;
+	}
+	return (0);
+}
 
 char	*token_string(char *string, int *index)
 {
@@ -89,6 +112,8 @@ int	lexer(t_shell *data)
 	t_tokens	*token;
 
 	index = 0;
+	if (check_quoting(data->line))
+		return (1);
 	while (data->line[index])
 	{
 		token = init_token(data, data->line, &index, 0);

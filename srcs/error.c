@@ -6,13 +6,30 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:39:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/11 10:24:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/14 13:10:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_2d(char **free2d)
+void	my_free(char *ptr)
+{
+	if (ptr)
+		free(ptr);
+	ptr = NULL;
+}
+
+void	free_2d_int(int **free2d)
+{
+	int	i;
+
+	i = -1;
+	while (free2d[++i])
+		free(free2d[i]);
+	free(free2d);
+}
+
+void	free_2d_char(char **free2d)
 {
 	int	i;
 

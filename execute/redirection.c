@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/12 17:13:07 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:29:00 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	red_process(t_tokens *token, int input, int output, int *nbr)
 {
 	while (token && token->class != PIPE)
 	{
-		if (token->class == APPEND)
+		if (token->class == APPEND && token->stat == GENERAL)
 			(append_red(token->right->string, output),
 				token = token->right);
 		else if (token->class == OUT_RED)
@@ -84,7 +84,7 @@ void	red_process(t_tokens *token, int input, int output, int *nbr)
 			token = token->right;
 			herdoc_red(token->string, input);
 		}
-		else if (token->class == WORD)
+		else// if (token->class == WORD || token->class == ENV)
 			(*nbr)++;
 		token = token->right;
 	}

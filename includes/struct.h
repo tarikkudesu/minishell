@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/12 17:48:45 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:02:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ struct	s_shell
 	int			number_of_commands;
 	int			status;
 	t_stat		stat;
-	t_stat		split;
 };
 
 #endif

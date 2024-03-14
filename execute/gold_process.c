@@ -6,7 +6,7 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/11 00:29:21 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:28:03 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ static	char	**get_args(t_tokens *token, int nbr_arg)
 	char	**args;
 	int		i;
 
-	i = 0;
+	i = -1;
 	args = malloc(sizeof(char *) * (nbr_arg + 1));
 	if (!args)
 		ft_throw("ERROR_MALLOC_GET_ARGS", 1);
-	while (token && token->string[0] != '|')
+	while (++i < nbr_arg)
 	{
-		if (token->class == WORD)
+		// printf(">>>>%d-------%c----%d<<<<\n", i, token->class, nbr_arg);
+		if (token->class == WORD || token->class == ENV)
 		{
 			args[i] = ft_strdup(token->string);
-			if (!args[i++])
+			if (!args[i])
 				ft_throw("ERROR_STRDUP_GET_ARGS", 1);
 		}
 		else if (token->class != PIPE && token->right->string[0] != '|')
@@ -47,6 +48,7 @@ static	void	ft_execve(t_shell *data, char **cmd_arg, int input, int output)
 	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0)
 		ft_throw(strerror(errno), 1);
 	execve(abs_path, cmd_arg, data->env);
+	free_2d_char(cmd_arg);
 	ft_throw(strerror(errno), 128);
 }
 

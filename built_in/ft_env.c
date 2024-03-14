@@ -6,7 +6,7 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:43 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 23:45:44 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:01:32 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	ft_env(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		ft_putstr_fd(tmp->name, 1);
-		ft_putstr_fd("=", 1);
-		ft_putendl_fd(tmp->value, 1);
+		if (tmp->name)
+			printf("%s", tmp->name);
+		if (tmp->value)
+			printf("\"=%s\"", tmp->value);
+		printf("\n");
 		tmp = tmp->next;
 	}
 }
