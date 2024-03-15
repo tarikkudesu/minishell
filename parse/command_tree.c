@@ -6,37 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:45:41 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 12:39:44 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:46:26 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-void d(int i) {
-    while (i-- >= 0)
-        printf("\t");
-}
-
-void    print_branch(t_tokens *cmd, int i) {
-    while (cmd) {
-        d(i);
-        printf("%s [%c] [%c]\n", cmd->string, cmd->class, cmd->stat);
-        cmd = cmd->right;
-    }
-}
-
-void    print_tree(t_tokens *tree)
-{
-    int i = 0;
-	while (tree)
-	{
-		print_branch(tree, i);
-		tree = tree->left;
-		i++;
-	}
-}
-*/
 
 void	command_tree(t_shell *data)
 {

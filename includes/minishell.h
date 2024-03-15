@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 14:33:33 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:44:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 char		*meta_char_string(char *string, int *index);
 void		token_stat(t_shell *data, t_tokens *token);
-void		expand(t_shell *data, t_tokens *token);
+int			expand(t_shell *data, t_tokens *token);
 int			class_operator(t_tokens *token);
 int			ft_strcmp(char *s1, char *s2);
 void		token_class(t_tokens *token);
@@ -85,5 +85,12 @@ t_tokens	*tokennew(char *content);
 
 // remember to remove this
 void fonction_mli7a(t_shell *data);
+
+
+/* FUNCTIONS */
+void    print_tree(t_tokens *tree);
+void c();
+void f();
+void s();
 
 #endif

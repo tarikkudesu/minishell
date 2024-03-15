@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 14:46:03 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:51:04 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_tokens	*init_token(t_shell *data, char *line, int *index, int t)
 		return (ft_putendl_fd(ERR_MAL, 2), NULL);
 	token = tokennew(string);
 	if (!token)
-		return (ft_putendl_fd(ERR_MAL, 2), NULL);
+		return (free(string), ft_putendl_fd(ERR_MAL, 2), NULL);
 	if (!t)
 	{
 		token_class(token);
@@ -95,7 +95,7 @@ int	env_lexer(t_shell *data, char *line)
 	{
 		token = init_token(data, line, &index, 1);
 		if (!token)
-			return (1);
+			return (throw_error(ERR_MAL));
 		tokenadd_back(&data->tokens, token);
 	}
 	return (0);
@@ -118,11 +118,11 @@ int	lexer(t_shell *data)
 	{
 		token = init_token(data, data->line, &index, 0);
 		if (!token)
-			return (1);
+			return (throw_error(ERR_MAL));
 		if (token->class == ENV && token->stat == GENERAL)
 		{
-			expand(data, token);
-			env_lexer(data, token->string);
+			if (expand(data, token) || env_lexer(data, token->string))
+				return (1);
 			tokenclear(&token);
 		}
 		else

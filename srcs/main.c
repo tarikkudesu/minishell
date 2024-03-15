@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 14:43:58 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:13:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 void	minishell(t_shell *data)
 {
-	if (lexer(data))
+	if (lexer(data) || pars(data) || check_syntax(data))
 		return ;
-	// if (pars(data))
-		// return ;
-	// if (check_syntax(data))
-		// return ;
-	// fonction_mli7a(data);
-	// command_tree(data);
-	// execute(data);
+	command_tree(data);
+	print_tree(data->tree);
+	execute(data);
 	clear_command_tree(&data->tokens);
 	clear_command_tree(&data->tree);
 }
@@ -43,12 +39,12 @@ void	read_line(t_shell *data)
 			data->line = line;
 			data->stat = GENERAL;
 			minishell(data);
-			exit(1);
 		}
 		free(line);
 		line = NULL;
 		data->line = NULL;
 	}
+	env_clear(&data->env_list);
 }
 
 void	init_data(t_shell *data, char **env)
@@ -68,11 +64,14 @@ void	init_data(t_shell *data, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_shell	data;
-
+// atexit(f);
 	(void)av;
 	if (ac != 1)
 		throw_error("minishell accepts no arguments");
 	init_data(&data, env);
-	// signals();
+	signals();
 	read_line(&data);
+	clear_command_tree(&data.tokens);
+	clear_command_tree(&data.tree);
+	env_clear(&data.env_list);
 }

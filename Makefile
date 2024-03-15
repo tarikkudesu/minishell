@@ -23,7 +23,8 @@ SRC				=	srcs/main.c  \
 					execute/heredoc.c 				   \
 					execute/redirection.c               \
 					execute/gold_process.c		         \
-					execute/path_processing.c
+					execute/path_processing.c \
+					functions.c
 
 GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'

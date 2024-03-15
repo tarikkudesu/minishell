@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 09:59:46 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:41:24 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*join_tokens(t_shell *data, t_tokens **tmp, char *string)
 	char		*to_free;
 
 	if ((*tmp)->class == ENV && (*tmp)->stat != INQUOTE)
-		expand(data, *tmp);
+		if (expand(data, *tmp))
+			return (NULL);
 	to_free = string;
 	string = ft_strjoin(string, (*tmp)->string);
 	if (!string)
@@ -32,7 +33,7 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class)
 
 	token = tokennew(string);
 	if (!token)
-		return (ft_putendl_fd(ERR_MAL, 2), 1);
+		return (free(string), throw_error(ERR_MAL));
 	if (class->stat == GENERAL)
 		token->class = class->class;
 	else
@@ -47,8 +48,6 @@ int	leaf(t_shell *data, t_tokens **tmp, char **string)
 
 	class = *tmp;
 	*tmp = (*tmp)->right;
-	if (class_operator(class))
-		return (init_leaf(data, *string, class));
 	while (*tmp)
 	{
 		if (skip(*tmp))
@@ -77,7 +76,8 @@ int	pars(t_shell *data)
 		if (add(tmp))
 		{
 			if (tmp->class == ENV && tmp->stat != INQUOTE)
-				expand(data, tmp);
+				if (expand(data, tmp))
+					return (1);
 			string = ft_strdup(tmp->string);
 			if (!string)
 				return (ft_putendl_fd(ERR_MAL, 2), 1);

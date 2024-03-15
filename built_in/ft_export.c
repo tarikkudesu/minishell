@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:05:03 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 14:28:07 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:22:58 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ void	ft_export(t_shell *data, t_env **env, char **to_add, int add)
 		(sort_list(tmp), env_clear(&tmp));
 	}
 	data->status = 0;
-	if (data->number_of_commands > 0)
+	if (data->number_of_commands > 1)
 		exit(0);
 }

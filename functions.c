@@ -6,11 +6,47 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:30:42 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 14:31:05 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:41:50 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+
+void d(int i) {
+    while (i-- >= 0)
+        printf("\t");
+}
+
+void    print_branch(t_tokens *cmd, int i) {
+    while (cmd) {
+        d(i);
+        printf("%s [%c] [%c]\n", cmd->string, cmd->class, cmd->stat);
+        cmd = cmd->right;
+    }
+}
+
+void    print_tree(t_tokens *tree)
+{
+    int i = 0;
+	while (tree)
+	{
+		print_branch(tree, i);
+		tree = tree->left;
+		i++;
+	}
+}
+
+void c() {system("lsof -c minishell");}
+void f() {system("leaks minishell");}
+
+void s() {
+	for (int i = 0; i < FD_SETSIZE; i++) {
+		if (fcntl(i, F_GETFD) != -1) {
+			dprintf(2, "%d : %d is open\n", getpid(), i);
+		}
+	}
+}
 
 void fonction_mli7a(t_shell *data)
 {

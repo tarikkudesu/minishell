@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:13:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 13:59:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:24:17 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ void	ft_echo(t_shell *data, char **argument)
 	if (!b)
 		write(1, "\n", 1);
 	data->status = 0;
-	if (data->number_of_commands > 0)
+	if (data->number_of_commands > 1)
 		exit(0);
 }
-
-// int	main(int ac, char **av) // to delete it
-// {
-// 	if (ac)
-// 		ft_echo(av + 1);
-// }
