@@ -6,36 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 10:03:21 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:33:43 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	get_env(t_shell *data, char **env)
-{
-	int		i;
-	char	*name;
-	char	*value;
-	char	*start;
-	t_env	*node;
-
-	i = -1;
-	while (env[++i])
-	{
-		start = ft_strchr(env[i], '=');
-		name = ft_substr(env[i], 0, (start - env[i]));
-		if (!name)
-			throw_error("ERROR_SUBSTR_GET_ENV");
-		value = ft_strdup(start + 1);
-		if (!value)
-			throw_error("ERROR_STRDUP_GET_ENV");
-		node = env_new(name, value);
-		if (!node)
-			throw_error("ERROR_ENV_NEW_GET_ENV");
-		env_add_back(&data->env_list, node);
-	}
-}
 
 void fonction_mli7a(t_shell *data)
 {

@@ -3,42 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:22:07 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/13 17:33:04 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:33:01 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_unset(t_env **env, char **vars)
+void	remove_one(t_env **env, char *var)
 {
-	t_env	*node;
 	t_env	*to_rm;
+	t_env	*node;
+
+	node = *env;
+	while (node)
+	{
+		if (!ft_strcmp(node->name, var))
+		{
+			to_rm = node;
+			if (node->prev)
+				node->prev->next = node->next;
+			else
+				*env = (*env)->next;
+			if (node->next)
+				node->next->prev = node->prev;
+			(my_free(to_rm->value), my_free(to_rm->name),
+				free(to_rm), to_rm = NULL);
+			break ;
+		}
+		node = node->next;
+	}
+}
+
+void	ft_unset(t_shell *data, t_env **env, char **vars)
+{
 	int		i;
 
 	i = -1;
 	while (vars[++i])
-	{
-		node = *env;
-		while (node)
-		{
-			if (!ft_strcmp(node->name, vars[i]))
-			{
-				to_rm = node;
-				if (node->prev)
-					node->prev->next = node->next;
-				else
-					*env = (*env)->next;
-				if (node->next)
-						node->next->prev = node->prev;
-				(my_free(to_rm->value), my_free(to_rm->name), free(to_rm), to_rm = NULL);
-				break ;
-			}
-			node = node->next;
-		}
-	}
+		remove_one(env, vars[i]);
+	data->status = 0;
+	env_to_array(data->env_list);
 }
 
 // int	main()

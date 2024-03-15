@@ -6,86 +6,89 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/13 11:29:00 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:57:33 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	input_red(char *file, int input)
+static int	input_red(char *file, int input)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		ft_throw("ERROR_OPEN_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_OPEN_REDIRECTION_PROCESS"), -1);
 	if (dup2(fd, input) < 0)
-		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
 	if (-1 == close(fd))
-		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+	return (0);
 }
 
-static void	output_red(char *file, int output)
+static int	output_red(char *file, int output)
 {
 	int	fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		ft_throw("ERROR_OPEN_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_OPEN_REDIRECTION_PROCESS"), -1);
 	if (dup2(fd, output) < 0)
-		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
 	if (-1 == close(fd))
-		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+	return (0);
 }
 
-static void	append_red(char *file, int output)
+static int	append_red(char *file, int output)
 {
 	int	fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		ft_throw("ERROR_OPEN_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_OPEN_REDIRECTION_PROCESS"), -1);
 	if (dup2(fd, output) < 0)
-		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
 	if (-1 == close(fd))
-		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+	return (0);
 }
 
-static	void	herdoc_red(char *eof, int input)
+static	int	herdoc_red(char *eof, int input)
 {
 	int	fd;
 
 	fd = heredoc(eof);
 	if (dup2(fd, input) < 0)
-		ft_throw("ERROR_DUP2_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
 	if (close(fd) < 0)
-		ft_throw("ERROR_CLOSE_REDIRECTION_PROCESS", 1);
+		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+	return (0);
 }
 
-void	red_process(t_tokens *token, int input, int output, int *nbr)
+int	red_process(t_tokens *token, int input, int output, int *nbr)
 {
+	int	i;
+
+	i = 0;
 	while (token && token->class != PIPE)
 	{
-		if (token->class == APPEND) // removed token->stat == GENERAL
-			(append_red(token->right->string, output),
+		if (token->class == APPEND && token->stat == GENERAL)
+			((i = append_red(token->right->string, output)),
+					(token = token->right));
+		else if (token->class == OUT_RED && token->stat == GENERAL)
+			((i = output_red(token->right->string, output)),
+				(token = token->right));
+		else if (token->class == IN_RED && token->stat == GENERAL)
+			((i = input_red(token->right->string, input)),
 				token = token->right);
-		else if (token->class == OUT_RED)
-		{
-			token = token->right;
-			output_red(token->string, output);
-		}
-		else if (token->class == IN_RED)
-		{
-			token = token->right;
-			input_red(token->string, input);
-		}
-		else if (token->class == HEREDOC)
-		{
-			token = token->right;
-			herdoc_red(token->string, input);
-		}
-		else // if (token->class == WORD || token->class == ENV)
+		else if (token->class == HEREDOC && token->stat == GENERAL)
+			((i = herdoc_red(token->right->string, input)), token = token->right);
+		else
 			(*nbr)++;
 		token = token->right;
+		if (i < 0)
+			return (-1);
 	}
+	return (0);
 }

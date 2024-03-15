@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:36:29 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/14 13:17:25 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:29:53 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,21 @@ int	is_builtin(char *string)
 void	exec_builtin(t_shell *data, char **cmd_arg)
 {
 	if (!ft_strcmp(cmd_arg[0], "echo"))
-		ft_echo(cmd_arg + 1);
+		ft_echo(data, cmd_arg + 1);
 	else if (!ft_strcmp(cmd_arg[0], "cd") && cmd_arg[1])
-		ft_cd(cmd_arg[1]);
+		ft_cd(data, cmd_arg[1]);
 	else if (!ft_strcmp(cmd_arg[0], "cd"))
-		ft_cd(NULL);
+		ft_cd(data, NULL);
 	else if (!ft_strcmp(cmd_arg[0], "pwd"))
 		ft_pwd(data);
 	else if (!ft_strcmp(cmd_arg[0], "env"))
-		ft_env(data->env_list);
+		ft_env(data, data->env_list);
 	else if (!ft_strcmp(cmd_arg[0], "unset"))
-		ft_unset(&data->env_list, cmd_arg + 1);
+		ft_unset(data, &data->env_list, cmd_arg + 1);
 	else if (!ft_strcmp(cmd_arg[0], "export") && cmd_arg[1])
-		ft_export(&data->env_list, cmd_arg + 1, 1);
+		ft_export(data, &data->env_list, cmd_arg + 1, 1);
 	else if (!ft_strcmp(cmd_arg[0], "export"))
-		ft_export(&data->env_list, NULL, 0);
+		ft_export(data, &data->env_list, NULL, 0);
 	else if (!ft_strcmp(cmd_arg[0], "exit"))
 		ft_exit(cmd_arg);
 	free_2d_char(cmd_arg);

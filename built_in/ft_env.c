@@ -6,13 +6,13 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:43 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/13 16:01:32 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:25:10 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_env(t_env *env)
+void	ft_env(t_shell *data, t_env *env)
 {
 	t_env	*tmp;
 
@@ -26,4 +26,5 @@ void	ft_env(t_env *env)
 		printf("\n");
 		tmp = tmp->next;
 	}
+	data->status = 0;
 }

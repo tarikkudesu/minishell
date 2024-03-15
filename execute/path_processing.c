@@ -6,7 +6,7 @@
 /*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:24:04 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/10 23:04:48 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:54:16 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*absolute_path(char	*cmd, char **env)
 		return (cmd);
 	path = get_path(env);
 	if (!path)
-		ft_throw("ERROR_GET_PATH_PATH_PROCESSING", 1);
+		ft_throw("minishell: command not found", 127);
 	tmp_char = ft_strjoin("/", cmd);
 	if (!tmp_char)
 		ft_throw("ERROR_JOIN_CMD_/", 1);

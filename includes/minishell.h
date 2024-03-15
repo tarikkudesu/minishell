@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 13:35:13 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:37:19 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "struct.h"
 # include "macros.h"
+# include "execute.h"
 # include "../libft/libft.h"
 
 # include <fcntl.h>
@@ -81,29 +82,5 @@ int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
 
 /*------------------end_token_operation-----------------*/
-
-/*-------------------execute_operations-----------------*/
-void		process(t_shell *data, t_tokens *token, int input, int output);
-void		red_process(t_tokens *token, int input, int output, int *nbr);
-void		exec_builtin(t_shell *data, char **cmd_argd);
-char		*absolute_path(char	*cmd, char **env);
-int			is_builtin(char *string);
-void		execute(t_shell *data);
-int			heredoc(char *del);
-void		signals(void);
-
-/*-----------------end_execute_operations---------------*/
-
-/*--------------------built_in_command------------------*/
-
-void	    ft_export(t_env **env, char **to_add, int add);
-void	    ft_unset(t_env **env, char **vars);
-void	    ft_echo(char **argument);
-void	    ft_pwd(t_shell *data);
-void		ft_exit(char **args);
-void	    ft_env(t_env *env);
-void	    ft_cd(char *path);
-
-/*------------------end_built_in_command----------------*/
 
 #endif
