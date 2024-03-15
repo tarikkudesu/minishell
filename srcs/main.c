@@ -69,6 +69,13 @@ void	minishell(t_shell *data)
 	execute(data);
 }
 
+void	print_env(char **env)
+{
+	for (int i = 0; env[i]; i++) {
+		printf("\033[33m%s\033[0m\n", env[i]);
+	}
+}
+
 void	read_line(t_shell *data)
 {
 	char	*line;
@@ -84,6 +91,7 @@ void	read_line(t_shell *data)
 			add_history(line);
 			data->line = line;
 			minishell(data);
+			// print_env(env_to_array(data->env_list));
 			data->stat = GENERAL;
 			clear_command_tree(&data->tokens);
 			clear_command_tree(&data->tree);

@@ -65,6 +65,7 @@ void		env_add_back(t_env **linked, t_env *node);
 void		get_env(t_shell *data, char **env);
 t_env		*env_new(char *name, char *value);
 void		env_clear(t_env **env);
+int	        env_size(t_env *env);
 void	    print(t_env *env);
 
 /*--------------end_environement_operation--------------*/
@@ -105,6 +106,8 @@ void	    ft_cd(char *path);
 
 
 /* FUNCTIONS */
+int	env_size(t_env *env);
+char	**env_to_array(t_env *env_list);
 int	class_operator(t_tokens *token);
 
 #endif

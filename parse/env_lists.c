@@ -68,3 +68,18 @@ void	env_clear(t_env **env)
 		tmp = *env;
 	}
 }
+
+int	env_size(t_env *env)
+{
+	int	i;
+
+	if (!env)
+		return (0);
+	i = 1;
+	while (env->next)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
