@@ -66,7 +66,7 @@ void	red_process(t_tokens *token, int input, int output, int *nbr)
 {
 	while (token && token->class != PIPE)
 	{
-		if (token->class == APPEND && token->stat == GENERAL)
+		if (token->class == APPEND) // removed token->stat == GENERAL
 			(append_red(token->right->string, output),
 				token = token->right);
 		else if (token->class == OUT_RED)
@@ -84,7 +84,7 @@ void	red_process(t_tokens *token, int input, int output, int *nbr)
 			token = token->right;
 			herdoc_red(token->string, input);
 		}
-		else// if (token->class == WORD || token->class == ENV)
+		else // if (token->class == WORD || token->class == ENV)
 			(*nbr)++;
 		token = token->right;
 	}

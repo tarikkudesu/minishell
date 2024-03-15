@@ -12,26 +12,49 @@
 
 #include "../includes/minishell.h"
 
+// static	char	**get_args(t_tokens *token, int nbr_arg)
+// {
+// 	char	**args;
+// 	int		i;
+
+// 	i = -1;
+// 	args = malloc(sizeof(char *) * (nbr_arg + 1));
+// 	if (!args)
+// 		return (free_2d_char(args), ft_putendl_fd("ERROR_MALLOC_GET_ARGS", 2), NULL);
+// 		// ft_throw("ERROR_MALLOC_GET_ARGS", 1);
+// 	while (++i < nbr_arg)
+// 	{
+// 		if (token->class == WORD) // removed || token->class == ENV
+// 		{
+// 			args[i] = ft_strdup(token->string);
+// 			if (!args[i])
+// 				return (free_2d_char(args), ft_putendl_fd("ERROR_MALLOC_GET_ARGS", 2), NULL);
+// 				// ft_throw("ERROR_STRDUP_GET_ARGS", 1);
+// 		}
+// 		token = token->right;
+// 	}
+// 	args[i] = NULL;
+// 	return (args);
+// }
+
 static	char	**get_args(t_tokens *token, int nbr_arg)
 {
 	char	**args;
 	int		i;
 
-	i = -1;
 	args = malloc(sizeof(char *) * (nbr_arg + 1));
 	if (!args)
-		ft_throw("ERROR_MALLOC_GET_ARGS", 1);
-	while (++i < nbr_arg)
+		return (free_2d_char(args), ft_putendl_fd("ERROR_MALLOC_GET_ARGS", 2), NULL);
+	i = 0;
+	while (token)
 	{
-		// printf(">>>>%d-------%c----%d<<<<\n", i, token->class, nbr_arg);
-		if (token->class == WORD || token->class == ENV)
+		if (token->class == WORD)
 		{
 			args[i] = ft_strdup(token->string);
 			if (!args[i])
-				ft_throw("ERROR_STRDUP_GET_ARGS", 1);
+				return (free_2d_char(args), ft_putendl_fd("ERROR_MALLOC_GET_ARGS", 2), NULL);
+			i++;
 		}
-		else if (token->class != PIPE && token->right->string[0] != '|')
-			token = token->right;
 		token = token->right;
 	}
 	args[i] = NULL;
@@ -47,7 +70,7 @@ static	void	ft_execve(t_shell *data, char **cmd_arg, int input, int output)
 		ft_throw(strerror(errno), 1);
 	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0)
 		ft_throw(strerror(errno), 1);
-	execve(abs_path, cmd_arg, data->env);
+	execve(abs_path, cmd_arg, env_to_array(data->env_list)); // data->env
 	free_2d_char(cmd_arg);
 	ft_throw(strerror(errno), 128);
 }

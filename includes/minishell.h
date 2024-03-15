@@ -35,6 +35,7 @@
 char	    *meta_char_string(char *string, int *index);
 void	    token_stat(t_shell *data, t_tokens *token);
 void	    expand(t_shell *data, t_tokens *token);
+int	        class_operator(t_tokens *token);
 int	        ft_strcmp(char *s1, char *s2);
 void	    token_class(t_tokens *token);
 void        token_class(t_tokens *token);
@@ -64,6 +65,7 @@ void		my_free(char *ptr);
 void		env_add_back(t_env **linked, t_env *node);
 void		get_env(t_shell *data, char **env);
 t_env		*env_new(char *name, char *value);
+char	    **env_to_array(t_env *env_list);
 void		env_clear(t_env **env);
 int	        env_size(t_env *env);
 void	    print(t_env *env);
@@ -103,11 +105,5 @@ void	    ft_env(t_env *env);
 void	    ft_cd(char *path);
 
 /*------------------end_built_in_command----------------*/
-
-
-/* FUNCTIONS */
-int	env_size(t_env *env);
-char	**env_to_array(t_env *env_list);
-int	class_operator(t_tokens *token);
 
 #endif
