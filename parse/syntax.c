@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 13:58:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 10:02:56 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	class_operator(t_tokens *token)
+int	class_operator(t_tokens *token)
 {
 	if (token->class == IN_RED || token->class == OUT_RED \
 		|| token->class == HEREDOC || token->class == APPEND \

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:43 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/12 17:09:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 09:54:03 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ int	add(t_tokens *token)
 	}
 	else if (token->stat != GENERAL)
 	{
-		if (token->class != QUOTE && token->class != DQUOTE)
+		if (token->stat == INDQUOTE && token->class == QUOTE)
+			return (1);
+		else if (token->stat == INQUOTE && token->class == DQUOTE)
+			return (1);
+		else if (token->class != QUOTE && token->class != DQUOTE)
 			return (1);
 	}
 	return (0);
@@ -52,13 +56,21 @@ int	add(t_tokens *token)
 
 int	skip(t_tokens *token)
 {
-	if (token->class == QUOTE || token->class == DQUOTE)
+	if (class_operator(token))
+		return (0);
+	if (token->stat == INDQUOTE && token->class == QUOTE)
+		return (0);
+	else if (token->stat == INQUOTE && token->class == DQUOTE)
+		return (0);
+	else if (token->class == QUOTE || token->class == DQUOTE)
 		return (1);
 	return (0);
 }
 
 int	keep(t_tokens *token)
 {
+	if (class_operator(token))
+		return (0);
 	if (token->class == WORD || token->class == ENV)
 		return (1);
 	else if (token->stat != GENERAL)

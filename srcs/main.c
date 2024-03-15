@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 14:03:05 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 10:03:21 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void fonction_mli7a(t_shell *data)
 		printf("\t\t[\033[1;32m\t%s\t\033[0m]\ttype : \t|\033[1;33m%c\033[0m|\t stat : |\033[1;34m%c\033[0m|\n", token->string, token->class, token->stat);
 		token = token->right;
 	}
-	printf("-------------------------------------------------------------------\n");
+	printf("------------------------------------------------------------\n");
 	token = data->tree;
 	while (token)
 	{
@@ -60,9 +60,9 @@ void	minishell(t_shell *data)
 {
 	if (lexer(data))
 		return ;
-	fonction_mli7a(data);
 	if (pars(data))
 		return ;
+	// fonction_mli7a(data);
 	if (check_syntax(data))
 		return ;
 	command_tree(data);
@@ -117,6 +117,6 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		throw_error("minishell accepts no arguments");
 	init_data(&data, env);
-	// signals();
+	signals();
 	read_line(&data);
 }

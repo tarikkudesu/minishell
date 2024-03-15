@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 14:07:26 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 09:59:46 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	leaf(t_shell *data, t_tokens **tmp, char **string)
 
 	class = *tmp;
 	*tmp = (*tmp)->right;
+	if (class_operator(class))
+		return (init_leaf(data, *string, class));
 	while (*tmp)
 	{
 		if (skip(*tmp))

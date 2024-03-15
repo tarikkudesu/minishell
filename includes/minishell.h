@@ -103,4 +103,8 @@ void	    ft_cd(char *path);
 
 /*------------------end_built_in_command----------------*/
 
+
+/* FUNCTIONS */
+int	class_operator(t_tokens *token);
+
 #endif

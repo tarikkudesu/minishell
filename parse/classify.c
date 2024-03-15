@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:32:32 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 12:33:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 09:39:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,17 @@ void	token_class(t_tokens *token)
 
 void	token_stat(t_shell *data, t_tokens *token)
 {
-	if (token->class == QUOTE || token->class == DQUOTE)
+	if (data->stat == GENERAL && (token->class == QUOTE \
+		|| token->class == DQUOTE))
 	{
-		if (data->stat == INDQUOTE || data->stat == INQUOTE)
-			data->stat = GENERAL;
-		else if (token->class == DQUOTE)
+		if (token->class == DQUOTE)
 			data->stat = INDQUOTE;
-		else if (token->class == QUOTE)
+		else
 			data->stat = INQUOTE;
 	}
+	else if (data->stat == INDQUOTE && token->class == DQUOTE)
+		data->stat = GENERAL;
+	else if (data->stat == INQUOTE && token->class == QUOTE)
+		data->stat = GENERAL;
 	token->stat = data->stat;
 }
