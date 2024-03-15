@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:05:03 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 13:33:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 14:28:07 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,24 +116,24 @@ void	ft_export(t_shell *data, t_env **env, char **to_add, int add)
 	int		i;
 
 	i = -1;
-	if (add)
+	while (add && to_add[++i])
 	{
-		while (to_add[++i])
-		{
-			splited = ft_split(to_add[i], '=');
-			if (!splited)
-				return (data->status = 1, perror("ERROR_SPLIT_EXPORT"));
-			if (splited[0][ft_strlen(splited[0]) - 1] == '+')
-				append(*env, splited);
-			else
-				(new_var(*env, splited), free(splited));
-		}
-		env_to_array(data->env_list);
+		splited = ft_split(to_add[i], '=');
+		if (!splited)
+			return (data->status = 1, perror("ERROR_SPLIT_EXPORT"));
+		if (splited[0][ft_strlen(splited[0]) - 1] == '+')
+			append(*env, splited);
+		else
+			(new_var(*env, splited), free(splited));
 	}
+	if (add)
+		data->env = env_to_array(data->env_list);
 	else
 	{
 		tmp = copy_list(*env);
 		(sort_list(tmp), env_clear(&tmp));
 	}
 	data->status = 0;
+	if (data->number_of_commands > 0)
+		exit(0);
 }

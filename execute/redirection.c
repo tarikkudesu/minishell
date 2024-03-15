@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/14 23:57:33 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:19:34 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,21 @@ static	int	herdoc_red(char *eof, int input)
 	return (0);
 }
 
-int	red_process(t_tokens *token, int input, int output, int *nbr)
+int	red_process(t_tokens *token, int input, int output)
 {
 	int	i;
 
 	i = 0;
-	while (token && token->class != PIPE)
+	while (token)
 	{
-		if (token->class == APPEND && token->stat == GENERAL)
-			((i = append_red(token->right->string, output)),
-					(token = token->right));
-		else if (token->class == OUT_RED && token->stat == GENERAL)
-			((i = output_red(token->right->string, output)),
-				(token = token->right));
-		else if (token->class == IN_RED && token->stat == GENERAL)
-			((i = input_red(token->right->string, input)),
-				token = token->right);
-		else if (token->class == HEREDOC && token->stat == GENERAL)
-			((i = herdoc_red(token->right->string, input)), token = token->right);
-		else
-			(*nbr)++;
+		if (token->class == APPEND)
+			i = append_red(token->right->string, output);
+		else if (token->class == OUT_RED)
+			i = output_red(token->right->string, output);
+		else if (token->class == IN_RED)
+			i = input_red(token->right->string, input);
+		else if (token->class == HEREDOC)
+			i = herdoc_red(token->right->string, input);
 		token = token->right;
 		if (i < 0)
 			return (-1);

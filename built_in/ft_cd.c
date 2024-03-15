@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:10:05 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/14 23:58:02 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:59:22 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ void	ft_cd(t_shell *data, char *path)
 	else if (chdir(path) < 0)
 		(perror("ERROR_CHANIGNG_DIRECTORY"), data->status = 1);
 	data->status = 0;
+	if (data->number_of_commands > 0)
+		exit(0);
 }

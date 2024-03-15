@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:22:07 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 13:33:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:59:07 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	ft_unset(t_shell *data, t_env **env, char **vars)
 		remove_one(env, vars[i]);
 	data->status = 0;
 	env_to_array(data->env_list);
+	if (data->number_of_commands > 0)
+		exit(0);
 }
 
 // int	main()

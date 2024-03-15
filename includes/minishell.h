@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 13:37:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 14:33:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@
 
 /*-----------------------parse-------------------------*/
 
-char	    *meta_char_string(char *string, int *index);
-void	    token_stat(t_shell *data, t_tokens *token);
-void	    expand(t_shell *data, t_tokens *token);
-int	        class_operator(t_tokens *token);
-int	        ft_strcmp(char *s1, char *s2);
-void	    token_class(t_tokens *token);
-void        token_class(t_tokens *token);
-void	    command_tree(t_shell *data);
-int	        check_syntax(t_shell *data);
-int	        skip(t_tokens *token);
-int	        keep(t_tokens *token);
-int	        add(t_tokens *token);
-int	        lexer(t_shell *data);
-int         pars(t_shell *data);
-int         meta_char(char c);
+char		*meta_char_string(char *string, int *index);
+void		token_stat(t_shell *data, t_tokens *token);
+void		expand(t_shell *data, t_tokens *token);
+int			class_operator(t_tokens *token);
+int			ft_strcmp(char *s1, char *s2);
+void		token_class(t_tokens *token);
+void		token_class(t_tokens *token);
+void		command_tree(t_shell *data);
+int			check_syntax(t_shell *data);
+int			skip(t_tokens *token);
+int			keep(t_tokens *token);
+int			add(t_tokens *token);
+int			lexer(t_shell *data);
+int			pars(t_shell *data);
+int			meta_char(char c);
 
 /*---------------------end_parse-----------------------*/
 
@@ -66,10 +66,10 @@ void		my_free(char *ptr);
 void		env_add_back(t_env **linked, t_env *node);
 void		get_env(t_shell *data, char **env);
 t_env		*env_new(char *name, char *value);
-char	    **env_to_array(t_env *env_list);
+char		**env_to_array(t_env *env_list);
 void		env_clear(t_env **env);
-int	        env_size(t_env *env);
-void	    print(t_env *env);
+int			env_size(t_env *env);
+void		print(t_env *env);
 
 /*--------------end_environement_operation--------------*/
 
@@ -82,5 +82,8 @@ int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
 
 /*------------------end_token_operation-----------------*/
+
+// remember to remove this
+void fonction_mli7a(t_shell *data);
 
 #endif

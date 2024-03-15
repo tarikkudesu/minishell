@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:39:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/14 13:10:23 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/15 14:33:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,3 @@ void	ft_throw(char *strerr, int status)
 	printf("%s\n", strerr);
 	exit(status);
 }
-
