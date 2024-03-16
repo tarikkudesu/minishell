@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:04:55 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 14:22:46 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 14:13:46 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int			red_process(t_tokens *token, int input, int output);
 
 /*--------------------built_in_command------------------*/
 
-void		ft_exit(char **args);
+void		ft_exit(t_shell *data, char **args);
 void		ft_pwd(t_shell *data);
 void		ft_cd(t_shell *data, char *path);
 void		ft_env(t_shell *data, t_env *env);
 void		ft_echo(t_shell *data, char **argument);
 void		ft_unset(t_shell *data, t_env **env, char **vars);
 void		ft_export(t_shell *data, t_env **env, char **to_add, int add);
+void		add_export(t_shell *data, t_env **env, char **to_add);
 
 /*------------------end_built_in_command----------------*/
 

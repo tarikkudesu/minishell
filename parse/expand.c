@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:28:01 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 15:52:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 12:38:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	expand(t_shell *data, t_tokens *token)
 
 	if (!ft_strcmp(token->string, "$"))
 		return (0);
-	else if (!ft_strcmp(token->string, "$?"))
+	else if (!ft_strncmp(token->string, "$?", 2))
 	{
 		string = token->string;
 		nbr = ft_itoa(data->status);

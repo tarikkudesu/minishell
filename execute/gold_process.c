@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gold_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 15:51:49 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:38:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static	char	**get_args(t_tokens *token)
 	args[i] = NULL;
 	return (args);
 }
-void	check(){system("leaks minishell");}
+
 static	void	ft_execve(t_shell *data, char **cmd_arg)
 {
 	char	*abs_path;
@@ -77,6 +77,8 @@ void	process(t_shell *data, t_tokens *token, int input, int output)
 	if (red_process(token, input, output) < 0)
 	{
 		data->status = 1;
+		if (data->number_of_commands > 1)
+			exit(1);
 		return ;
 	}
 	cmd_arg = get_args(token);

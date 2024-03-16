@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:43 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 15:22:49 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:37:48 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_env(t_shell *data, t_env *env)
 		if (tmp->name)
 			printf("%s", tmp->name);
 		if (tmp->value)
-			printf("\"=%s\"", tmp->value);
+			printf("=%s", tmp->value);
 		printf("\n");
 		tmp = tmp->next;
 	}

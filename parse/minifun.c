@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:43 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 15:26:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 12:33:19 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	meta_char(char c)
 
 int	add(t_tokens *token)
 {
-	if (token->class == WORD)
+	if (token->class == WORD || token->class == ENV)
 		return (1);
 	else if (token->stat == GENERAL)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:13:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 15:24:17 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:20:57 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void	ft_echo(t_shell *data, char **argument)
 	int	i;
 	int	b;
 
+	if (!argument[0])
+	{
+		ft_putstr_fd("\n", 1);
+		if (data->number_of_commands > 1)
+			exit(0);
+		return ;
+	}
 	i = -1;
 	while (argument[++i])
 		if (!is_echo_option(argument[i]))
