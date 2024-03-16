@@ -37,8 +37,9 @@ void	ft_echo(t_shell *data, char **argument)
 		if (!is_echo_option(argument[i]))
 			break ;
 	b = i;
-	while (argument[i])
+	while (argument[i + 1])
 		(ft_putstr_fd(argument[i], 1), ft_putstr_fd(" ", 1), i++);
+	ft_putstr_fd(argument[i], 1);
 	if (!b)
 		write(1, "\n", 1);
 	data->status = 0;

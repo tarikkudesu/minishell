@@ -17,7 +17,7 @@ void	minishell(t_shell *data)
 	if (lexer(data) || pars(data) || check_syntax(data))
 		return ;
 	command_tree(data);
-	print_tree(data->tree);
+	// print_tree(data->tree);
 	execute(data);
 	clear_command_tree(&data->tokens);
 	clear_command_tree(&data->tree);

@@ -36,6 +36,11 @@ int	add(t_tokens *token)
 {
 	if (token->class == WORD)
 		return (1);
+	else if (token->stat == GENERAL)
+	{
+		if (token->class != WHITESPACE && token->class != DQUOTE && token->class != QUOTE)
+			return (1);
+	}
 	else if (token->stat != GENERAL)
 	{
 		if (token->stat == INDQUOTE && token->class == QUOTE)
@@ -50,22 +55,16 @@ int	add(t_tokens *token)
 
 int	skip(t_tokens *token)
 {
-	if (class_operator(token))
-		return (0);
-	else if (token->stat == INDQUOTE && token->class == QUOTE)
-		return (0);
-	else if (token->stat == INQUOTE && token->class == DQUOTE)
-		return (0);
-	else if (token->class == QUOTE || token->class == DQUOTE)
+	if (token->stat == INDQUOTE && token->class == DQUOTE)
+		return (1);
+	else if (token->stat == INQUOTE && token->class == QUOTE)
 		return (1);
 	return (0);
 }
 
 int	keep(t_tokens *token)
 {
-	if (class_operator(token))
-		return (0);
-	else if (token->class == WORD || token->class == ENV)
+	if (token->stat == GENERAL && token->class == WORD)
 		return (1);
 	else if (token->stat != GENERAL)
 		return (1);

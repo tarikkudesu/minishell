@@ -48,6 +48,8 @@ int	leaf(t_shell *data, t_tokens **tmp, char **string)
 
 	class = *tmp;
 	*tmp = (*tmp)->right;
+	if (class_operator(class) && class->stat == GENERAL)
+		return (init_leaf(data, *string, class));
 	while (*tmp)
 	{
 		if (skip(*tmp))

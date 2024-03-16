@@ -21,7 +21,7 @@ void d(int i) {
 void    print_branch(t_tokens *cmd, int i) {
     while (cmd) {
         d(i);
-        printf("%s [%c] [%c]\n", cmd->string, cmd->class, cmd->stat);
+        printf("[\033[32m%s\033[0m] [%c] [%c]\n", cmd->string, cmd->class, cmd->stat);
         cmd = cmd->right;
     }
 }
