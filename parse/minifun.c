@@ -59,6 +59,10 @@ int	skip(t_tokens *token)
 		return (1);
 	else if (token->stat == INQUOTE && token->class == QUOTE)
 		return (1);
+	else if (token->stat == GENERAL && token->class == QUOTE)
+		return (1);
+	else if (token->stat == GENERAL && token->class == DQUOTE)
+		return (1);
 	return (0);
 }
 
