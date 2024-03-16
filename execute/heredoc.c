@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/12 17:55:29 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 17:55:13 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	heredoc(char *del)
 		ft_throw("ERRON_UNLINK_HERDOC", 1);
 	while (1)
 	{
-		ft_putstr_fd("here_doc > ", 1);
+		ft_putstr_fd("> ", 1);
 		line = readline("");
 		if (!line || (!ft_strcmp(line, del)))
 			break ;

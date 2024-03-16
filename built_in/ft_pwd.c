@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:17:02 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 15:24:53 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:02:52 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_pwd(t_shell *data)
 		(perror("pwd"), data->status = 1);
 	ft_putendl_fd(position, 1);
 	data->status = 0;
+	if (position)
+		free(position);
 	if (data->number_of_commands > 1)
 		exit(0);
 }

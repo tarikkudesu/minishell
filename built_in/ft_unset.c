@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 23:22:07 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 15:24:05 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:01:45 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_unset(t_shell *data, t_env **env, char **vars)
 	while (vars[++i])
 		remove_one(env, vars[i]);
 	data->status = 0;
-	env_to_array(data->env_list);
 	if (data->number_of_commands > 1)
 		exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 14:44:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:09:44 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ struct	s_shell
 	char		*line;
 	t_tokens	*tree;
 	int			**pipes;
-	int			*pids;
 	int			number_of_commands;
 	int			status;
 	t_stat		stat;

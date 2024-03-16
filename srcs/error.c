@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:39:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 14:33:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:12:02 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	my_free(char *ptr)
 	ptr = NULL;
 }
 
-void	free_2d_int(int **free2d)
+void	free_2d_int(int **free2d, int nb_pipe)
 {
 	int	i;
 
 	i = -1;
-	while (free2d[++i])
-		free(free2d[i]);
-	free(free2d);
+	while (++i < nb_pipe)
+		(free(free2d[i]), free2d[i] = NULL);
+	(free(free2d),free2d = NULL);
 }
 
 void	free_2d_char(char **free2d)
@@ -47,6 +47,6 @@ int	throw_error(char *str)
 
 void	ft_throw(char *strerr, int status)
 {
-	printf("%s\n", strerr);
+	ft_putendl_fd(strerr, 2);
 	exit(status);
 }

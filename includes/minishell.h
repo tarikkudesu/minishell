@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 14:05:45 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:12:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			meta_char(char c);
 
 void		ft_throw(char *strerr, int status);
 void		free_2d_char(char **free2d);
-void		free_2d_int(int **free2d);
+void		free_2d_int(int **free2d, int nb_pipe);
 int			throw_error(char *str);
 void		my_free(char *ptr);
 
@@ -88,6 +88,8 @@ void fonction_mli7a(t_shell *data);
 
 
 /* FUNCTIONS */
+void	ft_execve(t_shell *data, char **cmd_arg);
+int	red_process(t_tokens *token, int input, int output);
 void    print_tree(t_tokens *tree);
 void c();
 void f();

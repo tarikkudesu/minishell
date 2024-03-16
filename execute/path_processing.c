@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:24:04 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 16:52:16 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:50:59 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int	check_existance(char *file)
 
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
-		(printf("%s is directory\n", file), exit(126));
+		ft_throw(" is a directory", 126);
+	else if (access(file, F_OK))
+		ft_throw(" No such file or directory", 127);
 	else if (access(file, X_OK))
-		(printf("%s : Permission denied\n", file), exit(126));
+		ft_throw(" Permission denied", 126);
 	return (1);
 }
 
@@ -69,5 +71,5 @@ char	*absolute_path(char	*cmd, char **env)
 			return (free(tmp_char), try);
 		(free(try), try = NULL);
 	}
-	return (ft_throw("minishell: command not found", 127), NULL);
+	return (ft_throw(" command not found", 127), NULL);
 }

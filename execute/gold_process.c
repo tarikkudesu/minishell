@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 15:38:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 17:44:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static	int	get_args_nbr(t_tokens *token)
 	return (i);
 }
 
-static	char	**get_args(t_tokens *token)
+char	**get_args(t_tokens *token)
 {
 	char	**args;
 	int		i;
@@ -60,10 +60,10 @@ static	char	**get_args(t_tokens *token)
 	return (args);
 }
 
-static	void	ft_execve(t_shell *data, char **cmd_arg)
+void	ft_execve(t_shell *data, char **cmd_arg)
 {
 	char	*abs_path;
-	// atexit(check);
+
 	abs_path = absolute_path(cmd_arg[0], data->env);
 	execve(abs_path, cmd_arg, data->env);
 	free_2d_char(cmd_arg);
@@ -74,14 +74,9 @@ void	process(t_shell *data, t_tokens *token, int input, int output)
 {
 	char	**cmd_arg;
 
-	if (red_process(token, input, output) < 0)
-	{
-		data->status = 1;
-		if (data->number_of_commands > 1)
-			exit(1);
-		return ;
-	}
 	cmd_arg = get_args(token);
+	if (red_process(token, input, output) == -1)
+		exit(1);
 	dup_in_out(input, output);
 	if (is_builtin(cmd_arg[0]))
 		exec_builtin(data, cmd_arg);

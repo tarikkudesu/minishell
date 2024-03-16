@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:04:55 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 14:13:46 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:13:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		execute(t_shell *data);
 void		signals(void);
 int			heredoc(char *del);
 int			is_builtin(char *string);
+void		single_cmd(t_shell *data);
+char		**get_args(t_tokens *token);
 int			red_process(t_tokens *token, int input, int output);
 
 /*-----------------end_execute_operations---------------*/

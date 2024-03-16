@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 10:02:56 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/16 17:26:58 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_syntax(t_shell *data)
 {
 	t_tokens	*tmp;
 	t_tokens	*previous;
-
+	if (tokensize(data->tree) == 0)
+		return (1);
 	tmp = data->tree->right;
 	previous = data->tree;
 	if (previous->class == PIPE)

@@ -18,6 +18,7 @@ SRC				=	srcs/main.c  \
 					built_in/ft_unset.c	 	      \
 					built_in/ft_export.c		   \
 					built_in/export2.c \
+					execute/single_cmd.c \
 					execute/env_handling.c          \
 					execute/builtin.c         	     \
 					execute/execute.c                 \
