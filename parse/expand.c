@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	expand_variable(t_shell *data, t_tokens *token)
+static int	expand_variable(t_shell *data, t_tokens *token)
 {
 	char	*string;
 	t_env	*env;
@@ -28,7 +28,7 @@ int	expand_variable(t_shell *data, t_tokens *token)
 	{
 		string = ft_strdup(env->value);
 		if (!string)
-			return (throw_error(ERR_MAL));
+			return (1);
 		free(token->string);
 		token->string = string;
 		return (0);
@@ -36,7 +36,7 @@ int	expand_variable(t_shell *data, t_tokens *token)
 	free(token->string);
 	token->string = ft_strdup("");
 	if (!token->string)
-		return (throw_error(ERR_MAL));
+		return (1);
 	return (0);
 }
 
@@ -52,12 +52,12 @@ int	expand(t_shell *data, t_tokens *token)
 		string = token->string;
 		nbr = ft_itoa(data->status);
 		if (!nbr)
-			return (throw_error(ERR_MAL));
+			return (1);
 		token->string = ft_strjoin(nbr, token->string + 2);
 		free(string);
 		free(nbr);
 		if (!token->string)
-			return (throw_error(ERR_MAL));
+			return (1);
 	}
 	else
 		return (expand_variable(data, token));

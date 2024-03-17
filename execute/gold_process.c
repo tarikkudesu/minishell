@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 17:44:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:29:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**get_args(t_tokens *token)
 	i = 0;
 	while (token)
 	{
-		if (token->class == WORD)
+		if (token->class == WORD || token->class == ENV)
 		{
 			args[i] = ft_strdup(token->string);
 			if (!args[i])
@@ -75,7 +75,7 @@ void	process(t_shell *data, t_tokens *token, int input, int output)
 	char	**cmd_arg;
 
 	cmd_arg = get_args(token);
-	if (red_process(token, input, output) == -1)
+	if (red_process(data, token, input, output) == -1)
 		exit(1);
 	dup_in_out(input, output);
 	if (is_builtin(cmd_arg[0]))

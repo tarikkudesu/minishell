@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:50:34 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/15 13:32:15 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 13:55:30 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**env_to_array(t_env *env_list)
 	return (env);
 }
 
-void	get_env(t_shell *data, char **env)
+int	get_env(t_shell *data, char **env)
 {
 	int		i;
 	char	*name;
@@ -74,13 +74,14 @@ void	get_env(t_shell *data, char **env)
 		start = ft_strchr(env[i], '=');
 		name = ft_substr(env[i], 0, (start - env[i]));
 		if (!name)
-			throw_error("ERROR_SUBSTR_GET_ENV");
+			return (1);
 		value = ft_strdup(start + 1);
 		if (!value)
-			throw_error("ERROR_STRDUP_GET_ENV");
+			return (free(name), 1);
 		node = env_new(name, value);
 		if (!node)
-			throw_error("ERROR_ENV_NEW_GET_ENV");
+			return (free(name), free(value), 1);
 		env_add_back(&data->env_list, node);
 	}
+	return (0);
 }

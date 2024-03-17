@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 18:12:53 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:52:26 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int			ft_strcmp(char *s1, char *s2);
 void		token_class(t_tokens *token);
 void		token_class(t_tokens *token);
 void		command_tree(t_shell *data);
-int			check_syntax(t_shell *data);
+int			syntax(t_shell *data);
 int			skip(t_tokens *token);
-int			keep(t_tokens *token);
-int			add(t_tokens *token);
+int			exclude(t_tokens *token);
 int			lexer(t_shell *data);
 int			pars(t_shell *data);
 int			meta_char(char c);
@@ -64,7 +63,7 @@ void		my_free(char *ptr);
 /*----------------environement_operation---------------*/
 
 void		env_add_back(t_env **linked, t_env *node);
-void		get_env(t_shell *data, char **env);
+int 		get_env(t_shell *data, char **env);
 t_env		*env_new(char *name, char *value);
 char		**env_to_array(t_env *env_list);
 void		env_clear(t_env **env);
@@ -88,9 +87,11 @@ void fonction_mli7a(t_shell *data);
 
 
 /* FUNCTIONS */
+void	read_line(t_shell *data);
+int		heredoc(t_shell *data, char *del);
 void	ft_execve(t_shell *data, char **cmd_arg);
-int	red_process(t_tokens *token, int input, int output);
 void    print_tree(t_tokens *tree);
+
 void c();
 void f();
 void s();

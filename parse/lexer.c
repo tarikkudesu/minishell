@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 12:37:35 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:48:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_quoting(char *str)
 			while (*str && *str != c)
 				str++;
 			if (!*str)
-				return (ft_putendl_fd("Error : unclosed quotes", 2), 1);
+				return (1);
 			str++;
 		}
 		else
@@ -54,51 +54,20 @@ char	*token_string(char *string, int *index)
 	return (meta_char_string(string, index));
 }
 
-t_tokens	*init_token(t_shell *data, char *line, int *index, int t)
+t_tokens	*init_token(t_shell *data, char *line, int *index)
 {
 	char		*string;
 	t_tokens	*token;
 
 	string = token_string(line + *index, index);
 	if (!string)
-		return (ft_putendl_fd(ERR_MAL, 2), NULL);
+		return (NULL);
 	token = tokennew(string);
 	if (!token)
-		return (free(string), ft_putendl_fd(ERR_MAL, 2), NULL);
-	if (!t)
-	{
-		token_class(token);
-		token_stat(data, token);
-	}
-	else
-	{
-		if (!ft_strcmp(token->string, " "))
-			token->class = WHITESPACE;
-		else
-			token->class = WORD;
-		token->stat = GENERAL;
-	}
+		return (free(string), NULL);
+	token_class(token);
+	token_stat(data, token);
 	return (token);
-}
-
-/*
-	If the token is an envirement vaiable it expanded and broken into tokens
-	and added to the linked list.
-*/
-int	env_lexer(t_shell *data, char *line)
-{
-	int			index;
-	t_tokens	*token;
-
-	index = 0;
-	while (line[index])
-	{
-		token = init_token(data, line, &index, 1);
-		if (!token)
-			return (throw_error(ERR_MAL));
-		tokenadd_back(&data->tokens, token);
-	}
-	return (0);
 }
 
 /*
@@ -113,18 +82,12 @@ int	lexer(t_shell *data)
 
 	index = 0;
 	if (check_quoting(data->line))
-		return (1);
+		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2), 1);
 	while (data->line[index])
 	{
-		token = init_token(data, data->line, &index, 0);
+		token = init_token(data, data->line, &index);
 		if (!token)
 			return (throw_error(ERR_MAL));
-		if (token->class == ENV && token->stat == GENERAL)
-		{
-			if (expand(data, token) || env_lexer(data, token->string))
-				return (1);
-			tokenclear(&token);
-		}
 		else
 			tokenadd_back(&data->tokens, token);
 	}

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 17:26:58 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:17:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ int	class_operator(t_tokens *token)
 
 int	pars_error(t_shell *data)
 {
-	printf("pars error\n");
+	ft_putendl_fd(ERR_SYNTAX, 2);
 	data->status = 258;
 	return (1);
 }
 
-int	check_syntax(t_shell *data)
+int	syntax(t_shell *data)
 {
 	t_tokens	*tmp;
 	t_tokens	*previous;
+
 	if (tokensize(data->tree) == 0)
 		return (1);
 	tmp = data->tree->right;

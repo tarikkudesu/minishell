@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:04:55 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 16:13:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:28:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void		exec_builtin(t_shell *data, char **cmd_argd);
 char		*absolute_path(char	*cmd, char **env);
 void		execute(t_shell *data);
 void		signals(void);
-int			heredoc(char *del);
+// int			heredoc(char *del);
 int			is_builtin(char *string);
 void		single_cmd(t_shell *data);
 char		**get_args(t_tokens *token);
-int			red_process(t_tokens *token, int input, int output);
+int			red_process(t_shell *data, t_tokens *token, int input, int output);
 
 /*-----------------end_execute_operations---------------*/
 
@@ -43,14 +43,5 @@ void		ft_export(t_shell *data, t_env **env, char **to_add, int add);
 void		add_export(t_shell *data, t_env **env, char **to_add);
 
 /*------------------end_built_in_command----------------*/
-
-/*----------------environement_operation---------------*/
-
-void		env_add_back(t_env **linked, t_env *node);
-void		get_env(t_shell *data, char **env);
-t_env		*env_new(char *name, char *value);
-void		env_clear(t_env **env);
-
-/*--------------end_environement_operation--------------*/
 
 #endif

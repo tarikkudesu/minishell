@@ -13,6 +13,11 @@
 #ifndef MACROS_H
 # define MACROS_H
 
-# define ERR_MAL	"Error : malloc"
+# define ERR_ERG                "Error : minishell accepts no arguments"
+# define ERR_MAL	            "Error : malloc"
+# define ERR_OPEN	            "Error : open "
+# define ERR_UNLINK	            "Error : unlink "
+# define ERR_UNCLOSED_QUOTES    "Error : unclosed quotes"
+# define ERR_SYNTAX             "minishell : syntax error"
 
 #endif

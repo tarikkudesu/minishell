@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:43 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 12:33:19 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:11:29 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,6 @@ int	meta_char(char c)
 	return (0);
 }
 
-int	add(t_tokens *token)
-{
-	if (token->class == WORD || token->class == ENV)
-		return (1);
-	else if (token->stat == GENERAL)
-	{
-		if (token->class != WHITESPACE && token->class != DQUOTE && token->class != QUOTE)
-			return (1);
-	}
-	else if (token->stat != GENERAL)
-	{
-		if (token->stat == INDQUOTE && token->class == QUOTE)
-			return (1);
-		else if (token->stat == INQUOTE && token->class == DQUOTE)
-			return (1);
-		else if (token->class != QUOTE && token->class != DQUOTE)
-			return (1);
-	}
-	return (0);
-}
-
 int	skip(t_tokens *token)
 {
 	if (token->stat == INDQUOTE && token->class == DQUOTE)
@@ -66,11 +45,15 @@ int	skip(t_tokens *token)
 	return (0);
 }
 
-int	keep(t_tokens *token)
+
+int	exclude(t_tokens *token)
 {
-	if (token->stat == GENERAL && token->class == WORD)
-		return (1);
-	else if (token->stat != GENERAL)
-		return (1);
+	if (token->stat == GENERAL)
+	{
+		if (token->class == WHITESPACE || token->class == PIPE \
+			|| token->class == IN_RED || token->class == OUT_RED \
+			|| token->class == HEREDOC || token->class == APPEND)
+			return (1);
+	}
 	return (0);
 }

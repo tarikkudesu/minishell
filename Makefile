@@ -1,5 +1,6 @@
 SRC				=	srcs/main.c  \
 					srcs/error.c  \
+					srcs/minishell.c \
 					parse/lexer.c \
 					parse/parse.c \
 					parse/expand.c \
@@ -22,7 +23,7 @@ SRC				=	srcs/main.c  \
 					execute/env_handling.c          \
 					execute/builtin.c         	     \
 					execute/execute.c                 \
-					execute/heredoc.c 				   \
+					parse/heredoc.c 				   \
 					execute/redirection.c               \
 					execute/gold_process.c		         \
 					execute/path_processing.c \

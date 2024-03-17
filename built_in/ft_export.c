@@ -67,9 +67,7 @@ t_env	*copy_list(t_env *list)
 void	ft_export(t_shell *data, t_env **env, char **to_add, int add)
 {
 	t_env	*tmp;
-	int		i;
 
-	i = -1;
 	if (add)
 		add_export(data, env, to_add);
 	else

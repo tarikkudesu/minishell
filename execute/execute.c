@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 17:09:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 14:27:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	execute(t_shell *data)
 		middle_process(data, data->tree->left);
 		while (waitpid(-1, &data->status, 0) >= 0)
 			;
+		data->status = WEXITSTATUS(data->status);
 		if (WIFSIGNALED(data->status))
 			data->status = WTERMSIG(data->status) + 128;
 		else if (WIFEXITED(data->status))

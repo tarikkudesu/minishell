@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 16:42:29 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:30:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,16 @@ static int	append_red(char *file, int output)
 	return (0);
 }
 
-static	int	herdoc_red(char *eof, int input)
+static	int	herdoc_red(t_shell *data, int input)
 {
-	int	fd;
-
-	fd = heredoc(eof);
-	if (dup2(fd, input) < 0)
+	if (dup2(data->doc_fd, input) < 0)
 		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
-	if (close(fd) < 0)
+	if (close(data->doc_fd) < 0)
 		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
 	return (0);
 }
 
-int	red_process(t_tokens *token, int input, int output)
+int	red_process(t_shell *data, t_tokens *token, int input, int output)
 {
 	int	i;
 
@@ -80,7 +77,7 @@ int	red_process(t_tokens *token, int input, int output)
 		else if (token->class == IN_RED)
 			i = input_red(token->right->string, input);
 		else if (token->class == HEREDOC)
-			i = herdoc_red(token->right->string, input);
+			i = herdoc_red(data, input);
 		token = token->right;
 		if (i < 0)
 			return (-1);
