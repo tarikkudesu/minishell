@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:43 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 15:11:29 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:47:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	skip(t_tokens *token)
 		return (1);
 	return (0);
 }
-
 
 int	exclude(t_tokens *token)
 {

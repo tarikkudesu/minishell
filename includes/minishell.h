@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 19:52:26 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:59:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,36 @@
 
 /*-----------------------parse-------------------------*/
 
+t_tokens	*init_token(t_shell *data, char *line, int *index, int t);
 char		*meta_char_string(char *string, int *index);
 void		token_stat(t_shell *data, t_tokens *token);
+int			heredoc(t_shell *data, char *del, int exp);
+int			heredoc_init(t_shell *data, int *index);
+char		*token_string(char *string, int *index);
 int			expand(t_shell *data, t_tokens *token);
 int			class_operator(t_tokens *token);
 int			ft_strcmp(char *s1, char *s2);
 void		token_class(t_tokens *token);
 void		token_class(t_tokens *token);
 void		command_tree(t_shell *data);
+int			check_quoting(char *str);
+void		read_line(t_shell *data);
+int			exclude(t_tokens *token);
 int			syntax(t_shell *data);
 int			skip(t_tokens *token);
-int			exclude(t_tokens *token);
 int			lexer(t_shell *data);
 int			pars(t_shell *data);
+int			ft_isspace(char c);
 int			meta_char(char c);
 
 /*---------------------end_parse-----------------------*/
 
 /*-------------------error_handling--------------------*/
 
+void		free_2d_int(int **free2d, int nb_pipe);
 void		ft_throw(char *strerr, int status);
 void		free_2d_char(char **free2d);
-void		free_2d_int(int **free2d, int nb_pipe);
+int			pars_error(t_shell *data);
 int			throw_error(char *str);
 void		my_free(char *ptr);
 
@@ -63,7 +71,7 @@ void		my_free(char *ptr);
 /*----------------environement_operation---------------*/
 
 void		env_add_back(t_env **linked, t_env *node);
-int 		get_env(t_shell *data, char **env);
+int			get_env(t_shell *data, char **env);
 t_env		*env_new(char *name, char *value);
 char		**env_to_array(t_env *env_list);
 void		env_clear(t_env **env);
@@ -83,20 +91,10 @@ t_tokens	*tokennew(char *content);
 /*------------------end_token_operation-----------------*/
 
 // remember to remove this
-void fonction_mli7a(t_shell *data);
-
-
-/* FUNCTIONS */
-int	here_doc(t_shell *data, int *index);
-int	pars_error(t_shell *data);
-char	*token_string(char *string, int *index);
-t_tokens	*init_token(t_shell *data, char *line, int *index, int t);
-void	read_line(t_shell *data);
-void	ft_execve(t_shell *data, char **cmd_arg);
-void    print_tree(t_tokens *tree);
-
-void c();
-void f();
-void s();
+void		fonction_mli7a(t_shell *data);
+void		print_tree(t_tokens *tree);
+void		c(void);
+void		f(void);
+void		s(void);
 
 #endif

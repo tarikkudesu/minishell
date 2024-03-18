@@ -10,6 +10,7 @@ SRC				=	srcs/main.c  \
 					parse/env_lists.c \
 					parse/token_lists.c \
 					parse/command_tree.c \
+					parse/heredoc_parse.c \
 					signals/signals.c \
 					built_in/ft_cd.c         \
 					built_in/ft_env.c         \

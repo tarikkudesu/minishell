@@ -1,20 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/18 21:49:36 by tamehri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 void	minishell(t_shell *data)
 {
-	if (lexer(data))
+	if (check_quoting(data->line))
+		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2));
+	if (lexer(data) || pars(data) || syntax(data))
 		return ;
-	if (pars(data))
-		return ;
-	fonction_mli7a(data);
-	// if (syntax(data))
-    //     return ;
-	// command_tree(data);
-	// execute(data);
-    // if (data->number_of_commands > 1)
-    //     (free_2d_int(data->pipes, data->number_of_commands - 1), 
-    //     data->pipes = NULL);
+	command_tree(data);
+	execute(data);
+	if (data->number_of_commands > 1)
+		(free_2d_int(data->pipes, data->number_of_commands - 1), \
+		data->pipes = NULL);
 }
 
 void	read_line(t_shell *data)

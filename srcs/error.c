@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:39:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 18:12:02 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:49:06 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_2d_int(int **free2d, int nb_pipe)
 	i = -1;
 	while (++i < nb_pipe)
 		(free(free2d[i]), free2d[i] = NULL);
-	(free(free2d),free2d = NULL);
+	(free(free2d), free2d = NULL);
 }
 
 void	free_2d_char(char **free2d)

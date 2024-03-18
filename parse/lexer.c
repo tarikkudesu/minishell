@@ -95,7 +95,7 @@ int	env_lexer(t_shell *data, char *line)
 	{
 		token = init_token(data, line, &index, 1);
 		if (!token)
-			return (throw_error(ERR_MAL));
+			return (1);
 		tokenadd_back(&data->tokens, token);
 	}
 	return (0);
@@ -112,19 +112,21 @@ int	lexer(t_shell *data)
 	t_tokens	*token;
 
 	index = 0;
-	if (check_quoting(data->line))
-		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2), 1);
 	while (data->line[index])
 	{
 		token = init_token(data, data->line, &index, 0);
 		if (!token)
 			return (throw_error(ERR_MAL));
 		if (token->class == HEREDOC && token->stat == GENERAL)
-			here_doc(data, &index);
+		{
+			tokenadd_back(&data->tokens, token);
+			if (heredoc_init(data, &index))
+				return (1);
+		}
 		else if (token->class == ENV && token->stat != INQUOTE)
 		{
 			if (expand(data, token) || env_lexer(data, token->string))
-				return (1);
+				return (throw_error(ERR_MAL));
 			tokenclear(&token);
 		}
 		else

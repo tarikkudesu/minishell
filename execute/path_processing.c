@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:24:04 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 17:50:59 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:50:12 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_existance(char *file)
 {
-	struct	stat	st;
+	struct stat	st;
 
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:40:57 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 17:10:29 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:52:34 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,10 @@ void	single_cmd(t_shell *data)
 				exit(1);
 			ft_execve(data, args);
 		}
-		else
-		{
-			wait(&data->status);
-			if (WIFEXITED(data->status))
-				data->status = WEXITSTATUS(data->status);
-			else if (WIFSIGNALED(data->status))
-				data->status = WTERMSIG(data->status) + 128;
-		}
+		waitpid(pid, &data->status, 0);
+		if (WIFEXITED(data->status))
+			data->status = WEXITSTATUS(data->status);
+		else if (WIFSIGNALED(data->status))
+			data->status = WTERMSIG(data->status) + 128;
 	}
 }

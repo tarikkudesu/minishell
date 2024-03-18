@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/17 14:27:53 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:49:59 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static	void	first_process(t_shell *data, t_tokens *token)
 	if (pid < 0)
 		ft_throw("ERROR_FORK_MIDDLE_COMMAND", 1);
 	if (!pid)
-			(close(data->pipes[0][0]), \
-			process(data, token, STDIN_FILENO, data->pipes[0][1]));
+		(close(data->pipes[0][0]), \
+		process(data, token, STDIN_FILENO, data->pipes[0][1]));
 	else
 		close(data->pipes[0][1]);
 }

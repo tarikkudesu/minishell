@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 13:52:27 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 14:35:22 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:55:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int	all_alpha_num(char *str)
 	i = 0;
 	if (!ft_isalpha(*str))
 		return (0);
-	len = ft_strlen(str);	
+	len = ft_strlen(str);
 	while (i < len - 1)
 	{
 		if (!ft_isalnum(*(str + i)))
 			return (0);
-		i++; 
+		i++;
 	}
 	if (*(str + i) == '+' || ft_isalnum(*(str + i)))
 		return (1);
@@ -88,7 +88,8 @@ void	add_export(t_shell *data, t_env **env, char **to_add)
 		splited = ft_split(to_add[i], '=');
 		if (!splited)
 			return (data->status = 1, perror("ERROR_SPLIT_EXPORT"));
-		else if (!splited[0] || !ft_strlen(splited[0]) || !all_alpha_num(splited[0]))
+		else if (!splited[0] || !ft_strlen(splited[0]) \
+		|| !all_alpha_num(splited[0]))
 		{
 			if (!i)
 				ft_putendl_fd(" not a valid identifier", 2);
