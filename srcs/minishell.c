@@ -7,14 +7,14 @@ void	minishell(t_shell *data)
 		return ;
 	if (pars(data))
 		return ;
-	if (syntax(data))
-        return ;
-	// fonction_mli7a(data);
-	command_tree(data);
-	execute(data);
-    if (data->number_of_commands > 1)
-        (free_2d_int(data->pipes, data->number_of_commands - 1), \
-        data->pipes = NULL);
+	fonction_mli7a(data);
+	// if (syntax(data))
+    //     return ;
+	// command_tree(data);
+	// execute(data);
+    // if (data->number_of_commands > 1)
+    //     (free_2d_int(data->pipes, data->number_of_commands - 1), 
+    //     data->pipes = NULL);
 }
 
 void	read_line(t_shell *data)

@@ -38,14 +38,14 @@ int	heredoc(t_shell *data, char *del)
 {
 	int		fd;
 
-	data->doc_fd = open(".tmp", O_WRONLY | O_CREAT, 0644);
+	fd = open("/tmp/.mini_245", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (data->doc_fd < 0)
 		return (perror(ERR_OPEN), 1);
-	fd = open(".tmp", O_RDONLY);
+	data->doc_fd = open("/tmp/.mini_245", O_RDONLY);
 	if (fd < 0)
 		return (perror(ERR_OPEN), 1);
-	if (unlink(".tmp") < 0)
-		return (perror(ERR_UNLINK), 1);
+	// if (unlink(".tmp") < 0)
+	// 	return (perror(ERR_UNLINK), 1);
 	heredoc_fill(del, fd);
 	close(fd);
 	return (0);
