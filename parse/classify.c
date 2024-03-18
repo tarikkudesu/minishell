@@ -28,7 +28,7 @@ char	*meta_char_string(char *string, int *index)
 	else if (*string == '$')
 	{
 		len = 1;
-		if (*(string + 1) == '$')
+		if (*(string + 1) == '?')
 			len++;
 		while (*(string + len) && !meta_char(*(string + len)))
 			len++;

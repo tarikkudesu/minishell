@@ -87,10 +87,11 @@ void fonction_mli7a(t_shell *data);
 
 
 /* FUNCTIONS */
+int	here_doc(t_shell *data, int *index);
+int	pars_error(t_shell *data);
 char	*token_string(char *string, int *index);
 t_tokens	*init_token(t_shell *data, char *line, int *index, int t);
 void	read_line(t_shell *data);
-int		heredoc(t_shell *data, char *del);
 void	ft_execve(t_shell *data, char **cmd_arg);
 void    print_tree(t_tokens *tree);
 

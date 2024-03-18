@@ -54,7 +54,7 @@ char	*token_string(char *string, int *index)
 	return (meta_char_string(string, index));
 }
 
-t_tokens	*init_token(t_shell *data, char *line, int *index)
+t_tokens	*init_token(t_shell *data, char *line, int *index, int t)
 {
 	char		*string;
 	t_tokens	*token;
@@ -65,9 +65,40 @@ t_tokens	*init_token(t_shell *data, char *line, int *index)
 	token = tokennew(string);
 	if (!token)
 		return (free(string), NULL);
-	token_class(token);
-	token_stat(data, token);
+	if (!t)
+	{
+		token_class(token);
+		token_stat(data, token);
+	}
+	else
+	{
+		if (!ft_strcmp(token->string, " "))
+			token->class = WHITESPACE;
+		else
+			token->class = WORD;
+		token->stat = data->stat;
+	}
 	return (token);
+}
+
+/*
+	If the token is an envirement vaiable it expanded and broken into tokens
+	and added to the linked list.
+*/
+int	env_lexer(t_shell *data, char *line)
+{
+	int			index;
+	t_tokens	*token;
+
+	index = 0;
+	while (line[index])
+	{
+		token = init_token(data, line, &index, 1);
+		if (!token)
+			return (throw_error(ERR_MAL));
+		tokenadd_back(&data->tokens, token);
+	}
+	return (0);
 }
 
 /*
@@ -85,9 +116,17 @@ int	lexer(t_shell *data)
 		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2), 1);
 	while (data->line[index])
 	{
-		token = init_token(data, data->line, &index);
+		token = init_token(data, data->line, &index, 0);
 		if (!token)
 			return (throw_error(ERR_MAL));
+		if (token->class == HEREDOC && token->stat == GENERAL)
+			here_doc(data, &index);
+		else if (token->class == ENV && token->stat != INQUOTE)
+		{
+			if (expand(data, token) || env_lexer(data, token->string))
+				return (1);
+			tokenclear(&token);
+		}
 		else
 			tokenadd_back(&data->tokens, token);
 	}
