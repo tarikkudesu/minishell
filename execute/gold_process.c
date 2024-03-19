@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/17 15:29:33 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:21:57 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	dup_in_out(int input, int output)
 {
 	if (input != STDIN_FILENO && dup2(input, STDIN_FILENO) < 0)
-		ft_throw(strerror(errno), 1);
+		ft_throw(ERR_DUP2, 1);
 	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0)
-		ft_throw(strerror(errno), 1);
+		ft_throw(ERR_DUP2, 1);
 }
 
 static	int	get_args_nbr(t_tokens *token)
@@ -41,8 +41,7 @@ char	**get_args(t_tokens *token)
 
 	args = malloc(sizeof(char *) * (get_args_nbr(token) + 1));
 	if (!args)
-		return (free_2d_char(args), \
-		ft_putendl_fd("ERROR_MALLOC_GET_ARGS", 2), NULL);
+		return (free_2d_char(args), ft_putendl_fd(ERR_MAL, 2), NULL);
 	i = 0;
 	while (token)
 	{
@@ -50,8 +49,7 @@ char	**get_args(t_tokens *token)
 		{
 			args[i] = ft_strdup(token->string);
 			if (!args[i])
-				return (free_2d_char(args), \
-				ft_putendl_fd("ERROR_MALLOC_GET_ARGS", 2), NULL);
+				return (free_2d_char(args), ft_putendl_fd(ERR_MAL, 2), NULL);
 			i++;
 		}
 		token = token->right;
@@ -69,7 +67,7 @@ void	ft_execve(t_shell *data, char **cmd_arg)
 	abs_path = absolute_path(cmd_arg[0], env);
 	execve(abs_path, cmd_arg, env);
 	(free_2d_char(env), free_2d_char(cmd_arg));
-	ft_throw(strerror(errno), 127);
+	ft_throw(ERR_EXECVE, 127);
 }
 
 void	process(t_shell *data, t_tokens *token, int input, int output)

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:43 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/18 21:47:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:11:02 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ int	ft_strcmp(char *s1, char *s2)
 	while (*(s1 + i) && *(s1 + i) && *(s1 + i) == *(s2 + i))
 		i++;
 	return (*(s1 + i) - *(s2 + i));
+}
+
+int	class_operator(t_tokens *token)
+{
+	if (token->class == IN_RED || token->class == OUT_RED \
+		|| token->class == HEREDOC || token->class == APPEND \
+		|| token->class == PIPE)
+		return (1);
+	return (0);
 }
 
 int	meta_char(char c)

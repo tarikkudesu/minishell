@@ -6,20 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 18:17:32 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:10:56 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	class_operator(t_tokens *token)
-{
-	if (token->class == IN_RED || token->class == OUT_RED \
-		|| token->class == HEREDOC || token->class == APPEND \
-		|| token->class == PIPE)
-		return (1);
-	return (0);
-}
 
 int	pars_error(t_shell *data)
 {

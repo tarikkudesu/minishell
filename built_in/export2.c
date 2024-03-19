@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 13:52:27 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/18 21:55:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:09:37 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	new_var(t_env *env, char **splited)
 	{
 		node = env_new(splited[0], splited[1]);
 		if (!node)
-			return (perror("ERROR_LSTNEW_EXPORT"));
+			return (ft_putendl_fd(ERR_MAL, 2));
 		env_add_back(&env, node);
 	}
 }
 
-void	append(t_env *env, char **splited)
+int	append(t_env *env, char **splited)
 {
 	t_env	*node;
 	char	*join;
@@ -44,7 +44,7 @@ void	append(t_env *env, char **splited)
 	{
 		join = ft_strjoin(env->value, splited[1]);
 		if (!join)
-			ft_throw("ERROR_SUBSTR_APPEND<<<", 1);
+			return (ft_putendl_fd(ERR_MAL, 2), 1);
 		(free(env->value), env->value = NULL);
 		env->value = join;
 		free_2d_char(splited);
@@ -55,6 +55,7 @@ void	append(t_env *env, char **splited)
 		env->next = node;
 		(free(splited[0]), free(splited));
 	}
+	return (0);
 }
 
 int	all_alpha_num(char *str)
@@ -87,17 +88,19 @@ void	add_export(t_shell *data, t_env **env, char **to_add)
 	{
 		splited = ft_split(to_add[i], '=');
 		if (!splited)
-			return (data->status = 1, perror("ERROR_SPLIT_EXPORT"));
+			return (data->status = 1, ft_putendl_fd(ERR_MAL, 2));
 		else if (!splited[0] || !ft_strlen(splited[0]) \
 		|| !all_alpha_num(splited[0]))
 		{
 			if (!i)
-				ft_putendl_fd(" not a valid identifier", 2);
-			data->status = 1;
+				(ft_putendl_fd("not a valid identifier", 2), data->status = 1);
 			return ;
 		}
 		if (splited[0][ft_strlen(splited[0]) - 1] == '+')
-			append(*env, splited);
+		{
+			if (append(*env, splited))
+				return (data->status = 1, (void)i);
+		}
 		else
 			(new_var(*env, splited), free(splited));
 	}

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 19:48:49 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 16:58:00 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	lexer(t_shell *data)
 		else if (token->class == ENV && token->stat != INQUOTE)
 		{
 			if (expand(data, token) || env_lexer(data, token->string))
-				return (throw_error(ERR_MAL));
+				return (tokenclear(&token), throw_error(ERR_MAL));
 			tokenclear(&token);
 		}
 		else

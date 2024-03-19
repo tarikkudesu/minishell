@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/17 19:51:50 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:09:08 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	putline_fd(t_shell *data, char *s, int fd)
 			env = meta_char_string(s + i, &i);
 			if (!env)
 				return (ft_putendl_fd(ERR_MAL, 2), 1);
-			puts(env);
 			if (get_env_value(data, env, fd))
-				return (1);
+				return (free(env), 1);
 			free(env);
 		}
 		else
@@ -75,9 +74,7 @@ static void	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 		if (!line || !ft_strcmp(line, del))
 			break ;
 		if (exp && putline_fd(data, line, fd))
-			return ;
-		else
-			ft_putendl_fd(line, fd);
+			return (free(line));
 		(free(line), line = NULL);
 	}
 	if (line)

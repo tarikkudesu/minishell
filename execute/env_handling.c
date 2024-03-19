@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:50:34 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/17 13:55:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:29:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,30 @@ char	**env_to_array(t_env *env_list)
 	return (env);
 }
 
-int    get_env(t_shell *data, char **env)
+int	insert_env_node(t_shell *data, char *name, char *env)
+{
+	t_env	*node;
+	char	*value;
+
+	if (!ft_strcmp(name, "SHLVL"))
+		value = ft_itoa(ft_atoi(ft_strchr(env, '=') + 1) + 1);
+	else if (!ft_strcmp(name, "PWD"))
+		value = ft_strdup(data->pwd);
+	else
+		value = ft_strdup(ft_strchr(env, '=') + 1);
+	if (!value)
+		return (free(name), 1);
+	node = env_new(name, value);
+	if (!node)
+		return (free(name), free(value), 1);
+	env_add_back(&data->env_list, node);
+	return (0);
+}
+
+int	get_env(t_shell *data, char **env)
 {
 	int		i;
 	char	*name;
-	char	*value;
-	t_env	*node;
 
 	i = -1;
 	while (env[++i])
@@ -73,18 +91,13 @@ int    get_env(t_shell *data, char **env)
 		name = ft_substr(env[i], 0, (ft_strchr(env[i], '=') - env[i]));
 		if (!name)
 			return (1);
-		if (!ft_strcmp(name, "SHLVL"))
-			value = ft_itoa(ft_atoi(ft_strchr(env[i], '=') + 1) + 1);
-		else if (!ft_strcmp(name, "PWD"))
-			value = ft_strdup(data->pwd);
+		if (ft_strcmp(name, "OLDPWD"))
+		{
+			if (insert_env_node(data, name, env[i]))
+				return (1);
+		}
 		else
-			value = ft_strdup(ft_strchr(env[i], '=') + 1);
-		if (!value)
-			return (free(name), 1);
-		node = env_new(name, value);
-		if (!node)
-			return (free(name), free(value), 1);
-		env_add_back(&data->env_list, node);
+			free(name);
 	}
 	return (0);
 }

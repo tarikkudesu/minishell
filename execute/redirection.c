@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/17 15:30:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:20:40 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ static int	input_red(char *file, int input)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (perror("ERROR_OPEN_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_OPEN), -1);
 	if (dup2(fd, input) < 0)
-		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
-	if (-1 == close(fd))
-		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_DUP2), -1);
+	close(fd);
 	return (0);
 }
 
@@ -32,11 +31,10 @@ static int	output_red(char *file, int output)
 
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return (perror("ERROR_OPEN_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_OPEN), -1);
 	if (dup2(fd, output) < 0)
-		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
-	if (-1 == close(fd))
-		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_DUP2), -1);
+	close(fd);
 	return (0);
 }
 
@@ -46,20 +44,18 @@ static int	append_red(char *file, int output)
 
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		return (perror("ERROR_OPEN_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_OPEN), -1);
 	if (dup2(fd, output) < 0)
-		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
-	if (-1 == close(fd))
-		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_DUP2), -1);
+	close(fd);
 	return (0);
 }
 
 static	int	herdoc_red(t_shell *data, int input)
 {
 	if (dup2(data->doc_fd, input) < 0)
-		return (perror("ERROR_DUP2_REDIRECTION_PROCESS"), -1);
-	if (close(data->doc_fd) < 0)
-		return (perror("ERROR_CLOSE_REDIRECTION_PROCESS"), -1);
+		return (perror(ERR_DUP2), -1);
+	close(data->doc_fd);
 	return (0);
 }
 

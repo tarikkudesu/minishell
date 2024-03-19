@@ -34,14 +34,14 @@ GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'
 CC				=	cc
 NAME			=	minishell
-HEADERS			=	includes/minishell.h includes/struct.h includes/macros.h libft/libft.h
+HEADERS			=	includes/struct.h includes/macros.h includes/minishell.h 
 OBJ				=	$(SRC:.c=.o)
-CFLAGS			=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror
 READLINE		=	-lreadline
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADERS)
+$(NAME): $(OBJ)
 	@make -C libft
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a  -L /Users/$(USER)/.brew/opt/readline/lib
 

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/18 21:49:36 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	minishell(t_shell *data)
 		return ;
 	command_tree(data);
 	execute(data);
-	if (data->number_of_commands > 1)
-		(free_2d_int(data->pipes, data->number_of_commands - 1), \
+	if (data->cmd_nbr > 1)
+		(free_2d_int(data->pipes, data->cmd_nbr - 1), \
 		data->pipes = NULL);
 }
 
