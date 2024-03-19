@@ -62,11 +62,13 @@ char	**get_args(t_tokens *token)
 
 void	ft_execve(t_shell *data, char **cmd_arg)
 {
+	char	**env;
 	char	*abs_path;
 
-	abs_path = absolute_path(cmd_arg[0], data->env);
-	execve(abs_path, cmd_arg, data->env);
-	free_2d_char(cmd_arg);
+	env = env_to_array(data->env_list);
+	abs_path = absolute_path(cmd_arg[0], env);
+	execve(abs_path, cmd_arg, env);
+	(free_2d_char(env), free_2d_char(cmd_arg));
 	ft_throw(strerror(errno), 127);
 }
 

@@ -70,6 +70,7 @@ struct	s_shell
 	int			number_of_commands;
 	int			status;
 	int			doc_fd;
+	char		*pwd;
 	t_stat		stat;
 };
 

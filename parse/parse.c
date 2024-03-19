@@ -36,8 +36,9 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class)
 	t_tokens	*token;
 
 	if (!string)
-		return (1);
-	token = tokennew(string);
+		token = tokennew(ft_strdup(""));
+	else
+		token = tokennew(string);
 	if (!token)
 		return (free(string), 1);
 	if (class->stat == GENERAL)

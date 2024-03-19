@@ -60,22 +60,25 @@ char	**env_to_array(t_env *env_list)
 	return (env);
 }
 
-int	get_env(t_shell *data, char **env)
+int    get_env(t_shell *data, char **env)
 {
 	int		i;
 	char	*name;
 	char	*value;
-	char	*start;
 	t_env	*node;
 
 	i = -1;
 	while (env[++i])
 	{
-		start = ft_strchr(env[i], '=');
-		name = ft_substr(env[i], 0, (start - env[i]));
+		name = ft_substr(env[i], 0, (ft_strchr(env[i], '=') - env[i]));
 		if (!name)
 			return (1);
-		value = ft_strdup(start + 1);
+		if (!ft_strcmp(name, "SHLVL"))
+			value = ft_itoa(ft_atoi(ft_strchr(env[i], '=') + 1) + 1);
+		else if (!ft_strcmp(name, "PWD"))
+			value = ft_strdup(data->pwd);
+		else
+			value = ft_strdup(ft_strchr(env[i], '=') + 1);
 		if (!value)
 			return (free(name), 1);
 		node = env_new(name, value);
