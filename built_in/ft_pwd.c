@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 14:18:58 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 15:33:30 by tamehri          ###   ########.fr       */
+/*   Created: 2024/03/05 23:17:02 by ooulcaid          #+#    #+#             */
+/*   Updated: 2024/03/16 18:02:52 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	ft_pwd(t_shell *data)
 {
-	size_t	i;
+	char	*position;
 
-	i = 0;
-	if (!n)
-		return (0);
-	while (*(s1 + i) == *(s2 + i) && *(s1 + i) && *(s2 + i) && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)*(s1 + i) - (unsigned char)*(s2 + i));
+	position = getcwd(NULL, 0);
+	if (!position)
+		(perror("pwd"), data->status = 1);
+	ft_putendl_fd(position, 1);
+	data->status = 0;
+	if (position)
+		free(position);
+	if (data->number_of_commands > 1)
+		exit(0);
 }

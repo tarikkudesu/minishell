@@ -1,6 +1,35 @@
-SRC				=	srcs/main.c srcs/token.c srcs/help.c
+SRC				=	srcs/main.c  \
+					srcs/error.c  \
+					srcs/minishell.c \
+					parse/lexer.c \
+					parse/parse.c \
+					parse/expand.c \
+					parse/syntax.c \
+					parse/minifun.c \
+					parse/classify.c \
+					parse/env_lists.c \
+					parse/token_lists.c \
+					parse/command_tree.c \
+					parse/heredoc_parse.c \
+					signals/signals.c \
+					built_in/ft_cd.c         \
+					built_in/ft_env.c         \
+					built_in/ft_pwd.c          \
+					built_in/ft_exit.c	        \
+					built_in/ft_echo.c		     \
+					built_in/ft_unset.c	 	      \
+					built_in/ft_export.c		   \
+					built_in/export2.c \
+					execute/single_cmd.c \
+					execute/env_handling.c          \
+					execute/builtin.c         	     \
+					execute/execute.c                 \
+					parse/heredoc.c 				   \
+					execute/redirection.c               \
+					execute/gold_process.c		         \
+					execute/path_processing.c \
 
-GREEN			=	'\033[32m'
+GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'
 CC				=	cc
 NAME			=	minishell
@@ -9,28 +38,23 @@ OBJ				=	$(SRC:.c=.o)
 CFLAGS			=	-Wall -Wextra -Werror -g
 READLINE		=	-lreadline
 
-all: $(NAME) clean
+all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADERS)
 	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a
-	@echo $(GREEN) "\n compilation done" $(NONE)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a  -L /Users/$(USER)/.brew/opt/readline/lib
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo $(GREEN) "... Compiling\t$<\t[OK]" $(RESET)
+	@$(CC) $(CFLAGS) -c $< -o $@  -I /Users/$(USER)/.brew/opt/readline/include
 
 clean:
 	@make -C libft clean
 	@rm -f $(OBJ)
-	@echo $(GREEN) "clean done\n" $(NONE)
 
 fclean: clean
 	@make -C libft fclean
 	@rm -f $(NAME)
-	@echo $(GREEN) "fclean done\n" $(NONE)
 
 re: fclean all
-	@echo $(GREEN) "re done\n" $(NONE)
 
 .PHONY: clean

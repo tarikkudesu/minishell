@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 14:18:58 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/03 15:33:30 by tamehri          ###   ########.fr       */
+/*   Created: 2024/03/06 15:26:43 by ooulcaid          #+#    #+#             */
+/*   Updated: 2024/03/16 14:37:48 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	ft_env(t_shell *data, t_env *env)
 {
-	size_t	i;
+	t_env	*tmp;
 
-	i = 0;
-	if (!n)
-		return (0);
-	while (*(s1 + i) == *(s2 + i) && *(s1 + i) && *(s2 + i) && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)*(s1 + i) - (unsigned char)*(s2 + i));
+	tmp = env;
+	while (tmp)
+	{
+		if (tmp->name)
+			printf("%s", tmp->name);
+		if (tmp->value)
+			printf("=%s", tmp->value);
+		printf("\n");
+		tmp = tmp->next;
+	}
+	data->status = 0;
+	if (data->number_of_commands > 1)
+		exit(0);
 }
