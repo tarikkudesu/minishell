@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 17:09:08 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:59:45 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	heredoc(t_shell *data, char *del, int exp)
 	fd = open("/tmp/.mini_245", O_WRONLY | O_CREAT | O_TRUNC, 0744);
 	if (fd < 0)
 		return (perror(ERR_OPEN), 1);
+	if (data->doc_fd != -1)
+		close(data->doc_fd);
 	data->doc_fd = open("/tmp/.mini_245", O_RDONLY);
 	if (data->doc_fd < 0)
 		return (perror(ERR_OPEN), 1);

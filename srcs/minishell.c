@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:32:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@ void	minishell(t_shell *data)
 {
 	if (check_quoting(data->line))
 		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2));
-	if (lexer(data) || pars(data) || syntax(data))
+	if (lexer(data))
 		return ;
-	command_tree(data);
-	execute(data);
-	if (data->cmd_nbr > 1)
-		(free_2d_int(data->pipes, data->cmd_nbr - 1), \
-		data->pipes = NULL);
+	fonction_mli7a(data);
+	// if (pars(data))
+	// 	return ;
+	// if (syntax(data))
+	// 	return ;
+	// command_tree(data);
+	// execute(data);
+	// if (data->cmd_nbr > 1)
+	// 	(free_2d_int(data->pipes, data->cmd_nbr - 1), \
+	// 	data->pipes = NULL);
 }
 
 void	read_line(t_shell *data)

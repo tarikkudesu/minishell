@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 13:57:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:38:50 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,28 @@ t_tokens	*tokennew(char *content)
 	return (head);
 }
 
+void	tokenadd_back_left(t_tokens **lst, t_tokens *new)
+{
+	t_tokens	*temp;
+
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->left)
+		temp = temp->left;
+	temp->left = new;
+}
+
 void	tokenadd_back(t_tokens **lst, t_tokens *new)
 {
 	t_tokens	*temp;
 
-	if (!lst)
-		return ;
-	if (!new)
+	if (!lst || !new)
 		return ;
 	if (!*lst)
 	{

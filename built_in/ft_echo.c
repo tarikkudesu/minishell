@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:13:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 21:42:01 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	is_echo_option(char *option)
 	int	i;
 
 	i = 0;
-	if (option[i] != '-')
+	if (option[i] != '-' || (option[0] == '-' && option[1] != 'n'))
 		return (0);
 	while (option[++i])
 	{
-		if (option[i] != 'n')
+		if (option [i] != 'n')
 			return (0);
 	}
 	return (1);

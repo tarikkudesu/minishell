@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/19 17:45:02 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:46:00 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_data(t_shell *data, char **env)
 	data->pipes = NULL;
 	data->tree = NULL;
 	data->line = NULL;
+	data->doc_fd = -1;
 	data->status = 0;
 	data->env = env;
 }
