@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:45:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/19 16:58:06 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:30:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,49 +20,54 @@ int	del_len(char *str)
 	i = 0;
 	while (*str)
 	{
-		c = 0;
 		if (meta_char(*str) && *str != '"' && *str != '\'' && *str != '$')
 			break ;
-		if (*str == '\'' || *str == '"')
+		c = 0;
+		if (*str == '$' && (*(str + 1) == '\'' || *(str + 1) == '\"'))
+			str += 2;
+		else if (*str == '\'' || *str == '"')
 		{
 			c = *str++;
 			while (*str && *str++ != c)
 				i++;
+			str++;
 		}
-		else
+		else if (*str)
+		{
+			str++;
 			i++;
-		str++;
+		}
 	}
 	return (i);
 }
 
-int	fill_delimeter(char *str, char *del, int *index)
+int	fill_delimeter(char *str, char *del, int *d, int exp)
 {
 	int	i;
 	int	c;
-	int	exp;
 
 	i = 0;
-	exp = 1;
-	while (*(str + *index))
+	while (*(str + *d))
 	{
-		c = 0;
-		if (meta_char(*(str + *index)) && *(str + *index) != '"' \
-			&& *(str + *index) != '\'' && *(str + *index) != '$')
+		if (meta_char(*(str + *d)) && *(str + *d) != '"' && \
+			*(str + *d) != '\'' && *(str + *d) != '$')
 			break ;
-		if (*(str + *index) == '\'' || *(str + *index) == '"')
+		c = 0;
+		if (*(str + *d) == '$' && (*(str + *d + 1) == '\'' \
+			|| *(str + *d + 1) == '"'))
+			(*d) += 2;
+		else if (*(str + *d) == '\'' || *(str + *d) == '"')
 		{
 			exp = 0;
-			c = *(str + (*index)++);
-			while (*(str + *index) && *(str + *index) != c)
-				del[i++] = *(str + (*index)++);
+			c = *(str + (*d)++);
+			while (*(str + *d) && *(str + *d) != c)
+				*(del + i++) = *(str + (*d)++);
+			(*d)++;
 		}
 		else
-			del[i++] = *(str + *index);
-		(*index)++;
+			*(del + i++) = *(str + (*d)++);
 	}
-	del[i] = '\0';
-	return (exp);
+	return (*(del + i) = '\0', exp);
 }
 
 int	heredoc_init(t_shell *data, int *index)
@@ -79,7 +84,7 @@ int	heredoc_init(t_shell *data, int *index)
 	del = malloc(sizeof(char) * (del_len(data->line + *index) + 1));
 	if (!del)
 		return (throw_error(ERR_MAL));
-	exp = fill_delimeter(data->line, del, index);
+	exp = fill_delimeter(data->line, del, index, 1);
 	token = tokennew(del);
 	if (!token)
 		return (throw_error(ERR_MAL));

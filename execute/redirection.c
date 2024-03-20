@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 17:10:49 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:18:19 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ int	red_process(t_shell *data, t_tokens *token, int input, int output)
 		token = token->right;
 		if (i < 0)
 			return (-1);
+	}
+	if (data->doc_fd != -1)
+	{
+		close(data->doc_fd);
+		data->doc_fd = -1;
 	}
 	return (0);
 }

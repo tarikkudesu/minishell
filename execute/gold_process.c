@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 17:13:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:20:55 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ void	dup_in_out(int input, int output)
 {
 	if (input != STDIN_FILENO && dup2(input, STDIN_FILENO) < 0)
 		ft_throw(ERR_DUP2, 1);
+	if (input != STDIN_FILENO)
+		close(input);
 	if (output != STDOUT_FILENO && dup2(output, STDOUT_FILENO) < 0)
 		ft_throw(ERR_DUP2, 1);
+	if (output != STDOUT_FILENO)
+		close(output);
 }
 
 static	int	get_args_nbr(t_tokens *token)
@@ -27,7 +31,7 @@ static	int	get_args_nbr(t_tokens *token)
 	i = 0;
 	while (token)
 	{
-		if (token->class == WORD)
+		if (token->class == WORD || token->class == ENV)
 			i++;
 		token = token->right;
 	}

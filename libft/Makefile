@@ -43,24 +43,22 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 AR = ar cr
-ECHO = echo
-RM = rm -f
 
 NAME = libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(AR) $(NAME) $^
+	$(AR) $(NAME) $^
 
 %.o: %.c libft.h
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJS) $(OBJS_B)
+	rm -f $(OBJS)
 
 fclean: clean
-	@$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

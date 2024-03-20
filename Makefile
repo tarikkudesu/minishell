@@ -27,7 +27,8 @@ SRC				=	srcs/main.c  \
 					parse/heredoc.c 				   \
 					execute/redirection.c               \
 					execute/gold_process.c		         \
-					execute/path_processing.c
+					execute/path_processing.c \
+					func.c
 
 GREEN			=	'\033[1;32m'
 NONE			=	'\033[0m'
@@ -41,19 +42,19 @@ READLINE		=	-lreadline
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a  -L /Users/$(USER)/.brew/opt/readline/lib
+	make -C libft
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) libft/libft.a  -L /Users/$(USER)/.brew/opt/readline/lib
 
 %.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -c $< -o $@  -I /Users/$(USER)/.brew/opt/readline/include
+	$(CC) $(CFLAGS) -c $< -o $@  -I /Users/$(USER)/.brew/opt/readline/include
 
 clean:
-	@make -C libft clean
-	@rm -f $(OBJ)
+	make -C libft clean
+	rm -f $(OBJ)
 
 fclean: clean
-	@make -C libft fclean
-	@rm -f $(NAME)
+	make -C libft fclean
+	rm -f $(NAME)
 
 re: fclean all
 

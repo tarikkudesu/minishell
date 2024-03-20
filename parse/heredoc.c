@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 15:50:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:29:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,22 @@ static void	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 int	heredoc(t_shell *data, char *del, int exp)
 {
 	int		fd;
+	char	*name;
 
-	fd = open("/tmp/.mini_245", O_WRONLY | O_CREAT | O_TRUNC, 0744);
+	name = ft_itoa((int)data);
+	if (!name)
+		return (perror(ERR_MAL), 1);
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0744);
 	if (fd < 0)
-		return (perror(ERR_OPEN), 1);
+		return (free(name), perror(ERR_OPEN), 1);
 	if (data->doc_fd != -1)
 		close(data->doc_fd);
-	data->doc_fd = open("/tmp/.mini_245", O_RDONLY);
+	data->doc_fd = open(name, O_RDONLY);
 	if (data->doc_fd < 0)
-		return (perror(ERR_OPEN), 1);
-	if (unlink("/tmp/.mini_245") < 0)
-		return (perror(ERR_UNLINK), 1);
+		return (free(name), perror(ERR_OPEN), 1);
+	if (unlink(name) < 0)
+		return (free(name), perror(ERR_UNLINK), 1);
 	heredoc_fill(data, del, fd, exp);
-	close(fd);
+	(free(name), close(fd));
 	return (0);
 }

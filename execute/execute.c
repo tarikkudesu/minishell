@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 17:12:25 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:19:50 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ static	void	first_process(t_shell *data, t_tokens *token)
 	if (pid < 0)
 		ft_throw(ERR_FORK, 1);
 	if (!pid)
+	{
 		(close(data->pipes[0][0]), \
 		process(data, token, STDIN_FILENO, data->pipes[0][1]));
+	}
 	else
 		close(data->pipes[0][1]);
 }
@@ -41,8 +43,10 @@ static	void	last_process(t_shell *data, t_tokens *token)
 	if (pid < 0)
 		ft_throw(ERR_MAL, 1);
 	if (!pid)
+	{
 		(process(data, token,
 				data->pipes[i - 2][0], STDOUT_FILENO));
+	}
 	else
 	{
 		close(data->pipes[i - 2][0]);

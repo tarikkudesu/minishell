@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:32:32 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 09:39:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 18:12:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*meta_char_string(char *string, int *index)
 		len = 1;
 		if (*(string + 1) == '?')
 			len++;
-		while (*(string + len) && !meta_char(*(string + len)))
+		while (*(string + len) && ft_isalnum(*(string + len)))
 			len++;
 		(*index) += len;
 		return (ft_substr(string, 0, len));
