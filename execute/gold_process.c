@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 14:33:29 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:21:57 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static	int	get_args_nbr(t_tokens *token)
 	i = 0;
 	while (token)
 	{
-		if (token->class == WORD || token->class == ENV)
+		if (token->class == WORD)
 			i++;
 		token = token->right;
 	}
@@ -74,10 +74,10 @@ void	process(t_shell *data, t_tokens *token, int input, int output)
 {
 	char	**cmd_arg;
 
+	cmd_arg = get_args(token);
 	if (red_process(data, token, input, output) == -1)
 		exit(1);
 	dup_in_out(input, output);
-	cmd_arg = get_args(token);
 	if (is_builtin(cmd_arg[0]))
 		exec_builtin(data, cmd_arg);
 	else

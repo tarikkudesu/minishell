@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:36:29 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 21:52:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 15:07:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,10 @@ void	exec_builtin(t_shell *data, char **cmd_arg)
 {
 	if (!ft_strcmp(cmd_arg[0], "echo"))
 		ft_echo(data, cmd_arg + 1);
+	else if (!ft_strcmp(cmd_arg[0], "cd") && cmd_arg[1])
+		ft_cd(data, cmd_arg[1]);
 	else if (!ft_strcmp(cmd_arg[0], "cd"))
-	{
-		if (!cmd_arg[1])
-			ft_cd(data, NULL);
-		else if (cmd_arg[1] && !cmd_arg[2])
-			ft_cd(data, cmd_arg[1]);
-	}
+		ft_cd(data, NULL);
 	else if (!ft_strcmp(cmd_arg[0], "pwd"))
 		ft_pwd(data);
 	else if (!ft_strcmp(cmd_arg[0], "env"))
