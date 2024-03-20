@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 13:43:33 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 21:53:07 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/31 20:04:23 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/06 14:13:51 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*res;
 
-	i = ft_strlen(s);
-	if (c == 0)
-		return ((char *)(s + i));
-	while (i >= 0)
-	{
-		if (*(s + i) == (char)c)
-			return ((char *)(s + i));
-		i--;
-	}
-	return (NULL);
+	if (!s1 || !s2)
+		return (0);
+	res = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	i = -1;
+	while (*(s1 + ++i))
+		*(res + i) = *(s1 + i);
+	j = 0;
+	while (*(s2 + j))
+		*(res + i++) = *(s2 + j++);
+	*(res + i) = '\0';
+	return (res);
 }

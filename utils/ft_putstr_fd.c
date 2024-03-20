@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 13:43:33 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 21:53:07 by tamehri          ###   ########.fr       */
+/*   Created: 2023/11/03 21:26:03 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/06 14:10:35 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strrchr(const char *s, int c)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	i = ft_strlen(s);
-	if (c == 0)
-		return ((char *)(s + i));
-	while (i >= 0)
-	{
-		if (*(s + i) == (char)c)
-			return ((char *)(s + i));
-		i--;
-	}
-	return (NULL);
+	if (!s || fd < 0)
+		return ;
+	while (*s)
+		write(fd, s++, 1);
 }

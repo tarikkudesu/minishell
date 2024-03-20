@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_processing.c                                   :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 14:25:24 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 14:30:47 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/30 11:34:53 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/01 19:53:18 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	count_word(char *str, int ascii)
+int	ft_isalpha(int c)
 {
-	int	i;
-	int	word;
-
-	i = 0;
-	word = 0;
-	while (str[i])
-	{
-		while (str[i] && str[i] != ascii)
-			i++;
-		if (str[i])
-			word++;
-		while (str[i] && str[i] == ascii)
-			i++;
-	}
-	return (word);
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	else if (c >= 'A' && c <= 'Z')
+		return (1);
+	return (0);
 }
-
-fill_args(args, token->string, &i);

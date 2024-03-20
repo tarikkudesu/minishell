@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 13:43:33 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 21:53:07 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/30 11:45:39 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/01 19:52:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strrchr(const char *s, int c)
+int	ft_isalnum(int c)
 {
-	int	i;
-
-	i = ft_strlen(s);
-	if (c == 0)
-		return ((char *)(s + i));
-	while (i >= 0)
-	{
-		if (*(s + i) == (char)c)
-			return ((char *)(s + i));
-		i--;
-	}
-	return (NULL);
+	if (c >= '0' && c <= '9')
+		return (1);
+	else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }

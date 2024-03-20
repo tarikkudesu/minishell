@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 21:43:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:15:30 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "struct.h"
 # include "macros.h"
-# include "../libft/libft.h"
 
 # include <fcntl.h>
 # include <stdio.h>
@@ -85,6 +84,24 @@ int			meta_char(char c);
 
 /*---------------------end_parse-----------------------*/
 
+/*--------------------utils_functions-------------------*/
+
+char	    *ft_substr(char const *s, unsigned int start, size_t len);
+int 	    ft_strncmp(const char *s1, const char *s2, size_t n);
+char	    *ft_strjoin(char const *s1, char const *s2);
+char	    **ft_split(char const *s, char c);
+char	    *ft_strchr(const char *s, int c);
+void	    ft_putendl_fd(char *s, int fd);
+void	    ft_putstr_fd(char *s, int fd);
+size_t	    ft_strlen(const char *str);
+char	    *ft_strdup(const char *s1);
+int	        ft_atoi(const char *str);
+int	        ft_isalpha(int c);
+int	        ft_isalnum(int c);
+char	    *ft_itoa(int n);
+
+/*------------------utils_functions_end------------------*/
+
 /*-------------------error_handling--------------------*/
 
 void		free_2d_int(int **free2d, int nb_pipe);
@@ -92,7 +109,7 @@ void		ft_throw(char *strerr, int status);
 void		free_2d_char(char **free2d);
 int			pars_error(t_shell *data);
 int			throw_error(char *str);
-void		my_free(char *ptr);
+void		my_free(char *ptr); 
 
 /*-------------------error_handling--------------------*/
 
@@ -124,5 +141,6 @@ void		print_tree(t_tokens *tree);
 void		c(void);
 void		f(void);
 void		s(void);
+
 
 #endif
