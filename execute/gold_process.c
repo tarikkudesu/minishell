@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 18:21:57 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:13:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	process(t_shell *data, t_tokens *token, int input, int output)
 {
 	char	**cmd_arg;
 
-	cmd_arg = get_args(token);
 	if (red_process(data, token, input, output) == -1)
 		exit(1);
 	dup_in_out(input, output);
+	cmd_arg = get_args(token);
 	if (is_builtin(cmd_arg[0]))
 		exec_builtin(data, cmd_arg);
 	else

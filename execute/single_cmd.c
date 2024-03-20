@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:40:57 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 15:48:55 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 16:55:14 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	void	execute_single_cmd(t_shell *data)
 {
 	char	**args;
 	int		pid;
-	
+
 	args = get_args(data->tree);
 	if (!args || !*args)
 		return ;

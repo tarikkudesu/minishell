@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 18:30:00 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:12:25 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,10 @@ void	execute(t_shell *data)
 		middle_process(data, data->tree->left);
 		while (wait(NULL) >= 0)
 			;
+	}
+	if (data->doc_fd != -1)
+	{
+		close(data->doc_fd);
+		data->doc_fd = -1;
 	}
 }

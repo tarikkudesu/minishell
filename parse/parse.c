@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/19 16:56:53 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 16:54:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class)
 	else
 		token->class = WORD;
 	token->stat = class->stat;
-	tokenadd_back(&data->tree, token);
-	return (0);
+	return (tokenadd_back(&data->tree, token), 0);
 }
 
 int	leaf(t_shell *data, t_tokens **tmp)

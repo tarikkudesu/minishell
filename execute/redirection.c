@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:10:57 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 17:20:40 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:10:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ static int	append_red(char *file, int output)
 
 static	int	herdoc_red(t_shell *data, int input)
 {
-	if (dup2(data->doc_fd, input) < 0)
+	if (data->doc_fd != -1 && dup2(data->doc_fd, input) < 0)
 		return (perror(ERR_DUP2), -1);
 	close(data->doc_fd);
+	data->doc_fd = -1;
 	return (0);
 }
 

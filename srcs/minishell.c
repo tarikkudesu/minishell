@@ -6,11 +6,34 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:12:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	check_quoting(char *str)
+{
+	int	c;
+
+	while (*str)
+	{
+		c = 0;
+		if (*str == '\'' || *str == '"')
+		{
+			c = *str;
+			str++;
+			while (*str && *str != c)
+				str++;
+			if (!*str)
+				return (1);
+			str++;
+		}
+		else
+			str++;
+	}
+	return (0);
+}
 
 void	minishell(t_shell *data)
 {
