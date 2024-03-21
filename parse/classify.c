@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:32:32 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 13:50:05 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 17:39:55 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*variable(char *s, int *i)
 	name = malloc(sizeof(char) * (variable_len(s) + 1));
 	if (!name)
 		return (NULL);
-	(*i)++;
+	(*i) += 2;
 	j = 0;
 	while ((*(s + *i) && ft_isalnum(*s)) \
 		|| *(s + *i) == '\'' || *(s + *i) == '"')
