@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:43 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:18:43 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ void	ft_env(t_shell *data, t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (tmp->name)
-			printf("%s", tmp->name);
-		if (tmp->value)
-			printf("=%s", tmp->value);
-		printf("\n");
+		if (tmp->name && tmp->value)
+			printf("%s=%s\n", tmp->name, tmp->value);
 		tmp = tmp->next;
 	}
 	data->status = 0;

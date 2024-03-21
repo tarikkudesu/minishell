@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:40:57 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 16:55:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 16:31:04 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static	void	execute_single_cmd(t_shell *data)
 		return (free_2d_char(args), perror(ERR_FORK));
 	if (!pid)
 		ft_execve(data, args);
+	rl_replace_line("hi there", 0);
 	waitpid(pid, &data->status, 0);
 	if (WIFEXITED(data->status))
 		data->status = WEXITSTATUS(data->status);

@@ -6,11 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 21:29:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:15:17 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_sig;
 
 int	get_env_value(t_shell *data, char *name, int fd)
 {
@@ -59,11 +61,14 @@ int	putline_fd(t_shell *data, char *s, int fd)
 	return (0);
 }
 
-static void	heredoc_fill(t_shell *data, char *del, int fd, int exp)
+static int	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 {
 	char	*line;
+	int		zero;
 
-	while (1)
+	line = NULL;
+	(signal(SIGINT, sig_h), zero = dup(STDIN_FILENO));
+	while (!g_sig && 1)
 	{
 		line = readline("> ");
 		if (!del && !*line)
@@ -74,11 +79,15 @@ static void	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 		if (!line || !ft_strcmp(line, del))
 			break ;
 		if (exp && putline_fd(data, line, fd))
-			return (free(line));
+			return (free(line), dup2(zero, 0), close(zero), 1);
 		(free(line), line = NULL);
 	}
 	if (line)
 		free(line);
+	(dup2(zero, STDIN_FILENO), close(zero));
+	if (g_sig)
+		return (close(data->doc_fd), data->doc_fd = -1, 1);
+	return (0);
 }
 
 int	heredoc(t_shell *data, char *del, int exp)
@@ -99,7 +108,7 @@ int	heredoc(t_shell *data, char *del, int exp)
 		return (free(name), perror(ERR_OPEN), 1);
 	if (unlink(name) < 0)
 		return (free(name), perror(ERR_UNLINK), 1);
-	heredoc_fill(data, del, fd, exp);
-	(free(name), close(fd));
-	return (0);
+	if (heredoc_fill(data, del, fd, exp))
+		return (free(name), close(fd), 1);
+	return (free(name), close(fd), 0);
 }

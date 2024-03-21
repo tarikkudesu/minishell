@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 22:15:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 16:36:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 /*-------------------execute_operations-----------------*/
 
 void		signals(void);
+void		sig_h(int sig);
+void		ctl_s(int signal);
+void		ctl_c(int signal);
 void		execute(t_shell *data);
 int			is_builtin(char *string);
 void		single_cmd(t_shell *data);
@@ -86,19 +89,19 @@ int			meta_char(char c);
 
 /*--------------------utils_functions-------------------*/
 
-char	    *ft_substr(char const *s, unsigned int start, size_t len);
-int 	    ft_strncmp(const char *s1, const char *s2, size_t n);
-char	    *ft_strjoin(char const *s1, char const *s2);
-char	    **ft_split(char const *s, char c);
-char	    *ft_strchr(const char *s, int c);
-void	    ft_putendl_fd(char *s, int fd);
-void	    ft_putstr_fd(char *s, int fd);
-size_t	    ft_strlen(const char *str);
-char	    *ft_strdup(const char *s1);
-int	        ft_atoi(const char *str);
-int	        ft_isalpha(int c);
-int	        ft_isalnum(int c);
-char	    *ft_itoa(int n);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		**ft_split(char const *s, char c);
+char		*ft_strchr(const char *s, int c);
+void		ft_putendl_fd(char *s, int fd);
+void		ft_putstr_fd(char *s, int fd);
+size_t		ft_strlen(const char *str);
+char		*ft_strdup(const char *s1);
+int			ft_atoi(const char *str);
+int			ft_isalpha(int c);
+int			ft_isalnum(int c);
+char		*ft_itoa(int n);
 
 /*------------------utils_functions_end------------------*/
 
@@ -109,7 +112,7 @@ void		ft_throw(char *strerr, int status);
 void		free_2d_char(char **free2d);
 int			pars_error(t_shell *data);
 int			throw_error(char *str);
-void		my_free(char *ptr); 
+void		my_free(char *ptr);
 
 /*-------------------error_handling--------------------*/
 
@@ -134,13 +137,5 @@ int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
 
 /*------------------end_token_operation-----------------*/
-
-// remember to remove this
-void		fonction_mli7a(t_shell *data);
-void		print_tree(t_tokens *tree);
-void		c(void);
-void		f(void);
-void		s(void);
-
 
 #endif

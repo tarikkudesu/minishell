@@ -6,13 +6,13 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 13:52:27 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 16:54:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 15:09:02 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	new_var(t_env *env, char **splited)
+void	new_var(t_env *env, char **splited, char *export)
 {
 	t_env	*tmp;
 	t_env	*node;
@@ -20,8 +20,14 @@ void	new_var(t_env *env, char **splited)
 	tmp = env;
 	while (tmp->next && ft_strcmp(tmp->name, splited[0]))
 		tmp = tmp->next;
+	if (!splited[1] && export[ft_strlen(export) - 1] == '=')
+		splited[1] = ft_strdup("");
 	if (!ft_strcmp(tmp->name, splited[0]))
-		(free(tmp->value), free(splited[0]), tmp->value = splited[1]);
+	{
+		if (tmp->value)
+			free(tmp->value);
+		(free(splited[0]), tmp->value = splited[1]);
+	}
 	else
 	{
 		node = env_new(splited[0], splited[1]);
@@ -78,31 +84,35 @@ int	all_alpha_num(char *str)
 	return (0);
 }
 
-void	add_export(t_shell *data, t_env **env, char **to_add)
+void	export_one(t_shell *data, t_env **env, char *export)
 {
 	char	**splited;
-	int		i;
+
+	splited = ft_split(export, '=');
+	if (!splited)
+		return (data->status = 1, ft_putendl_fd(ERR_MAL, 2));
+	else if (!splited[0] || !all_alpha_num(splited[0]) || *export == '=')
+	{
+		(ft_putendl_fd("not a valid identifier", 2), data->status = 1);
+		return ;
+	}
+	if (splited[0][ft_strlen(splited[0]) - 1] == '+')
+	{
+		if (append(*env, splited))
+		{
+			data->status = 1;
+			return ;
+		}
+	}
+	else
+		(new_var(*env, splited, export), free(splited));
+}
+
+void	add_export(t_shell *data, t_env **env, char **to_add)
+{
+	int			i;
 
 	i = -1;
 	while (to_add[++i])
-	{
-		splited = ft_split(to_add[i], '=');
-		if (!splited)
-			return (data->status = 1, ft_putendl_fd(ERR_MAL, 2));
-		else if (!splited[0] || !ft_strlen(splited[0]) \
-		|| !all_alpha_num(splited[0]))
-		{
-			if (!i)
-				(ft_putendl_fd("not a valid identifier", 2), data->status = 1);
-			return ;
-		}
-		if (splited[0][ft_strlen(splited[0]) - 1] == '+')
-		{
-			if (append(*env, splited))
-				return (data->status = 1, (void)i);
-		}
-		else
-			(new_var(*env, splited), free(splited));
-	}
-	data->status = 0;
+		export_one(data, env, to_add[i]);
 }

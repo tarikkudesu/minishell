@@ -6,11 +6,65 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:32:32 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 18:12:33 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:50:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	variable_len(char *str)
+{
+	int	c;
+	int	i;
+
+	i = 0;
+	str += 2;
+	while ((*str && ft_isalnum(*str)) || *str == '\'' || *str == '"')
+	{
+		c = 0;
+		if (*str == '\'' || *str == '"')
+		{
+			c = *str++;
+			while (*str && *str++ != c)
+				i++;
+			str++;
+		}
+		else if (*str)
+		{
+			str++;
+			i++;
+		}
+	}
+	return (i);
+}
+
+static char	*variable(char *s, int *i)
+{
+	int		c;
+	int		j;
+	char	*name;
+
+	name = malloc(sizeof(char) * (variable_len(s) + 1));
+	if (!name)
+		return (NULL);
+	(*i)++;
+	j = 0;
+	while ((*(s + *i) && ft_isalnum(*s)) \
+		|| *(s + *i) == '\'' || *(s + *i) == '"')
+	{
+		c = 0;
+		if (*(s + *i) == '\'' || *(s + *i) == '"')
+		{
+			c = *(s + (*i)++);
+			while (*(s + *i) && *(s + *i) != c)
+				*(name + j++) = *(s + (*i)++);
+			(*i)++;
+		}
+		else if (*(s + *i))
+			*(name + j++) = *(s + (*i)++);
+	}
+	return (*(name + j) = '\0', name);
+}
 
 char	*meta_char_string(char *string, int *index)
 {
@@ -30,6 +84,8 @@ char	*meta_char_string(char *string, int *index)
 		len = 1;
 		if (*(string + 1) == '?')
 			len++;
+		else if (*(string + 1) == '\'' || *(string + 1) == '"')
+			return (variable(string, index));
 		while (*(string + len) && ft_isalnum(*(string + len)))
 			len++;
 		(*index) += len;

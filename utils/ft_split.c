@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:01:25 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/16 14:30:36 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:44:56 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,3 @@ char	**ft_split(char const *s, char c)
 	*(tab + i) = 0;
 	return (tab);
 }
-
-// int main() {
-// 	char **hi = ft_split("       hodf\" wlfj \" ksjlfh afkj ;");
-// 	for (int i = 0; *(hi + i); i++) {
-// 		printf("%s\n", *(hi + i));
-// 	}
-// }

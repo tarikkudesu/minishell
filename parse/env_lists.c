@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:05:56 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/19 14:47:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 15:09:20 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,16 @@ void	print(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->name, tmp->value);
+		ft_putstr_fd(tmp->name, 1);
+		if (tmp->value)
+		{
+			ft_putstr_fd("=", 1);
+			if (!*tmp->value)
+				ft_putstr_fd("\"\"", 1);
+			else
+				ft_putstr_fd(tmp->value, 1);
+		}
+		ft_putstr_fd("\n", 1);
 		tmp = tmp->next;
 	}
 }

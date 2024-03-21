@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/20 21:19:50 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 17:17:51 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ static	void	last_process(t_shell *data, t_tokens *token)
 	{
 		close(data->pipes[i - 2][0]);
 		waitpid(pid, &data->status, 0);
-		data->status = WEXITSTATUS(data->status);
-		if (WIFSIGNALED(data->status))
-			data->status = WTERMSIG(data->status) + 128;
-		else if (WIFEXITED(data->status))
+		if (WIFEXITED(data->status))
 			data->status = WEXITSTATUS(data->status);
+		else if (WIFSIGNALED(data->status))
+			data->status = WTERMSIG(data->status) + 128;
 	}
 }
 
@@ -89,6 +88,7 @@ static	void	middle_process(t_shell *data, t_tokens *token)
 
 void	execute(t_shell *data)
 {
+	signal(SIGINT, ctl_s);
 	if (data->cmd_nbr == 1)
 		single_cmd(data);
 	else
@@ -106,4 +106,5 @@ void	execute(t_shell *data)
 		close(data->doc_fd);
 		data->doc_fd = -1;
 	}
+	signal(SIGINT, ctl_c);
 }

@@ -6,32 +6,40 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:28:01 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 17:46:45 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:17:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	expand_variable(t_env *env, t_tokens *token, int t)
+static int	expand_variable_2(t_tokens *token)
 {
 	char	*string;
 
-	if (t)
+	string = ft_strdup(token->string + 2);
+	if (!string)
+		return (1);
+	(free(token->string), token->string = string);
+	return (0);
+}
+
+static int	expand_variable(t_env *env, t_tokens *token)
+{
+	char	*string;
+
+	while (env)
 	{
-		while (env)
-		{
-			if (!ft_strcmp(token->string + 1, env->name))
-				break ;
-			env = env->next;
-		}
-		if (env)
-		{
-			string = ft_strdup(env->value);
-			if (!string)
-				return (1);
-			(free(token->string), token->string = string);
-			return (0);
-		}
+		if (!ft_strcmp(token->string + 1, env->name))
+			break ;
+		env = env->next;
+	}
+	if (env && env->value)
+	{
+		string = ft_strdup(env->value);
+		if (!string)
+			return (1);
+		(free(token->string), token->string = string);
+		return (0);
 	}
 	(free(token->string), token->string = ft_strdup(""));
 	if (!token->string)
@@ -45,9 +53,9 @@ int	expand(t_shell *data, t_tokens *token)
 	char	*nbr;
 
 	if (token->string[0] == '$' && \
-	(token->string[1] == '\'' || token->string[1] == '\''))
-		return (expand_variable(data->env_list, token, 0));
-	else if (token->string[0] == '$')
+	(token->string[1] == '\'' || token->string[1] == '"'))
+		return (expand_variable_2(token));
+	else if (!ft_strcmp(token->string, "$"))
 		return (0);
 	else if (!ft_strncmp(token->string, "$?", 2))
 	{
@@ -61,6 +69,6 @@ int	expand(t_shell *data, t_tokens *token)
 			return (1);
 	}
 	else
-		return (expand_variable(data->env_list, token, 1));
+		return (expand_variable(data->env_list, token));
 	return (0);
 }

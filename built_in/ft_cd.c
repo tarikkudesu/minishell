@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:10:05 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 17:56:09 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 17:23:06 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	ft_cd(t_shell *data, char *path)
 		return (data->status = 1, \
 		ft_putendl_fd("minishell error : could not change directory", 2));
 	data->status = 0;
-	update(data);
+	// update(data);
 	return (exit_if(data->cmd_nbr, 0));
 }

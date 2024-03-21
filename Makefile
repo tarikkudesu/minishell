@@ -28,20 +28,19 @@ SRC				=	srcs/main.c    \
 					execute/redirection.c                     \
 					execute/gold_process.c		               \
 					execute/path_processing.c                   \
-					utils/ft_atoi.c \
-					utils/ft_isalnum.c \
-					utils/ft_isalpha.c \
-					utils/ft_itoa.c \
-					utils/ft_putendl_fd.c \
-					utils/ft_putstr_fd.c \
-					utils/ft_split.c \
-					utils/ft_strchr.c \
-					utils/ft_strdup.c \
-					utils/ft_strjoin.c \
-					utils/ft_strlen.c \
-					utils/ft_strncmp.c \
-					utils/ft_substr.c \
-					func.c
+					utils/ft_atoi.c                              \
+					utils/ft_isalnum.c                            \
+					utils/ft_isalpha.c                             \
+					utils/ft_itoa.c                                 \
+					utils/ft_putendl_fd.c                            \
+					utils/ft_putstr_fd.c                              \
+					utils/ft_split.c                                   \
+					utils/ft_strchr.c                                   \
+					utils/ft_strdup.c                                    \
+					utils/ft_strjoin.c                                    \
+					utils/ft_strlen.c                                      \
+					utils/ft_strncmp.c                                      \
+					utils/ft_substr.c
 
 CC				=	cc
 NAME			=	minishell
