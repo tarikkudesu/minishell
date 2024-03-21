@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:05:03 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/21 17:26:25 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 20:59:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_export(t_shell *data, t_env **env, char **to_add, int add)
 	t_env	*tmp;
 
 	if (add)
-		add_export(data, env, to_add);
+		add_export(data, to_add);
 	else
 	{
 		tmp = copy_list(*env);

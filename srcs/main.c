@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 17:57:51 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 19:39:36 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_data(t_shell *data, char **env)
 	data->cmd_nbr = 0;
 	data->pwd = getcwd(NULL, 0);
 	data->env_list = NULL;
-	if (get_env(data, env))
+	if (get_env(data, env, env))
 		(ft_putendl_fd(ERR_MAL, 2), exit(1));
 	data->tokens = NULL;
 	data->pipes = NULL;

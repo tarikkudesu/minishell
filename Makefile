@@ -46,7 +46,7 @@ CC				=	cc
 NAME			=	minishell
 HEADERS			=	includes/struct.h includes/macros.h includes/minishell.h
 OBJ				=	$(SRC:.c=.o)
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -g
 READLINE		=	-lreadline
 
 all: $(NAME)

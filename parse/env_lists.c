@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:05:56 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 15:09:20 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 20:21:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	print(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
+		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(tmp->name, 1);
 		if (tmp->value)
 		{
-			ft_putstr_fd("=", 1);
-			if (!*tmp->value)
-				ft_putstr_fd("\"\"", 1);
-			else
-				ft_putstr_fd(tmp->value, 1);
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(tmp->value, 1);
+			ft_putstr_fd("\"", 1);
 		}
 		ft_putstr_fd("\n", 1);
 		tmp = tmp->next;
@@ -73,9 +72,14 @@ void	env_clear(t_env **env)
 	while (tmp)
 	{
 		*env = (*env)->next;
-		(free(tmp->name), free(tmp->value), free(tmp));
+		if (tmp->value)
+			free(tmp->value);
+		if (tmp->name)
+			free(tmp->name);
+		free(tmp);
 		tmp = *env;
 	}
+	*env = NULL;
 }
 
 int	env_size(t_env *env)

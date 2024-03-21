@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 16:36:05 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 21:00:12 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		ft_env(t_shell *data, t_env *env);
 void		ft_exit(t_shell *data, char **args);
 void		ft_echo(t_shell *data, char **argument);
 void		ft_unset(t_shell *data, t_env **env, char **vars);
-void		add_export(t_shell *data, t_env **env, char **to_add);
+void		add_export(t_shell *data, char **to_add);
 void		ft_export(t_shell *data, t_env **env, char **to_add, int add);
 
 /*------------------end_built_in_command----------------*/
@@ -119,7 +119,7 @@ void		my_free(char *ptr);
 /*----------------environement_operation---------------*/
 
 void		env_add_back(t_env **linked, t_env *node);
-int			get_env(t_shell *data, char **env);
+int			get_env(t_shell *data, char **env, char **def_env);
 t_env		*env_new(char *name, char *value);
 char		**env_to_array(t_env *env_list);
 void		env_clear(t_env **env);
