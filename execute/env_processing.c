@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:50:34 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/22 11:23:00 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:37:28 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,6 @@ char	**default_env(void)
 	return (free(pwd), env);
 }
 
-char	*env_join(char const *s1, char const *s2)
-{
-	int		i;
-	int		j;
-	char	*res;
-
-	if (!s1 || !s2)
-		return (0);
-	res = malloc((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
-	if (!res)
-		return (NULL);
-	i = -1;
-	while (*(s1 + ++i))
-		*(res + i) = *(s1 + i);
-	*(res + i++) = '=';
-	j = 0;
-	while (*(s2 + j))
-		*(res + i++) = *(s2 + j++);
-	*(res + i) = '\0';
-	return (res);
-}
-
 char	**env_to_array(t_env *env_list)
 {
 	int		i;
@@ -69,13 +47,16 @@ char	**env_to_array(t_env *env_list)
 	i = 0;
 	if (env_list)
 	{
-		while (i < size)
+		while (env_list)
 		{
-			*(env + i) = env_join(env_list->name, env_list->value);
-			if (!*(env + i))
-				return (free_2d_char(env), NULL);
+			if (env_list->name && env_list->value)
+			{
+				*(env + i) = env_join(env_list->name, env_list->value);
+				if (!*(env + i))
+					return (free_2d_char(env), NULL);
+				i++;
+			}
 			env_list = env_list->next;
-			i++;
 		}
 	}
 	*(env + i) = NULL;

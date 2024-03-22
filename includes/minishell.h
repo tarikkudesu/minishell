@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/22 12:07:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:52:33 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void		my_free(char *ptr);
 
 void		get_env(t_shell *data, char **env, char **def_env, char *name);
 void		env_add_back(t_env **linked, t_env *node);
+char		*env_join(char const *s1, char const *s2);
 t_env		*env_new(char *name, char *value);
 char		**env_to_array(t_env *env_list);
 void		env_clear(t_env **env);

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:05:56 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 20:21:11 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:32:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	env_size(t_env *env)
 	i = 1;
 	while (env->next)
 	{
-		i++;
+		if (env->name && env->value)
+			i++;
 		env = env->next;
 	}
 	return (i);
