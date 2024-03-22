@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 16:34:03 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 11:27:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	read_line(t_shell *data)
 
 	while (1)
 	{
-		line = readline("\033[1;32m➜  \033[1;32mminishell \033[0m");
+		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
 		if (!line)
 			return ;
 		if (*line)

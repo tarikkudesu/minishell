@@ -21,7 +21,7 @@ SRC				=	srcs/main.c    \
 					built_in/ft_export.c		       \
 					built_in/export2.c                  \
 					execute/single_cmd.c                 \
-					execute/env_handling.c                \
+					execute/env_processing.c              \
 					execute/builtin.c         	           \
 					execute/execute.c                       \
 					parse/heredoc.c 				         \
@@ -46,22 +46,22 @@ CC				=	cc
 NAME			=	minishell
 HEADERS			=	includes/struct.h includes/macros.h includes/minishell.h
 OBJ				=	$(SRC:.c=.o)
-CFLAGS			=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror
 READLINE		=	-lreadline
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) -L /Users/$(USER)/.brew/opt/readline/lib
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE) -L /Users/$(USER)/.brew/opt/readline/lib
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@ -I /Users/$(USER)/.brew/opt/readline/include
+	@$(CC) $(CFLAGS) -c $< -o $@ -I /Users/$(USER)/.brew/opt/readline/include
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

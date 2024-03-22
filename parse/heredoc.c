@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/21 14:15:17 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 01:38:33 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 	}
 	if (line)
 		free(line);
-	(dup2(zero, STDIN_FILENO), close(zero));
+	(signal(SIGINT, ctl_c), dup2(zero, STDIN_FILENO), close(zero));
 	if (g_sig)
 		return (close(data->doc_fd), data->doc_fd = -1, 1);
 	return (0);

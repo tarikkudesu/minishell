@@ -3,79 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 13:52:27 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 22:18:03 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 01:29:09 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	append(t_shell *data, t_env *env, char *name, char *value)
+void	new_var(t_shell *data, char *name, char *value)
 {
 	t_env	*node;
+	t_env	*tmp;
+
+	tmp = data->env_list;
+	while (tmp && ft_strcmp(name, tmp->name))
+		tmp = tmp->next;
+	if (!tmp)
+	{
+		node = env_new(name, value);
+		if (!node)
+			return (ft_putendl_fd("h", 2));
+		env_add_back(&data->env_list, node);
+	}
+	else
+	{
+		if (tmp->value)
+			free(tmp->value);
+		(free(name), tmp->value = value);
+	}
+}
+
+int	append(t_shell *data, t_env *env, char *name, char *value)
+{
 	char	*join;
 
 	while (env && ft_strcmp(name, env->name))
 		env = env->next;
 	if (env)
 	{
-		join = ft_strjoin(env->value, value);
-		if (!join)
-			return (ft_putendl_fd(ERR_MAL, 2), 1);
-		(free(env->value), free(name), free(value));
-		env->value = join;
+		if (!env->value)
+			env->value = value;
+		else
+		{
+			join = ft_strjoin(env->value, value);
+			if (!join)
+				return (ft_putendl_fd("hhh", 2), 1);
+			(free(env->value), free(name), free(value));
+			env->value = join;
+		}
 	}
 	else
-	{
-		node = env_new(name, value);
-		if (!node)
-			return(ft_putendl_fd(ERR_MAL, 2), 1);
-		env_add_back(&data->env_list, node);
-	}
+		new_var(data, name, value);
 	return (0);
 }
 
 int	all_alpha_num(char *str)
 {
 	int	i;
-	int	len;
 
 	i = 0;
 	if (!ft_isalpha(*str))
 		return (0);
-	len = ft_strlen(str);
-	while (i < len - 1)
+	while (str[i] && str[i + 1])
 	{
-		if (!ft_isalnum(*(str + i)))
+		if (!ft_isalnum(str[i + 1]))
 			return (0);
 		i++;
 	}
-	if (*(str + i) == '+' || ft_isalnum(*(str + i)))
-		return (1);
-	return (0);
+	return (str[i + 1] == '+' || ft_isalnum(str[i + 1]) || !str[i + 1]);
 }
 
 void	export_one(t_shell *data, char *name, char *value)
 {
-	t_env	*node;
+	char	*name_env;
 
-	if (name[ft_strlen(name) - 1] == '+' && !value)
-		return (free(name), ft_putendl_fd("not a valid identifierrrr", 2));
 	if (name[ft_strlen(name) - 1] == '+' )
 	{
-		puts("lhih");
-		append(data, data->env_list, ft_substr(name, 0, ft_strlen(name) - 1), value);
+		name_env = ft_substr(name, 0, ft_strlen(name) - 1);
 		free(name);
+		if (!all_alpha_num(name_env))
+			return (ft_putendl_fd("not a valid identifierrr", 2), \
+			free(name_env), free(value));
+		append(data, data->env_list, name_env, value);
 	}
 	else
 	{
-		puts("hna");
-		node = env_new(name, value);
-		if (!node)
-			return (ft_putendl_fd(ERR_MAL, 2));
-		env_add_back(&data->env_list, node);
+		if (!all_alpha_num(name))
+			return (ft_putendl_fd("not a valid identifierrr", 2), \
+			free(name), free(value));
+		new_var(data, name, value);
 	}
 }
 
@@ -83,32 +101,25 @@ void	add_export(t_shell *data, char **to_add)
 {
 	int		i;
 	char	*name;
-	char	*value;
 	char	*help;
 
 	i = -1;
 	while (to_add[++i])
 	{
 		help = ft_strchr(to_add[i], '=');
-		if (!help && !all_alpha_num(to_add[i]))
-			(ft_putendl_fd("not a valid identifier", 2));
+		if (!help && all_alpha_num(to_add[i]))
+			new_var(data, ft_strdup(to_add[i]), NULL);
+		else if (!help && !all_alpha_num(to_add[i]))
+			ft_putendl_fd("not a valid identifierrr", 2);
 		else
 		{
-			if (!help)
-			{
-				name = ft_strdup(to_add[i]);
-				value = NULL;
-				export_one(data, name, value);
-			}
+			name = ft_substr(to_add[i], 0, help - to_add[i]);
+			if (!name)
+				return (ft_putendl_fd(ERR_MAL, 2));
+			if (!ft_isalpha(*name))
+				(free(name), ft_putendl_fd("not a valid identifierrr", 2));
 			else
-			{
-				name = ft_substr(to_add[i], 0, help - to_add[i]);
-				if (name && !all_alpha_num(name))
-					(ft_putendl_fd("not a valid identifierrr", 2));
-				value = ft_strdup(help + 1);
-				export_one(data, name, value);
-			}
+				export_one(data, name, ft_strdup(help + 1));
 		}
-		
 	}
 }

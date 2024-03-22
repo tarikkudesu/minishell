@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 16:54:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 11:34:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,17 @@ int	leaf(t_shell *data, t_tokens **tmp)
 int	pars(t_shell *data)
 {
 	t_tokens	*tmp;
+	char		*string;
 
 	tmp = data->tokens;
 	while (tmp)
 	{
 		if (class_operator(tmp) && tmp->stat == GENERAL)
 		{
-			if (init_leaf(data, ft_strdup(tmp->string), tmp))
+			string = ft_strdup(tmp->string);
+			if (!string)
+				return (throw_error(ERR_MAL));
+			if (init_leaf(data, string, tmp))
 				return (throw_error(ERR_MAL));
 			tmp = tmp->right;
 		}

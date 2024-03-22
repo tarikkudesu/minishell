@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 21:00:12 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 12:07:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <dirent.h>
-# include <string.h>
-# include <errno.h>
 
 /*-------------------execute_operations-----------------*/
 
@@ -42,6 +39,7 @@ char		**get_args(t_tokens *token);
 void		dup_in_out(int input, int output);
 char		*absolute_path(char	*cmd, char **env);
 void		ft_execve(t_shell *data, char **cmd_arg);
+void		set_environment(t_shell *data, char **env);
 void		exec_builtin(t_shell *data, char **cmd_argd);
 void		process(t_shell *data, t_tokens *token, int input, int output);
 int			red_process(t_shell *data, t_tokens *token, int input, int output);
@@ -55,8 +53,8 @@ void		ft_cd(t_shell *data, char *path);
 void		ft_env(t_shell *data, t_env *env);
 void		ft_exit(t_shell *data, char **args);
 void		ft_echo(t_shell *data, char **argument);
-void		ft_unset(t_shell *data, t_env **env, char **vars);
 void		add_export(t_shell *data, char **to_add);
+void		ft_unset(t_shell *data, t_env **env, char **vars);
 void		ft_export(t_shell *data, t_env **env, char **to_add, int add);
 
 /*------------------end_built_in_command----------------*/
@@ -118,8 +116,8 @@ void		my_free(char *ptr);
 
 /*----------------environement_operation---------------*/
 
+void		get_env(t_shell *data, char **env, char **def_env, char *name);
 void		env_add_back(t_env **linked, t_env *node);
-int			get_env(t_shell *data, char **env, char **def_env);
 t_env		*env_new(char *name, char *value);
 char		**env_to_array(t_env *env_list);
 void		env_clear(t_env **env);
