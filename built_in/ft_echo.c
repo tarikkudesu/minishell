@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:13:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 15:20:57 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_echo(t_shell *data, char **argument)
 	if (!argument[0])
 	{
 		ft_putstr_fd("\n", 1);
-		if (data->number_of_commands > 1)
+		if (data->cmd_nbr > 1)
 			exit(0);
 		return ;
 	}
@@ -50,6 +50,6 @@ void	ft_echo(t_shell *data, char **argument)
 	if (!b)
 		write(1, "\n", 1);
 	data->status = 0;
-	if (data->number_of_commands > 1)
+	if (data->cmd_nbr > 1)
 		exit(0);
 }

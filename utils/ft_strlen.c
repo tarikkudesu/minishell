@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 14:10:18 by tamehri           #+#    #+#             */
-/*   Updated: 2023/11/04 14:10:22 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/31 09:49:11 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/22 11:29:32 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-t_list	*ft_lstlast(t_list *lst)
+size_t	ft_strlen(const char *str)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	int	i;
+
+	i = 0;
+	while (*(str + i))
+		i++;
+	return (i);
 }

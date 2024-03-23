@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lists.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:05:56 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/09 18:50:29 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 14:52:37 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,17 @@ void	print(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->name, tmp->value);
+		if (ft_strcmp(tmp->name, "_"))
+		{
+			(ft_putstr_fd("declare -x ", 1), ft_putstr_fd(tmp->name, 1));
+			if (tmp->value)
+			{
+				ft_putstr_fd("=\"", 1);
+				ft_putstr_fd(tmp->value, 1);
+				ft_putstr_fd("\"", 1);
+			}
+			ft_putstr_fd("\n", 1);
+		}
 		tmp = tmp->next;
 	}
 }
@@ -64,9 +74,14 @@ void	env_clear(t_env **env)
 	while (tmp)
 	{
 		*env = (*env)->next;
-		(free(tmp->name), free(tmp->value), free(tmp));
+		if (tmp->value)
+			free(tmp->value);
+		if (tmp->name)
+			free(tmp->name);
+		free(tmp);
 		tmp = *env;
 	}
+	*env = NULL;
 }
 
 int	env_size(t_env *env)

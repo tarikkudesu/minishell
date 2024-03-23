@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 19:27:58 by tamehri           #+#    #+#             */
-/*   Updated: 2023/11/05 11:23:23 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/30 11:45:39 by tamehri           #+#    #+#             */
+/*   Updated: 2023/11/01 19:52:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+int	ft_isalnum(int c)
 {
-	int	i;
-
-	i = -1;
-	if (!s)
-		return ;
-	while (*(s + ++i))
-		f(i, &s[i]);
+	if (c >= '0' && c <= '9')
+		return (1);
+	else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }

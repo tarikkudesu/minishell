@@ -6,34 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 19:48:49 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 12:38:06 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	check_quoting(char *str)
-{
-	int	c;
-
-	while (*str)
-	{
-		c = 0;
-		if (*str == '\'' || *str == '"')
-		{
-			c = *str;
-			str++;
-			while (*str && *str != c)
-				str++;
-			if (!*str)
-				return (1);
-			str++;
-		}
-		else
-			str++;
-	}
-	return (0);
-}
 
 char	*token_string(char *string, int *index)
 {
@@ -66,10 +43,7 @@ t_tokens	*init_token(t_shell *data, char *line, int *index, int t)
 	if (!token)
 		return (free(string), NULL);
 	if (!t)
-	{
-		token_class(token);
-		token_stat(data, token);
-	}
+		(token_class(token), token_stat(data, token));
 	else
 	{
 		if (!ft_strcmp(token->string, " "))
@@ -81,16 +55,14 @@ t_tokens	*init_token(t_shell *data, char *line, int *index, int t)
 	return (token);
 }
 
-/*
-	If the token is an envirement vaiable it expanded and broken into tokens
-	and added to the linked list.
-*/
-int	env_lexer(t_shell *data, char *line)
+static int	env_lexer(t_shell *data, char *line, t_tokens **tmp)
 {
 	int			index;
 	t_tokens	*token;
 
 	index = 0;
+	if (data->exp == '1')
+		return (tokenadd_back(&data->tokens, *tmp), 0);
 	while (line[index])
 	{
 		token = init_token(data, line, &index, 1);
@@ -98,39 +70,45 @@ int	env_lexer(t_shell *data, char *line)
 			return (1);
 		tokenadd_back(&data->tokens, token);
 	}
+	return (tokenclear(tmp), 0);
+}
+
+static	int	simple_cases(t_shell *data, t_tokens **token, int *index)
+{
+	if ((*token)->stat == GENERAL && (*token)->class == HEREDOC)
+	{
+		tokenadd_back(&data->tokens, (*token));
+		if (heredoc_init(data, index))
+			return (1);
+	}
+	else if ((*token)->class == ENV && (*token)->stat != INQUOTE)
+	{
+		if (expand(data, *token) || env_lexer(data, (*token)->string, token))
+			return (tokenclear(token), throw_error(data, ERR_MAL, 1));
+	}
+	else
+		tokenadd_back(&data->tokens, (*token));
 	return (0);
 }
 
-/*
-	The Lexer : this function will retrieve the next token and add it
-	to a linked list, a token can be a word, an operator (<, >, <<, >>, |),
-	an env ($VAR) or a quote (", ')
-*/
 int	lexer(t_shell *data)
 {
 	int			index;
 	t_tokens	*token;
 
 	index = 0;
+	data->exp = '0';
 	while (data->line[index])
 	{
 		token = init_token(data, data->line, &index, 0);
 		if (!token)
-			return (throw_error(ERR_MAL));
-		if (token->class == HEREDOC && token->stat == GENERAL)
-		{
-			tokenadd_back(&data->tokens, token);
-			if (heredoc_init(data, &index))
-				return (1);
-		}
-		else if (token->class == ENV && token->stat != INQUOTE)
-		{
-			if (expand(data, token) || env_lexer(data, token->string))
-				return (throw_error(ERR_MAL));
-			tokenclear(&token);
-		}
-		else
-			tokenadd_back(&data->tokens, token);
+			return (throw_error(data, ERR_MAL, 1));
+		if (token->stat == GENERAL && class_operator(token))
+			data->exp = '0';
+		else if (!ft_strcmp(token->string, "export"))
+			data->exp = '1';
+		if (simple_cases(data, &token, &index))
+			return (1);
 	}
-	return (0);
+	return (data->exp = '0', 0);
 }

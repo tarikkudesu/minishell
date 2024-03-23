@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:05:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/17 15:23:12 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 17:38:23 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ enum	e_class
 	IN_RED = '<',
 	OUT_RED = '>',
 	HEREDOC = 'H',
+	HEREDOC_E = 'E',
+	HEREDOC_O = 'O',
 	APPEND = 'A',
 	ENV = '$',
 	FILE_NAME = 'F',
@@ -67,10 +69,12 @@ struct	s_shell
 	char		*line;
 	t_tokens	*tree;
 	int			**pipes;
-	int			number_of_commands;
+	int			cmd_nbr;
 	int			status;
 	int			doc_fd;
+	char		*pwd;
 	t_stat		stat;
+	char		exp;
 };
 
 #endif

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/18 23:58:22 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:51:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern int	g_sig;
 
 int	get_env_value(t_shell *data, char *name, int fd)
 {
@@ -22,7 +24,7 @@ int	get_env_value(t_shell *data, char *name, int fd)
 	{
 		nbr = ft_itoa(data->status);
 		if (!nbr)
-			return (throw_error(ERR_MAL));
+			return (throw_error(data, ERR_MAL, 1));
 		ft_putstr_fd(nbr, fd);
 		return (free(nbr), 0);
 	}
@@ -35,7 +37,7 @@ int	get_env_value(t_shell *data, char *name, int fd)
 	return (0);
 }
 
-int	putline_fd(t_shell *data, char *s, int fd)
+int	putline_fd(t_shell *data, char *s, int fd, int exp)
 {
 	char	*env;
 	int		i;
@@ -43,13 +45,13 @@ int	putline_fd(t_shell *data, char *s, int fd)
 	i = 0;
 	while (*(s + i))
 	{
-		if (*(s + i) == '$')
+		if (*(s + i) == '$' && exp == HEREDOC_E)
 		{
 			env = meta_char_string(s + i, &i);
 			if (!env)
 				return (ft_putendl_fd(ERR_MAL, 2), 1);
 			if (get_env_value(data, env, fd))
-				return (1);
+				return (free(env), 1);
 			free(env);
 		}
 		else
@@ -59,11 +61,14 @@ int	putline_fd(t_shell *data, char *s, int fd)
 	return (0);
 }
 
-static void	heredoc_fill(t_shell *data, char *del, int fd, int exp)
+static int	heredoc_fill(t_shell *data, char *del, int fd, t_class exp)
 {
 	char	*line;
+	int		zero;
 
-	while (1)
+	line = NULL;
+	(signal(SIGINT, sig_h), zero = dup(STDIN_FILENO));
+	while (!g_sig && 1)
 	{
 		line = readline("> ");
 		if (!del && !*line)
@@ -73,29 +78,37 @@ static void	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 		}
 		if (!line || !ft_strcmp(line, del))
 			break ;
-		if (exp && putline_fd(data, line, fd))
-			return (free(line));
-		// else
-		// 	ft_putendl_fd(line, fd); // we write in file twice
+		if (putline_fd(data, line, fd, exp))
+			return (free(line), dup2(zero, 0), close(zero), 1);
 		(free(line), line = NULL);
 	}
 	if (line)
 		free(line);
+	(signal(SIGINT, ctl_c), dup2(zero, STDIN_FILENO), close(zero));
+	if (g_sig)
+		return (close(data->doc_fd), data->doc_fd = -1, 1);
+	return (0);
 }
 
-int	heredoc(t_shell *data, char *del, int exp)
+int	heredoc(t_shell *data, char *del, t_class exp)
 {
 	int		fd;
+	char	*name;
 
-	fd = open("/tmp/.mini_245", O_WRONLY | O_CREAT | O_TRUNC, 0744);
+	name = ft_itoa((int)data);
+	if (!name)
+		return (perror(ERR_MAL), 1);
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0744);
 	if (fd < 0)
-		return (perror(ERR_OPEN), 1);
-	data->doc_fd = open("/tmp/.mini_245", O_RDONLY);
+		return (free(name), perror(ERR_OPEN), 1);
+	if (data->doc_fd != -1)
+		close(data->doc_fd);
+	data->doc_fd = open(name, O_RDONLY);
 	if (data->doc_fd < 0)
-		return (perror(ERR_OPEN), 1);
-	if (unlink("/tmp/.mini_245") < 0)
-		return (perror(ERR_UNLINK), 1);
-	heredoc_fill(data, del, fd, exp);
-	close(fd);
-	return (0);
+		return (free(name), perror(ERR_OPEN), 1);
+	if (unlink(name) < 0)
+		return (free(name), perror(ERR_UNLINK), 1);
+	if (heredoc_fill(data, del, fd, exp))
+		return (free(name), close(fd), 1);
+	return (free(name), close(fd), 0);
 }

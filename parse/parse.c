@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 19:54:02 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:03:03 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,14 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class)
 	t_tokens	*token;
 
 	if (!string)
-		return (1);
-	token = tokennew(string);
+	{
+		string = ft_strdup("");
+		if (!string)
+			return (1);
+		token = tokennew(string);
+	}
+	else
+		token = tokennew(string);
 	if (!token)
 		return (free(string), 1);
 	if (class->stat == GENERAL)
@@ -45,8 +51,7 @@ int	init_leaf(t_shell *data, char *string, t_tokens *class)
 	else
 		token->class = WORD;
 	token->stat = class->stat;
-	tokenadd_back(&data->tree, token);
-	return (0);
+	return (tokenadd_back(&data->tree, token), 0);
 }
 
 int	leaf(t_shell *data, t_tokens **tmp)
@@ -64,7 +69,7 @@ int	leaf(t_shell *data, t_tokens **tmp)
 		{
 			string = join_tokens(tmp, string);
 			if (!string)
-				return (throw_error(ERR_MAL));
+				return (1);
 			*tmp = (*tmp)->right;
 		}
 	}
@@ -74,14 +79,18 @@ int	leaf(t_shell *data, t_tokens **tmp)
 int	pars(t_shell *data)
 {
 	t_tokens	*tmp;
+	char		*string;
 
 	tmp = data->tokens;
 	while (tmp)
 	{
 		if (class_operator(tmp) && tmp->stat == GENERAL)
 		{
-			if (init_leaf(data, ft_strdup(tmp->string), tmp))
-				return (throw_error(ERR_MAL));
+			string = ft_strdup(tmp->string);
+			if (!string)
+				return (throw_error(data, ERR_MAL, 1));
+			if (init_leaf(data, string, tmp))
+				return (throw_error(data, ERR_MAL, 1));
 			tmp = tmp->right;
 		}
 		else if (exclude(tmp))
@@ -89,7 +98,7 @@ int	pars(t_shell *data)
 		else
 		{
 			if (leaf(data, &tmp))
-				return (1);
+				return (throw_error(data, ERR_MAL, 1));
 		}
 	}
 	return (0);

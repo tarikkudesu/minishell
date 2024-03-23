@@ -6,11 +6,11 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:40:29 by tamehri           #+#    #+#             */
-/*   Updated: 2023/11/01 19:48:06 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:15:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
 int	ft_isspace(char c)
 {

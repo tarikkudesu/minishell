@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 12:37:00 by tamehri           #+#    #+#             */
-/*   Updated: 2023/11/04 14:44:12 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/31 13:58:28 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/22 11:29:58 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+char	*ft_strchr(const char *s, int c)
 {
-	new->next = *lst;
-	*lst = new;
+	int	i;
+
+	i = 0;
+	while (*(s + i))
+	{
+		if (*(s + i) == (char)c)
+			return ((char *)(s + i));
+		i++;
+	}
+	if (*(s + i) == (char)c)
+		return ((char *)(s + i));
+	return (NULL);
 }

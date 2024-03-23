@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 12:49:57 by tamehri           #+#    #+#             */
-/*   Updated: 2023/11/04 12:50:00 by tamehri          ###   ########.fr       */
+/*   Created: 2023/10/31 17:05:12 by tamehri           #+#    #+#             */
+/*   Updated: 2024/03/22 11:29:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-int	ft_lstsize(t_list *lst)
+char	*ft_strdup(const char *s1)
 {
-	int	i;
+	int		i;
+	char	*res;
 
-	if (!lst)
-		return (0);
-	i = 1;
-	while (lst->next)
+	i = ft_strlen(s1);
+	res = malloc((i + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (*(s1 + i))
 	{
+		*(res + i) = *(s1 + i);
 		i++;
-		lst = lst->next;
 	}
-	return (i);
+	*(res + i) = '\0';
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:49:59 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/17 13:57:01 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:50:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	tokenadd_back(t_tokens **lst, t_tokens *new)
 {
 	t_tokens	*temp;
 
-	if (!lst)
-		return ;
-	if (!new)
+	if (!lst || !new)
 		return ;
 	if (!*lst)
 	{

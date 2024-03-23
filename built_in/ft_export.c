@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:05:03 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/16 14:28:14 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 11:52:36 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sort_list(t_env *env)
 	char	*help;
 
 	i = env;
-	while (i->next)
+	while (i && i->next)
 	{
 		j = i->next;
 		while (j)
@@ -50,16 +50,17 @@ t_env	*copy_list(t_env *list)
 	env = NULL;
 	while (list)
 	{
+		name = NULL;
+		value = NULL;
 		if (list->name)
 			name = ft_strdup(list->name);
 		if (list->value)
 			value = ft_strdup(list->value);
 		node = env_new(name, value);
 		if (!node)
-			return (perror("ERROR_NEW_NODE_EXPORT"), NULL);
+			return (free(name), free(value), perror(ERR_MAL), NULL);
 		env_add_back(&env, node);
 		list = list->next;
-		value = NULL;
 	}
 	return (env);
 }
@@ -69,13 +70,13 @@ void	ft_export(t_shell *data, t_env **env, char **to_add, int add)
 	t_env	*tmp;
 
 	if (add)
-		add_export(data, env, to_add);
+		add_export(data, to_add);
 	else
 	{
 		tmp = copy_list(*env);
 		(sort_list(tmp), env_clear(&tmp));
 		data->status = 0;
 	}
-	if (data->number_of_commands > 1)
+	if (data->cmd_nbr > 1)
 		exit(0);
 }

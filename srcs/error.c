@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:39:48 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/18 21:49:06 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/21 20:09:05 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	free_2d_char(char **free2d)
 	free(free2d);
 }
 
-int	throw_error(char *str)
+int	throw_error(t_shell *data, char *str, int status)
 {
+	data->status = status;
 	ft_putendl_fd(str, 2);
 	return (1);
 }

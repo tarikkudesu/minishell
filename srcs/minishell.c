@@ -6,23 +6,49 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/18 21:49:36 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/22 11:27:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	minishell(t_shell *data)
+int	g_sig;
+
+int	check_quoting(char *str)
+{
+	int	c;
+
+	while (*str)
+	{
+		c = 0;
+		if (*str == '\'' || *str == '"')
+		{
+			c = *str;
+			str++;
+			while (*str && *str != c)
+				str++;
+			if (!*str)
+				return (1);
+			str++;
+		}
+		else
+			str++;
+	}
+	return (0);
+}
+
+int	minishell(t_shell *data)
 {
 	if (check_quoting(data->line))
-		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2));
+		return (ft_putendl_fd(ERR_UNCLOSED_QUOTES, 2), 1);
 	if (lexer(data) || pars(data) || syntax(data))
-		return ;
+		return (g_sig = 0, 1);
 	command_tree(data);
 	execute(data);
-	if (data->number_of_commands > 1)
-		(free_2d_int(data->pipes, data->number_of_commands - 1), \
+	if (data->cmd_nbr > 1)
+		(free_2d_int(data->pipes, data->cmd_nbr - 1), \
 		data->pipes = NULL);
+	return (g_sig = 0);
 }
 
 void	read_line(t_shell *data)
@@ -31,7 +57,6 @@ void	read_line(t_shell *data)
 
 	while (1)
 	{
-		rl_initialize();
 		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
 		if (!line)
 			return ;

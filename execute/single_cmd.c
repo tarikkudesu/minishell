@@ -3,38 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:40:57 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/18 23:46:30 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:27:53 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static	int	parent_built_in(t_shell *data, char **args)
-{
-	int	fd_in;
-	int	fd_out;
-
-	fd_in = dup(STDIN_FILENO);
-	if (fd_in < 0)
-		return (throw_error("ERROR_DUP_PARENT_BUILTIN"));
-	fd_out = dup(STDOUT_FILENO);
-	if (fd_out < 0)
-		return (close(fd_in), throw_error("ERROR_DUP_PARENT_BUILTIN"));
-	if (!red_process(data, data->tree, STDIN_FILENO, STDOUT_FILENO))
-		exec_builtin(data, args);
-	else
-		data->status = 1;
-	if (dup2(fd_in, STDIN_FILENO) < 0 || dup2(fd_out, STDOUT_FILENO) < 0)
-		ft_throw("ERROR_LOST_STDIN_AND_STDOUT", 1);
-	close(fd_in);
-	close(fd_out);
-	return (0);
-}
-
-void	single_cmd(t_shell *data)
+static	void	execute_single_cmd(t_shell *data)
 {
 	char	**args;
 	int		pid;
@@ -43,22 +21,38 @@ void	single_cmd(t_shell *data)
 	if (!args || !*args)
 		return ;
 	if (is_builtin(*args))
-		parent_built_in(data, args);
+		return (exec_builtin(data, args));
+	pid = fork();
+	if (pid < 0)
+		return (free_2d_char(args), perror(ERR_FORK));
+	if (!pid)
+		ft_execve(data, args);
+	waitpid(pid, &data->status, 0);
+	if (WIFEXITED(data->status))
+		data->status = WEXITSTATUS(data->status);
+	else if (WIFSIGNALED(data->status))
+		data->status = WTERMSIG(data->status) + 128;
+	free_2d_char(args);
+}
+
+void	single_cmd(t_shell *data)
+{
+	int		fd_in;
+	int		fd_out;
+
+	fd_in = dup(STDIN_FILENO);
+	if (fd_in < 0)
+		return (data->status = 1, perror(ERR_DUP));
+	fd_out = dup(STDOUT_FILENO);
+	if (fd_out < 0)
+		return (close(fd_in), data->status = 1, perror(ERR_DUP));
+	if (!red_process(data, data->tree, STDIN_FILENO, STDOUT_FILENO))
+		execute_single_cmd(data);
 	else
-	{
-		pid = fork();
-		if (pid < 0)
-			ft_throw("ERROR_FORK", 1);
-		if (!pid)
-		{
-			if (red_process(data, data->tree, STDIN_FILENO, STDOUT_FILENO) < 0)
-				exit(1);
-			(ft_execve(data, args), free_2d_char(args));
-		}
-		(waitpid(pid, &data->status, 0), free_2d_char(args));
-		if (WIFEXITED(data->status))
-			data->status = WEXITSTATUS(data->status);
-		else if (WIFSIGNALED(data->status))
-			data->status = WTERMSIG(data->status) + 128;
-	}
+		data->status = 1;
+	if (dup2(fd_in, STDIN_FILENO) < 0 || dup2(fd_out, STDOUT_FILENO) < 0)
+		return (close(fd_in), close(fd_out), data->status = 1, \
+		perror(ERR_DUP2));
+	close(fd_in);
+	close(fd_out);
 }

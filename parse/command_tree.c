@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:45:41 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/15 16:46:26 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	command_tree(t_shell *data)
 		if (tmp->right)
 			tmp = tmp->right;
 	}
-	data->number_of_commands = i + 1;
+	data->cmd_nbr = i + 1;
 }
