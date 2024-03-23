@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 13:52:27 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/23 13:39:38 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 16:08:59 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	new_var(t_shell *data, char *name, char *value)
 	t_env	*node;
 	t_env	*tmp;
 
+	if (name && !ft_strcmp(name, "_"))
+		return (my_free(name), my_free(value));
 	tmp = data->env_list;
 	while (tmp && ft_strcmp(name, tmp->name))
 		tmp = tmp->next;
@@ -29,9 +31,9 @@ void	new_var(t_shell *data, char *name, char *value)
 	}
 	else
 	{
-		if (tmp->value)
-			free(tmp->value);
-		(free(name), tmp->value = value);
+		if (tmp && tmp->value && value)
+			(free(tmp->value), tmp->value = value);
+		free(name);
 	}
 }
 
@@ -39,6 +41,8 @@ int	append(t_shell *data, t_env *env, char *name, char *value)
 {
 	char	*join;
 
+	if (name && !ft_strcmp(name, "_"))
+		return (my_free(name), my_free(value), 0);
 	while (env && ft_strcmp(name, env->name))
 		env = env->next;
 	if (env)
@@ -72,8 +76,7 @@ int	all_alpha_num(char *str)
 			return (0);
 		i++;
 	}
-	return (str[i + 1] == '+' || str[i + 1] == '_' \
-		|| ft_isalnum(str[i + 1]) || !str[i + 1]);
+	return (!str[i + 1] || str[i + 1] == '+' || ft_isalnum(str[i + 1]));
 }
 
 void	export_one(t_shell *data, char *name, char *value)
@@ -119,7 +122,7 @@ void	add_export(t_shell *data, char **to_add)
 			name = ft_substr(to_add[i], 0, help - to_add[i]);
 			if (!name)
 				return (ft_putendl_fd(ERR_MAL, 2));
-			if (!ft_isalpha(*name))
+			if (!ft_isalpha(*name) && *name != '_')
 				(free(name), ft_putendl_fd(ERR_NOT_VALID, 2), \
 					data->status = 1);
 			else

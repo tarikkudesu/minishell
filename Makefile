@@ -24,7 +24,7 @@ SRC				=	srcs/main.c    \
 					execute/env_processing.c              \
 					execute/builtin.c         	           \
 					execute/execute.c                       \
-					parse/heredoc.c 				         \
+					parse/heredoc.c 			        	 \
 					execute/redirection.c                     \
 					execute/gold_process.c		               \
 					execute/path_processing.c                   \

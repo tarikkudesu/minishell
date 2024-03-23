@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/23 12:37:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 16:11:42 by ooulcaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_env_value(t_shell *data, char *name, int fd)
 	return (0);
 }
 
-int	putline_fd(t_shell *data, char *s, int fd)
+int	putline_fd(t_shell *data, char *s, int fd, int exp)
 {
 	char	*env;
 	int		i;
@@ -45,7 +45,7 @@ int	putline_fd(t_shell *data, char *s, int fd)
 	i = 0;
 	while (*(s + i))
 	{
-		if (*(s + i) == '$')
+		if (*(s + i) == '$' && exp)
 		{
 			env = meta_char_string(s + i, &i);
 			if (!env)
@@ -78,7 +78,7 @@ static int	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 		}
 		if (!line || !ft_strcmp(line, del))
 			break ;
-		if (exp && putline_fd(data, line, fd))
+		if (putline_fd(data, line, fd, exp))
 			return (free(line), dup2(zero, 0), close(zero), 1);
 		(free(line), line = NULL);
 	}
