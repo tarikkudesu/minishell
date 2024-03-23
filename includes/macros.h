@@ -13,18 +13,19 @@
 #ifndef MACROS_H
 # define MACROS_H
 
-# define ERR_ARG				"minishell Error : no arguments required "
-# define ERR_CMD_NOT_FOUND		"minishell Error : command not found "
-# define ERR_UNCLOSED_QUOTES	"minishell Error : unclosed quotes "
-# define ERR_MAL				"minishell Error : malloc "
-# define ERR_UNLINK				"minishell Error : unlink "
-# define ERR_EXECVE				"minishell Error : execve "
+# define ERR_ARG				"minishell error : no arguments required "
+# define ERR_NOT_VALID			"minishell error : not a valid identifier"
+# define ERR_CMD_NOT_FOUND		"minishell error : command not found "
+# define ERR_UNCLOSED_QUOTES	"minishell error : unclosed quotes "
+# define ERR_MAL				"minishell error : malloc "
+# define ERR_UNLINK				"minishell error : unlink "
+# define ERR_EXECVE				"minishell error : execve "
 # define ERR_SYNTAX 			"minishell : syntax error "
-# define ERR_FORK				"minishell Error : fork "
-# define ERR_PIPE				"minishell Error : pipe "
-# define ERR_DUP2				"minishell Error : dup2 "
-# define ERR_OPEN				"minishell Error : open "
-# define ERR_DUP				"minishell Error : dup "
-# define ERR					"minishell Error "
+# define ERR_FORK				"minishell error : fork "
+# define ERR_PIPE				"minishell error : pipe "
+# define ERR_DUP2				"minishell error : dup2 "
+# define ERR_OPEN				"minishell error : open "
+# define ERR_DUP				"minishell error : dup "
+# define ERR					"minishell error "
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:04:23 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/22 16:35:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 12:02:59 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ char	*fill_envs(char const *s1, char const *s2, char **res)
 		while (*(s1 + ++i))
 			*(*res + i) = *(s1 + i);
 	}
-	*(*res + i++) = '=';
 	if (s2)
 	{
+		*(*res + i++) = '=';
 		j = 0;
 		while (*(s2 + j))
 			*(*res + i++) = *(s2 + j++);
@@ -92,8 +92,8 @@ char	*env_join(char const *s1, char const *s2)
 	if (s1)
 		l1 = ft_strlen(s1);
 	if (s2)
-		l2 = ft_strlen(s2);
-	res = malloc((l1 + l2 + 2) * sizeof(char));
+		l2 = 1 + ft_strlen(s2);
+	res = malloc((l1 + l2 + 1) * sizeof(char));
 	if (!res)
 		return (NULL);
 	return (fill_envs(s1, s2, &res));

@@ -6,11 +6,54 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:50:34 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/22 16:37:28 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 12:09:24 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	envname_size(t_env *env)
+{
+	int	i;
+
+	if (!env)
+		return (0);
+	i = 1;
+	while (env->next)
+	{
+		if (env->name && env->value)
+			i++;
+		env = env->next;
+	}
+	return (i);
+}
+
+char	**env_to_array(t_env *env_list)
+{
+	int		i;
+	int		size;
+	char	**env;
+
+	if (!env_list)
+		return (NULL);
+	size = envname_size(env_list);
+	env = malloc(sizeof(char *) * (size + 1));
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env_list)
+	{
+		if (env_list->name && env_list->value)
+		{
+			*(env + i) = env_join(env_list->name, env_list->value);
+			if (!*(env + i))
+				return (free_2d_char(env), NULL);
+			i++;
+		}
+		env_list = env_list->next;
+	}
+	return (*(env + i) = NULL, env);
+}
 
 char	**default_env(void)
 {
@@ -32,35 +75,6 @@ char	**default_env(void)
 		return (free(pwd), free(env[0]), free(env[1]), NULL);
 	env[3] = NULL;
 	return (free(pwd), env);
-}
-
-char	**env_to_array(t_env *env_list)
-{
-	int		i;
-	int		size;
-	char	**env;
-
-	size = env_size(env_list);
-	env = malloc(sizeof(char *) * (size + 1));
-	if (!env)
-		return (NULL);
-	i = 0;
-	if (env_list)
-	{
-		while (env_list)
-		{
-			if (env_list->name && env_list->value)
-			{
-				*(env + i) = env_join(env_list->name, env_list->value);
-				if (!*(env + i))
-					return (free_2d_char(env), NULL);
-				i++;
-			}
-			env_list = env_list->next;
-		}
-	}
-	*(env + i) = NULL;
-	return (env);
 }
 
 int	insert_env_node(t_shell *data, char *name, char *env)

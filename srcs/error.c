@@ -39,8 +39,9 @@ void	free_2d_char(char **free2d)
 	free(free2d);
 }
 
-int	throw_error(char *str)
+int	throw_error(t_shell *data, char *str, int status)
 {
+	data->status = status;
 	ft_putendl_fd(str, 2);
 	return (1);
 }

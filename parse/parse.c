@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:32:45 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/22 11:34:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 12:38:24 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int	pars(t_shell *data)
 		{
 			string = ft_strdup(tmp->string);
 			if (!string)
-				return (throw_error(ERR_MAL));
+				return (throw_error(data, ERR_MAL, 1));
 			if (init_leaf(data, string, tmp))
-				return (throw_error(ERR_MAL));
+				return (throw_error(data, ERR_MAL, 1));
 			tmp = tmp->right;
 		}
 		else if (exclude(tmp))
@@ -98,7 +98,7 @@ int	pars(t_shell *data)
 		else
 		{
 			if (leaf(data, &tmp))
-				return (throw_error(ERR_MAL));
+				return (throw_error(data, ERR_MAL, 1));
 		}
 	}
 	return (0);

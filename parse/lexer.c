@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:30:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/21 13:48:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 12:38:06 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static	int	simple_cases(t_shell *data, t_tokens **token, int *index)
 	else if ((*token)->class == ENV && (*token)->stat != INQUOTE)
 	{
 		if (expand(data, *token) || env_lexer(data, (*token)->string, token))
-			return (tokenclear(token), throw_error(ERR_MAL));
+			return (tokenclear(token), throw_error(data, ERR_MAL, 1));
 	}
 	else
 		tokenadd_back(&data->tokens, (*token));
@@ -102,7 +102,7 @@ int	lexer(t_shell *data)
 	{
 		token = init_token(data, data->line, &index, 0);
 		if (!token)
-			return (throw_error(ERR_MAL));
+			return (throw_error(data, ERR_MAL, 1));
 		if (token->stat == GENERAL && class_operator(token))
 			data->exp = '0';
 		else if (!ft_strcmp(token->string, "export"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/22 01:38:33 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:37:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_env_value(t_shell *data, char *name, int fd)
 	{
 		nbr = ft_itoa(data->status);
 		if (!nbr)
-			return (throw_error(ERR_MAL));
+			return (throw_error(data, ERR_MAL, 1));
 		ft_putstr_fd(nbr, fd);
 		return (free(nbr), 0);
 	}

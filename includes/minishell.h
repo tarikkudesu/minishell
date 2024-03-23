@@ -105,11 +105,11 @@ char		*ft_itoa(int n);
 
 /*-------------------error_handling--------------------*/
 
+int			throw_error(t_shell *data, char *str, int status);
 void		free_2d_int(int **free2d, int nb_pipe);
 void		ft_throw(char *strerr, int status);
 void		free_2d_char(char **free2d);
 int			pars_error(t_shell *data);
-int			throw_error(char *str);
 void		my_free(char *ptr);
 
 /*-------------------error_handling--------------------*/

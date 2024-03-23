@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:05:03 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/22 15:51:03 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 11:52:36 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ t_env	*copy_list(t_env *list)
 	env = NULL;
 	while (list)
 	{
+		name = NULL;
+		value = NULL;
 		if (list->name)
 			name = ft_strdup(list->name);
 		if (list->value)
 			value = ft_strdup(list->value);
 		node = env_new(name, value);
 		if (!node)
-			return (perror(ERR_MAL), NULL);
+			return (free(name), free(value), perror(ERR_MAL), NULL);
 		env_add_back(&env, node);
 		list = list->next;
-		value = NULL;
 	}
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:45:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 21:30:53 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 12:37:10 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ int	heredoc_init(t_shell *data, int *index)
 		return (1);
 	del = malloc(sizeof(char) * (del_len(data->line + *index) + 1));
 	if (!del)
-		return (throw_error(ERR_MAL));
+		return (throw_error(data, ERR_MAL, 1));
 	exp = fill_delimeter(data->line, del, index, 1);
 	token = tokennew(del);
 	if (!token)
-		return (throw_error(ERR_MAL));
+		return (throw_error(data, ERR_MAL, 1));
 	token->class = FILE_NAME;
 	tokenadd_back(&data->tokens, token);
 	if (!*del && exp)
