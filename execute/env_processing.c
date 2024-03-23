@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_processing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:50:34 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/23 16:14:20 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:18:35 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	**default_env(void)
 	if (!env[1])
 		return (free(pwd), free(env[0]), NULL);
 	env[2] = ft_strdup("PATH=/usr/bin:/bin");
-	// env[2] = ft_strdup("_=/usr/bin/env");
 	if (!env[2])
 		return (free(pwd), free(env[0]), free(env[1]), NULL);
 	env[3] = NULL;

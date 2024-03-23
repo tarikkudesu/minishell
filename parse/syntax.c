@@ -6,11 +6,24 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 20:28:15 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/20 17:54:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 17:53:13 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	here_document(t_shell *data)
+{
+	t_tokens	*tmp;
+
+	tmp = data->tokens;
+	while (tmp)
+	{
+		if (tmp->stat == GENERAL && tmp->class == HEREDOC)
+			heredoc(data, tmp->right->string, tmp->right->class);
+		tmp = tmp->right;
+	}
+}
 
 int	pars_error(t_shell *data)
 {
@@ -43,5 +56,6 @@ int	syntax(t_shell *data)
 	}
 	if (class_operator(previous))
 		return (pars_error(data));
+	here_document(data);
 	return (0);
 }

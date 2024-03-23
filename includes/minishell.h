@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/23 16:12:49 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:49:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void		ft_export(t_shell *data, t_env **env, char **to_add, int add);
 /*-----------------------parse-------------------------*/
 
 t_tokens	*init_token(t_shell *data, char *line, int *index, int t);
+int			heredoc(t_shell *data, char *del, t_class exp);
 char		*meta_char_string(char *string, int *index);
 void		token_stat(t_shell *data, t_tokens *token);
-int			heredoc(t_shell *data, char *del, int exp);
 int			heredoc_init(t_shell *data, int *index);
 char		*token_string(char *string, int *index);
 int			expand(t_shell *data, t_tokens *token);
@@ -136,5 +136,9 @@ int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
 
 /*------------------end_token_operation-----------------*/
+
+
+/* FUNCTIONS */
+void    print_tree(t_tokens *tree);
 
 #endif

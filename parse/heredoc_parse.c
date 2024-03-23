@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:45:06 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/23 12:37:10 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:20:49 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ int	heredoc_init(t_shell *data, int *index)
 	char		*del;
 	int			exp;
 
-	while (data->line[*index] && isspace(data->line[*index]))
+	while (data->line[*index] && ft_isspace(data->line[*index]))
 		(*index)++;
 	if (meta_char(data->line[*index]) && data->line[*index] != '"' \
 		&& data->line[*index] != '\'' && data->line[*index] != '$')
-		return (1);
+		return (pars_error(data));
 	del = malloc(sizeof(char) * (del_len(data->line + *index) + 1));
 	if (!del)
 		return (throw_error(data, ERR_MAL, 1));
@@ -92,7 +92,9 @@ int	heredoc_init(t_shell *data, int *index)
 	tokenadd_back(&data->tokens, token);
 	if (!*del && exp)
 		return (pars_error(data));
-	if (heredoc(data, del, exp))
-		return (1);
+	if (exp)
+		token->class = HEREDOC_E;
+	else
+		token->class = HEREDOC_O;
 	return (0);
 }

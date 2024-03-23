@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/23 16:11:42 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:51:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	putline_fd(t_shell *data, char *s, int fd, int exp)
 	i = 0;
 	while (*(s + i))
 	{
-		if (*(s + i) == '$' && exp)
+		if (*(s + i) == '$' && exp == HEREDOC_E)
 		{
 			env = meta_char_string(s + i, &i);
 			if (!env)
@@ -61,7 +61,7 @@ int	putline_fd(t_shell *data, char *s, int fd, int exp)
 	return (0);
 }
 
-static int	heredoc_fill(t_shell *data, char *del, int fd, int exp)
+static int	heredoc_fill(t_shell *data, char *del, int fd, t_class exp)
 {
 	char	*line;
 	int		zero;
@@ -90,7 +90,7 @@ static int	heredoc_fill(t_shell *data, char *del, int fd, int exp)
 	return (0);
 }
 
-int	heredoc(t_shell *data, char *del, int exp)
+int	heredoc(t_shell *data, char *del, t_class exp)
 {
 	int		fd;
 	char	*name;

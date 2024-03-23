@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:10:05 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/22 00:47:49 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:36:37 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_cd(t_shell *data, char *path)
 
 	if (!path || !ft_strcmp(path, "~"))
 	{
-		if (chdir("/Users/ooulcaid") < 0)
+		if (chdir("/Users/tamehri") < 0)
 			return (perror(ERR), data->status = 1, exit_if(data->cmd_nbr, 1));
 	}
 	else if (stat(path, &st) < 0)
