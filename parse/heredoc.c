@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/23 17:51:41 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/24 20:38:47 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	get_env_value(t_shell *data, char *name, int fd)
 	while (env)
 	{
 		if (!ft_strcmp(env->name, name + 1))
+		{
 			ft_putstr_fd(env->value, fd);
+			break ;
+		}
 		env = env->next;
 	}
 	return (0);
@@ -85,8 +88,6 @@ static int	heredoc_fill(t_shell *data, char *del, int fd, t_class exp)
 	if (line)
 		free(line);
 	(signal(SIGINT, ctl_c), dup2(zero, STDIN_FILENO), close(zero));
-	if (g_sig)
-		return (close(data->doc_fd), data->doc_fd = -1, 1);
 	return (0);
 }
 

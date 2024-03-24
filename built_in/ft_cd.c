@@ -62,6 +62,11 @@ void	update(t_shell *data)
 		tmp = tmp->next;
 	if (tmp)
 		update_pwd(data, &tmp);
+	else
+	{
+		data->pwd = getcwd(NULL, 0);
+		update_pwd(data, &tmp);
+	}
 }
 
 void	ft_cd(t_shell *data, char *path)

@@ -27,8 +27,7 @@ char	*join_tokens(t_tokens **tmp, char *string)
 	string = ft_strjoin(string, (*tmp)->string);
 	if (!string)
 		return (free(to_free), NULL);
-	free(to_free);
-	return (string);
+	return (free(to_free), string);
 }
 
 int	init_leaf(t_shell *data, char *string, t_tokens *class)
@@ -95,11 +94,8 @@ int	pars(t_shell *data)
 		}
 		else if (exclude(tmp))
 			tmp = tmp->right;
-		else
-		{
-			if (leaf(data, &tmp))
-				return (throw_error(data, ERR_MAL, 1));
-		}
+		else if (leaf(data, &tmp))
+			return (throw_error(data, ERR_MAL, 1));
 	}
 	return (0);
 }

@@ -86,7 +86,8 @@ char	*meta_char_string(char *string, int *index)
 			len++;
 		else if (*(string + 1) == '\'' || *(string + 1) == '"')
 			return (variable(string, index));
-		while (*(string + len) && ft_isalnum(*(string + len)))
+		while (*(string + len) && (ft_isalnum(*(string + len)) \
+			|| *(string + len) == '_'))
 			len++;
 		(*index) += len;
 		return (ft_substr(string, 0, len));

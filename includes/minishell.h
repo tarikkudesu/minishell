@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/23 17:49:54 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/24 18:20:41 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,5 @@ int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
 
 /*------------------end_token_operation-----------------*/
-
-
-/* FUNCTIONS */
-void    print_tree(t_tokens *tree);
 
 #endif

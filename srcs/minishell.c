@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/22 11:27:42 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/24 18:26:57 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,41 @@ int	minishell(t_shell *data)
 	return (g_sig = 0);
 }
 
+void	process_line(t_shell *data, char *line)
+{
+	add_history(line);
+	data->line = line;
+	data->stat = GENERAL;
+	minishell(data);
+	(clear_command_tree(&data->tokens), data->tokens = NULL);
+	(clear_command_tree(&data->tree), data->tree = NULL);
+}
+
 void	read_line(t_shell *data)
 {
-	char	*line;
+	int		zero;
 
+	signals();
 	while (1)
 	{
-		line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
-		if (!line)
-			return ;
-		if (*line)
+		zero = dup(0);
+		if (zero < 0)
+			ft_throw(ERR_DUP, 1);
+		signal(SIGINT, sig_h);
+		data->line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
+		if (!data->line && !g_sig)
+			break ;
+		else if (!data->line && g_sig)
 		{
-			add_history(line);
-			data->line = line;
-			data->stat = GENERAL;
-			minishell(data);
-			(clear_command_tree(&data->tokens), data->tokens = NULL);
-			(clear_command_tree(&data->tree), data->tree = NULL);
+			if (dup2(zero, 0) < 0)
+				ft_throw(ERR_DUP2, 1);
+			data->status = 1;
+			g_sig = 0;
 		}
-		free(line);
-		line = NULL;
-		data->line = NULL;
+		else if (data->line && *(data->line))
+			process_line(data, data->line);
+		(free(data->line), data->line = NULL, close(zero));
+		signal(SIGINT, ctl_c);
 	}
+	close(zero);
 }
