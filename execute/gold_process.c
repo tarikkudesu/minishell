@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:15:56 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/23 12:14:51 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:09:11 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	process(t_shell *data, t_tokens *token, int input, int output)
 {
 	char	**cmd_arg;
 
+	signal(SIGQUIT, SIG_DFL);
 	if (red_process(data, token, input, output) == -1)
 		exit(1);
 	dup_in_out(input, output);

@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:10:05 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/23 18:36:37 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/01 17:18:30 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,28 @@ void	new_old_pwd(t_shell *data)
 
 void	update_pwd(t_shell *data, t_env **tmp)
 {
+	t_env	*pwd;
 	char	*value;
+	char	*name;
 
 	value = ft_strdup(data->pwd);
 	if (!value)
 		return (ft_putendl_fd(ERR_MAL, 2));
-	free((*tmp)->value);
-	(*tmp)->value = value;
+	if (*tmp)
+	{
+		free((*tmp)->value);
+		(*tmp)->value = value;
+	}
+	else
+	{
+		name = ft_strdup("PWD");
+		if (!name)
+			return (free(value), ft_putendl_fd(ERR_MAL, 2));
+		pwd = env_new(name, value);
+		if (!pwd)
+			return (free(value), free(name), ft_putendl_fd(ERR_MAL, 2));
+		env_add_back(&data->env_list, pwd);
+	}
 }
 
 void	update(t_shell *data)
@@ -60,13 +75,8 @@ void	update(t_shell *data)
 	tmp = data->env_list;
 	while (tmp && ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
-	if (tmp)
-		update_pwd(data, &tmp);
-	else
-	{
-		data->pwd = getcwd(NULL, 0);
-		update_pwd(data, &tmp);
-	}
+	data->pwd = getcwd(NULL, 0);
+	update_pwd(data, &tmp);
 }
 
 void	ft_cd(t_shell *data, char *path)

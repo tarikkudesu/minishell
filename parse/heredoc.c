@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 09:56:24 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/24 20:38:47 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/25 12:40:42 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	heredoc_fill(t_shell *data, char *del, int fd, t_class exp)
 	int		zero;
 
 	line = NULL;
-	(signal(SIGINT, sig_h), zero = dup(STDIN_FILENO));
+	zero = dup(STDIN_FILENO);
 	while (!g_sig && 1)
 	{
 		line = readline("> ");
@@ -87,7 +87,7 @@ static int	heredoc_fill(t_shell *data, char *del, int fd, t_class exp)
 	}
 	if (line)
 		free(line);
-	(signal(SIGINT, ctl_c), dup2(zero, STDIN_FILENO), close(zero));
+	(dup2(zero, STDIN_FILENO), close(zero));
 	return (0);
 }
 

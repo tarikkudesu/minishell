@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/24 18:20:41 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/03/25 12:49:15 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 
 void		signals(void);
 void		sig_h(int sig);
-void		ctl_s(int signal);
 void		ctl_c(int signal);
 void		execute(t_shell *data);
 int			is_builtin(char *string);
@@ -39,7 +38,6 @@ char		**get_args(t_tokens *token);
 void		dup_in_out(int input, int output);
 char		*absolute_path(char	*cmd, char **env);
 void		ft_execve(t_shell *data, char **cmd_arg);
-void		set_environment(t_shell *data, char **env);
 void		exec_builtin(t_shell *data, char **cmd_argd);
 void		process(t_shell *data, t_tokens *token, int input, int output);
 int			red_process(t_shell *data, t_tokens *token, int input, int output);
@@ -136,5 +134,9 @@ int			tokensize(t_tokens *lst);
 t_tokens	*tokennew(char *content);
 
 /*------------------end_token_operation-----------------*/
+
+
+/* FUNCTIONS */
+void	exit_if(int processes, int status);
 
 #endif

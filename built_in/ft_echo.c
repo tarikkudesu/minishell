@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:13:47 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/19 17:27:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/01 17:18:59 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ void	ft_echo(t_shell *data, char **argument)
 		if (!is_echo_option(argument[i]))
 			break ;
 	b = i;
-	while (argument[i + 1])
-		(ft_putstr_fd(argument[i], 1), ft_putstr_fd(" ", 1), i++);
-	ft_putstr_fd(argument[i], 1);
+	while (argument[i])
+	{
+		ft_putstr_fd(argument[i++], 1);
+		if (argument[i])
+			ft_putstr_fd(" ", 1);
+	}
 	if (!b)
 		write(1, "\n", 1);
-	data->status = 0;
-	if (data->cmd_nbr > 1)
-		exit(0);
+	return (data->status = 0, exit_if(data->cmd_nbr, 0));
 }

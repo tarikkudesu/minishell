@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:44:38 by tamehri           #+#    #+#             */
-/*   Updated: 2024/03/24 18:26:57 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/01 17:10:56 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	read_line(t_shell *data)
 		else if (data->line && *(data->line))
 			process_line(data, data->line);
 		(free(data->line), data->line = NULL, close(zero));
-		signal(SIGINT, ctl_c);
 	}
 	close(zero);
 }
