@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooulcaid <ooulcaid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 23:32:32 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/03/22 01:33:54 by ooulcaid         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:46:37 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static	void	middle_process(t_shell *data, t_tokens *token)
 
 void	execute(t_shell *data)
 {
-	signal(SIGINT, ctl_s);
+	signal(SIGINT, ctl_c);
 	if (data->cmd_nbr == 1)
 		single_cmd(data);
 	else
@@ -106,5 +106,4 @@ void	execute(t_shell *data)
 		close(data->doc_fd);
 		data->doc_fd = -1;
 	}
-	signal(SIGINT, ctl_c);
 }

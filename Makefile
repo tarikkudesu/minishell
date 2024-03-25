@@ -40,8 +40,7 @@ SRC				=	srcs/main.c    \
 					utils/ft_strjoin.c                                    \
 					utils/ft_strlen.c                                      \
 					utils/ft_strncmp.c                                      \
-					utils/ft_substr.c \
-					print.c
+					utils/ft_substr.c
 
 CC				=	cc
 NAME			=	minishell
