@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 14:10:05 by ooulcaid          #+#    #+#             */
-/*   Updated: 2024/04/01 17:18:30 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/04/05 14:05:54 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void	update(t_shell *data)
 		new_old_pwd(data);
 	else if (!ft_strcmp(tmp->name, "OLDPWD"))
 		update_pwd(data, &tmp);
-	(free(data->pwd), data->pwd = getcwd(NULL, 0));
 	tmp = data->env_list;
 	while (tmp && ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
+	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
 	update_pwd(data, &tmp);
 }
