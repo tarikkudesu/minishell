@@ -44,7 +44,9 @@ int	minishell(t_shell *data)
 	if (lexer(data) || pars(data) || syntax(data))
 		return (g_sig = 0, 1);
 	command_tree(data);
+	g_sig = -1;
 	execute(data);
+	g_sig = 0;
 	if (data->cmd_nbr > 1)
 		(free_2d_int(data->pipes, data->cmd_nbr - 1), \
 		data->pipes = NULL);
@@ -65,19 +67,20 @@ void	read_line(t_shell *data)
 {
 	int		zero;
 
-	signals();
 	while (1)
 	{
-		zero = dup(0);
+		zero = dup(STDIN_FILENO);
 		if (zero < 0)
 			ft_throw(ERR_DUP, 1);
-		signal(SIGINT, sig_h);
 		data->line = readline("\033[1;32m➜  \033[1;36mminishell \033[0m");
 		if (!data->line && !g_sig)
+		{
+			write(1, "exit\n", 5);
 			break ;
+		}
 		else if (!data->line && g_sig)
 		{
-			if (dup2(zero, 0) < 0)
+			if (dup2(zero, STDIN_FILENO) < 0)
 				ft_throw(ERR_DUP2, 1);
 			data->status = 1;
 			g_sig = 0;

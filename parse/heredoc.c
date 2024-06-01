@@ -98,7 +98,7 @@ int	heredoc(t_shell *data, char *del, t_class exp)
 	int		fd;
 	char	*name;
 
-	name = ft_itoa((int)data);
+	name = ft_itoa((long)data);
 	if (!name)
 		return (perror(ERR_MAL), 1);
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0744);

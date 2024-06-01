@@ -14,6 +14,17 @@
 
 extern int	g_sig;
 
+int	ctrl_c_exit_status(int __status, int __flag)
+{
+	static int	old_status;
+
+	if (__flag == 1)
+		old_status = 1;
+	else
+		old_status = __status;
+	return (old_status);
+}
+
 void	sig_h(int sig)
 {
 	if (sig)
@@ -23,10 +34,14 @@ void	sig_h(int sig)
 
 void	ctl_c(int signal)
 {
-	if (signal == SIGINT)
+	if (signal == SIGINT && g_sig != -1)
 	{
+		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		ctrl_c_exit_status(1, 1);
+		g_sig = 1;
+		close(0);
 	}
 }
 

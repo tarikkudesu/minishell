@@ -35,6 +35,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 		(ft_putendl_fd(ERR_ARG, 2), exit(1));
+	signals();
 	init_data(&data, env);
 	read_line(&data);
 	clear_command_tree(&data.tokens);
