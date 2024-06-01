@@ -6,7 +6,7 @@
 /*   By: tamehri <tamehri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:26:50 by tamehri           #+#    #+#             */
-/*   Updated: 2024/04/05 11:51:31 by tamehri          ###   ########.fr       */
+/*   Updated: 2024/06/01 18:54:34 by tamehri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 /*-------------------execute_operations-----------------*/
 
 void		signals(void);
-void		sig_h(int sig);
 void		ctl_c(int signal);
 void		execute(t_shell *data);
 int			is_builtin(char *string);
