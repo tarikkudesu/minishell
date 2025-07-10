@@ -42,4 +42,4 @@ As the name suggests, the goal is creating a simple shell that implements the mo
 -   Built-in Commands
 -   Job Control
 -   Signal Handling
--   
+
